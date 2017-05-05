@@ -1,0 +1,48 @@
+Product backlog:
+
+Products in development:
+Andrew	| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+Josh	| [1] 2 [3 4 5] 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+Richard	| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+Qi	| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+William	| 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19
+
+Notes:
+Andrew:
+Josh: I'll work on the board implentation and see if I can create simple user controls.
+Richard:
+Qi:
+William:
+
+NC - Not completed, C - Completed
+-----------------------------
+Necessities
+-----------------------------
+1 - (NC)Create UML diagram
+2 - (NC)Add graphics to game
+-----------------------------
+3 - (NC)Allow user to navigate through maze
+4 - (NC)Allow user to interact with environment
+	- be able to push a block in desired direction
+	- stop character movement when user runs into wall
+5 - (NC)Finish level once the goal state has been reached
+6 - (NC)Design and implement a graphical user interface so that players of varying degrees of expertise
+can interact effectively with the system
+7 - (NC)Ensure that program experiences no compliation errors
+	-JUnit testing?
+-----------------------------
+Extensions
+-----------------------------
+8 - (NC) Allow user to progress to another level once the current level is completed
+9 - (NC) Allow user to select different levels / levels of difficulty
+10 -(NC) Produce an algorithm that generates puzzles
+11 -(NC) Add character animations
+12 -(NC)Allow user to play with another user
+13 -(NC)Allow user to interact with different items
+14 -(NC)Limitations on the number of moves that a character can make
+15 -(NC)Provide hints to the user if they seem stuck
+16 -(NC)Allow user to play against an AI
+17 -(NC)Allow user to edit level
+18 -(NC)3D interface
+19 -(NC)levels with fog (discovering level as you play)
+

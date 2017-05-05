@@ -1,0 +1,24 @@
+User stories 1:
+As a: user
+I want to: see the map & player being shown correctly
+Scenario: when on the GUI
+Given I have chosen the difficulty of map
+When I clicked the start button
+Then the map & player should be shown in 3 seconds.
+
+
+User stories 2:
+As a: user
+I want to: move around on the map
+Scenario: when on the map created
+Given the map and player correctly displayed
+When I press the up/down/left/right from keyboard
+Then the player should be able to move
+
+User stories 3:
+As a: user
+I want to: see solution(s) to the map
+Scenario: when on the GUI
+Given the map and player correctly displayed
+When I press the "show solution" button
+Then an expected complete routes would shown as a solution to the puzzle.
