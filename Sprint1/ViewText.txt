@@ -19,6 +19,6 @@ MapEnd
 # W = wall
 # E = empty space
 # O = person on target
-
+# D = box Done (box on target)
 
 
