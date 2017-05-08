@@ -18,7 +18,7 @@ MapEnd
 # T = target
 # W = wall
 # E = empty space
-
+# O = person on target
 
 
 
