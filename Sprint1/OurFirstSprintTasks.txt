@@ -1,0 +1,25 @@
+Our task is split into three. We have allocated 2 team members to each part.
+
+Three Parts: GAME, VIEW, CONTROLLER
+
+********************GAME: Anthony and William********************************************
+
+INPUT: Takes in GameText which includes the map as text AND moves as text
+
+OUTPUT: Prints out the resulting map as text (after the moves)
+
+
+********************VIEW: Qi and Josh****************************************************
+
+INPUT: Takes in ViewText which includes map as text only
+
+OUTPUT: A (beautiful) map as image
+
+
+********************CONTROLLER: Andrew and Richard***************************************
+
+INPUT: No input file, the user will input through keyboard as the program runs
+
+OUTPUT: As the user types in the UP, DOWN, LEFT, or RIGHT keys, 
+	the program will dynamically print UP, DOWN, LEFT, or RIGHT (on the command line)
+
