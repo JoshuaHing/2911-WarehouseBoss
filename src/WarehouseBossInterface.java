@@ -34,7 +34,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// JButton WbMusic;
 
 	ArrayList<ArrayList<String>> map;
-	Game game;
+
 	// Create MyPanel
 	MyPanel mainPanel;
 	JLabel label;
@@ -46,7 +46,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		super("Warehouse Boss 2017-COMP2911");
 		//game = new Game();
 		this.map = new ArrayList<ArrayList<String>>();
-		/** code for arrow keys */
+		/* code for arrow keys */
 		JPanel p = new JPanel();
 		label = new JLabel("Key Listener!");
 		p.add(label);
@@ -89,21 +89,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void updateInterface(Game game) {
-		//Container c = getContentPane();
-		//mainPanel = new MyPanel(game.getMap());
-		//mainPanel.setBounds(200, 150, 400, 400);
-		//c.add(mainPanel);
-		/*MyPanel newPanel = new MyPanel(game.getMap());
-		newPanel.setBounds(200, 150, 400, 400);
-		newPanel.setSize(720,720);*/
-		mainPanel.removeAll();
-		mainPanel.add(new MyPanel(game.getMap()));
-		mainPanel.validate();
-		/*setSize(720, 720);
-		setVisible(true);
-		setLocationRelativeTo(null);*/
-	}
 	public void setButtonLocation(Container c) {
 
 		// This part is going to Set Button in right side of interface
@@ -207,86 +192,52 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		}
 	}
 
-	public void left() {
-		System.out.println("move left");
-		this.game.moveLEFT();
-		//this.game.moveUP();
-		this.updateInterface(this.game);
-		//WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
-		
-	}
-
-	public void right() {
-		System.out.println("move right");
-		this.game.moveRIGHT();
-		//this.game.moveDOWN();
-		//WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
-		this.updateInterface(this.game);
-
-
-		
-	}
-
-	public void up() {
-		System.out.println("wooohoo!");
-		System.out.println("move up");
-		this.game.moveUP();
-		//this.game.moveLEFT();
-		//WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
-		this.updateInterface(this.game);
-
-
-	}
-
-	public void down() {
-		System.out.println("move down");
-		this.game.moveDOWN();
-		//this.game.moveRIGHT();
-		
-		//WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
-		this.updateInterface(this.game);
-
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// debug key type System.out.println("Key pressed code=" + e.getKeyCode() + ", char=" + e.getKeyChar());
-
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
 		//System.out.println("Key pressed code=" + e.getKeyCode() + ", char=" + e.getKeyChar());
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_LEFT:
-				//move left;
-				left();
+			  game.moveLEFT();  //move left;
+        this.updateInterface(this.game);
 				break;
 			case KeyEvent.VK_RIGHT:
-				//move right
-				right();
+			  game.moveRIGHT(); //move right
+			  this.updateInterface(this.game);
 				break;
 			case KeyEvent.VK_UP:
-				//move up
-				up();
+			  game.moveUP();    //move up
+        this.updateInterface(this.game);
 				break;
 			case KeyEvent.VK_DOWN:
-				//move down
-				down();
+			  game.moveDOWN();  //move down
+        this.updateInterface(this.game);
 				break;
 		}
 	}
+  public void updateInterface(Game game) {
+    //Container c = getContentPane();
+    //mainPanel = new MyPanel(game.getMap());
+    //mainPanel.setBounds(200, 150, 400, 400);
+    //c.add(mainPanel);
+		/*MyPanel newPanel = new MyPanel(game.getMap());
+		newPanel.setBounds(200, 150, 400, 400);
+		newPanel.setSize(720,720);*/
+    mainPanel.removeAll();
+    mainPanel.add(new MyPanel(game.getMap()));
+    mainPanel.validate();
+		/*setSize(720, 720);
+		setVisible(true);
+		setLocationRelativeTo(null);*/
+  }
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-	}
-	
-	public Game getGame() {
-		return this.game;
-	}
+	public void keyReleased(KeyEvent e) {}
+
+	@Override
+  public void keyTyped(KeyEvent e) {
+    // debug key type System.out.println("Key pressed code=" + e.getKeyCode() + ", char=" + e.getKeyChar());
+  }
+
+	private Game game;
 
 }
