@@ -12,13 +12,62 @@ W W W W W W W W W W NextLine
 MapEnd
 
 # These are just comments, don't read them in!
-
 # P = person
 # B = box
 # T = target
 # W = wall
 # E = empty space
 # O = person on target
-# D = box Done (box on target)
+
+MoveStart
+UP
+RIGHT
+RIGHT
+DOWN
+DOWN
+RIGHT
+RIGHT
+RIGHT
+UP
+UP
+LEFT
+DOWN
+DOWN
+DOWN
+DOWN
+LEFT
+DOWN
+RIGHT
+RIGHT
+LEFT
+LEFT
+LEFT
+LEFT
+UP
+UP
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+DOWN
+RIGHT
+UP
+UP
+UP
+UP
+DOWN
+DOWN
+LEFT
+LEFT
+LEFT
+LEFT
+UP
+RIGHT
+RIGHT
+RIGHT
+RIGHT
+MoveEnd
+
+
 
 
