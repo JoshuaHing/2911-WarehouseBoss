@@ -13,7 +13,7 @@ public class Game {
 	}
 
 	
-	public void moveUP() {
+	public void moveLEFT() {
 		//first find person P or O
 		int x = 0;
 		int y = 0;
@@ -89,7 +89,7 @@ public class Game {
 		}
 		
 	}
-	public void moveDOWN() {
+	public void moveRIGHT() {
 		//first find person P or O
 		int x = 0;
 		int y = 0;
@@ -166,7 +166,7 @@ public class Game {
 		}
 		
 	}
-	public void moveLEFT() {
+	public void moveUP() {
 		//first find person P or O
 		int x = 0;
 		int y = 0;
@@ -242,7 +242,7 @@ public class Game {
 		}
 		
 	}
-	public void moveRIGHT() {
+	public void moveDOWN() {
 		//first find person P or O
 		int x = 0;
 		int y = 0;

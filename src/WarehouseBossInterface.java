@@ -207,6 +207,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	public void left() {
 		System.out.println("move left");
 		this.game.moveLEFT();
+		//this.game.moveUP();
+		this.updateInterface(this.game);
 		//WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 		
 	}
@@ -214,6 +216,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	public void right() {
 		System.out.println("move right");
 		this.game.moveRIGHT();
+		//this.game.moveDOWN();
 		//WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 		this.updateInterface(this.game);
 
@@ -224,6 +227,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	public void up() {
 		System.out.println("move up");
 		this.game.moveUP();
+		//this.game.moveLEFT();
 		//WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 		this.updateInterface(this.game);
 
@@ -233,6 +237,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	public void down() {
 		System.out.println("move down");
 		this.game.moveDOWN();
+		//this.game.moveRIGHT();
+		
 		//WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 		this.updateInterface(this.game);
 
