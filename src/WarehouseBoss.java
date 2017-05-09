@@ -2,8 +2,11 @@
 
 
 public class WarehouseBoss {
+	
   public static void main(String[] args){
     new WarehouseBossInterface();
+    new Action();
+    
   }
 }
 
