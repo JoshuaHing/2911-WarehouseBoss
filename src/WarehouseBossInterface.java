@@ -172,7 +172,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				kit.getImage("img/goal.png"),
 				kit.getImage("img/ground.png"), 
 				kit.getImage("img/player.png"), 
-				kit.getImage("img/wall.png") };
+				kit.getImage("img/wall.png"), 
+				kit.getImage("img/goal-box.png")};
 
 		public MyPanel(ArrayList<ArrayList<String>>map) {
 			setSize(640, 640);
@@ -184,7 +185,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		public void paint(Graphics g) {
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					String currString = this.map.get(i).get(j);
+					String currString = this.map.get(j).get(i);
 					//System.out.println("currString = " + currString);
 					if (currString.equals("B")) {	//Box
 						g.drawImage(mapimg[0], i * 32, j * 32, 32, 32, this);
@@ -198,6 +199,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 						g.drawImage(mapimg[3], i * 32, j * 32, 32, 32, this);
 					} else if (currString.equals("W")) {	//wall
 						g.drawImage(mapimg[4], i * 32, j * 32, 32, 32, this);
+					} else if (currString.equals("D")) {
+						g.drawImage(mapimg[5], i * 32, j * 32, 32, 32, this);
 					}
 				}
 			}
@@ -225,6 +228,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	}
 
 	public void up() {
+		System.out.println("wooohoo!");
 		System.out.println("move up");
 		this.game.moveUP();
 		//this.game.moveLEFT();
