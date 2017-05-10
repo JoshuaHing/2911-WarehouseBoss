@@ -9,11 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,7 +41,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	boolean upPressed;
 	boolean downPressed;
 	public WarehouseBossInterface(Game game) {
-		super("Warehouse Boss 2017-COMP2911");
+
+	  super("Warehouse Boss 2017-COMP2911");
 		//game = new Game();
 		this.map = new ArrayList<ArrayList<String>>();
 		/* code for arrow keys */
@@ -54,6 +53,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		addKeyListener(this);
 		setSize(0, 0);
 		setVisible(true);
+
 		leftPressed = true;
 		rightPressed = true;
 		upPressed = true;
@@ -139,9 +139,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// This part is going to set the function of each button...
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == WbExit) {
-			// String str = "Do You Really Want to Exit?\n";
-			// JOptionPane.showMessageDialog(this, str,"Warnnig",
-			// JOptionPane.WARNING_MESSAGE);
+			String str = "Do You Really Want to Exit?\n";
+			JOptionPane.showMessageDialog(this, str,"Warnnig", JOptionPane.WARNING_MESSAGE);
 			System.exit(0);
 			
 		}
