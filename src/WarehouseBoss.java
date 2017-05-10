@@ -9,15 +9,12 @@ import java.util.Scanner;
 public class WarehouseBoss {
 	
 	public static void main(String[] args){
-		//Game game = new Game();
-		//ArrayList<ArrayList<String>> map = game.getMap();
-		//ArrayList<String> moves = game.getMoves();
 		ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>();
 		//****************SCANNER STARTS****************
 		Scanner sc = null;
-
+		int numGoals = 0;
 		try{
-			sc = new Scanner(new FileReader("map/GameText.txt"));
+			sc = new Scanner(new FileReader(args[0]));
 			while(sc.hasNext()){
 				if(sc.hasNext("#")){
 					sc.nextLine();
@@ -29,10 +26,10 @@ public class WarehouseBoss {
 						ArrayList<String> newList = new ArrayList<String>();
 						map.add(newList);
 						while(!sc.hasNext("NextLine")){
-							if(sc.hasNext("P")||sc.hasNext("B")
-                  ||sc.hasNext("T")||sc.hasNext("W")
-                  ||sc.hasNext("E")||sc.hasNext("O")
-                  ||sc.hasNext("D")){
+							if(sc.hasNext("P")||sc.hasNext("B")||sc.hasNext("T")||sc.hasNext("W")||sc.hasNext("E")||sc.hasNext("O")||sc.hasNext("D")){
+								if(sc.hasNext("T")) {
+									numGoals++;
+								}
 								map.get(i).add(sc.next());
 							}
 						}
@@ -41,19 +38,11 @@ public class WarehouseBoss {
 					}	
 					sc.nextLine();
 				}
-
-				sc.nextLine();
 			}
-			//now that everything's initialised, print out the map.
-			//Game game = new Game();
-			
-			//System.out.println("woohoo!");
 			Game game = new Game();
+			game.setInitialMap(map);
 			game.setMap(map);
-			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
-
-
-
+			WarehouseBossInterface newInterface = new WarehouseBossInterface(game, numGoals);
 		} catch (FileNotFoundException e){}
 		finally{
 			if (sc != null) sc.close();

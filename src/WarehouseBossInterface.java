@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -9,12 +10,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class WarehouseBossInterface extends JFrame implements ActionListener, KeyListener {
@@ -32,7 +36,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// JButton WbMusic;
 
 	ArrayList<ArrayList<String>> map;
-
+	Game game;
 	// Create MyPanel
 	MyPanel mainPanel;
 	JLabel label;
@@ -40,12 +44,15 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	boolean rightPressed;
 	boolean upPressed;
 	boolean downPressed;
-	public WarehouseBossInterface(Game game) {
-
-	  super("Warehouse Boss 2017-COMP2911");
+	private int numGoals;
+	private static final int MODE_REFRESH = 0;
+	private static final int MODE_RESTART = 1;
+	private static final int MODE_DONE = 2;
+	public WarehouseBossInterface(Game game, int numGoals) {
+		super("Warehouse Boss 2017-COMP2911");
 		//game = new Game();
 		this.map = new ArrayList<ArrayList<String>>();
-		/* code for arrow keys */
+		/** code for arrow keys */
 		JPanel p = new JPanel();
 		label = new JLabel("Key Listener!");
 		p.add(label);
@@ -53,12 +60,13 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		addKeyListener(this);
 		setSize(0, 0);
 		setVisible(true);
-
+		
 		leftPressed = true;
 		rightPressed = true;
 		upPressed = true;
 		downPressed = true;
 		this.game = game;
+		this.numGoals = numGoals;
 		// end of code for arrow keys
 		//map = new ArrayList<ArrayList<String>>();
 		// This is going to set Icon of this game
@@ -139,14 +147,15 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// This part is going to set the function of each button...
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == WbExit) {
-			String str = "Do You Really Want to Exit?\n";
+			String str = "Are you sure you want to quit?\n";
 			JOptionPane.showMessageDialog(this, str,"Warnnig", JOptionPane.WARNING_MESSAGE);
 			System.exit(0);
-			
+		} else if(e.getSource() == WbRestart) {
+			this.game.setMap(this.game.getInitialMap());	//**IN PROGRESS**
+			this.updateInterface(1, this.game);				//When the restart button is pressed, the game should go back to the start.
 		}
 	}
 
-	// Main game interface
 	// Main game interface
 	public class MyPanel extends JPanel {
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -170,10 +179,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
 					String currString = this.map.get(j).get(i);
-					//System.out.println("currString = " + currString);
 					if (currString.equals("B")) {	//Box
 						g.drawImage(mapimg[0], i * 32, j * 32, 32, 32, this);
-					} else if (currString.equals("T")) {	//
+					} else if (currString.equals("T")) {	//goal square
 						g.drawImage(mapimg[1], i * 32, j * 32, 32, 32, this);
 					} else if (currString.equals("E")) {	//empty
 						g.drawImage(mapimg[2], i * 32, j * 32, 32, 32, this);
@@ -183,60 +191,102 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 						g.drawImage(mapimg[3], i * 32, j * 32, 32, 32, this);
 					} else if (currString.equals("W")) {	//wall
 						g.drawImage(mapimg[4], i * 32, j * 32, 32, 32, this);
-					} else if (currString.equals("D")) {
+					} else if (currString.equals("D")) {	//box is on goal square
 						g.drawImage(mapimg[5], i * 32, j * 32, 32, 32, this);
 					}
 				}
 			}
 		}
 	}
+	
+	public void updateInterface(int mode, Game game) {
+		mainPanel.removeAll();
+		if(mode == MODE_REFRESH) {	//for refreshing
+			mainPanel.add(new MyPanel(game.getMap()));
+		} else if(mode == MODE_RESTART) { //for going back to start ***IN PROGRESS***
+			mainPanel.add(new MyPanel(game.getInitialMap()));
+		} else if(mode == MODE_DONE) {		//for when the level finishes ***IN PROGRESS***
+			//create a window to be printed 
+			mainPanel.add(new MyPanel(game.getMap()));
+			/*JPanel newPanel = new JPanel();
+			String message = "Congratulations!";*/
+		}
+		mainPanel.validate();
+	}
+
+	public void left() {
+		System.out.println("move left");
+		this.game.moveLEFT();
+		if(this.game.checkIfDone(this.numGoals)) {
+			this.updateInterface(MODE_DONE, this.game);
+		} else {
+			this.updateInterface(MODE_REFRESH, this.game);
+		}
+	}
+
+	public void right() {
+		System.out.println("move right");
+		this.game.moveRIGHT();
+		this.game.checkIfDone(this.numGoals);
+		if(this.game.checkIfDone(this.numGoals)) {
+			this.updateInterface(MODE_DONE, this.game);
+		} else {
+			this.updateInterface(MODE_REFRESH, this.game);
+		}
+	}
+
+	public void up() {
+		System.out.println("move up");
+		this.game.moveUP();
+		if(this.game.checkIfDone(this.numGoals)) {
+			this.updateInterface(MODE_DONE, this.game);
+		} else {
+			this.updateInterface(MODE_REFRESH, this.game);
+		}
+	}
+
+	public void down() {
+		System.out.println("move down");
+		this.game.moveDOWN();
+		if(this.game.checkIfDone(this.numGoals)) {
+			this.updateInterface(MODE_DONE, this.game);
+		} else {
+			this.updateInterface(MODE_REFRESH, this.game);
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// debug key type System.out.println("Key pressed code=" + e.getKeyCode() + ", char=" + e.getKeyChar());
+
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		//System.out.println("Key pressed code=" + e.getKeyCode() + ", char=" + e.getKeyChar());
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_LEFT:
-			  game.moveLEFT();  //move left;
-        this.updateInterface(this.game);
+				//move left;
+				left();
 				break;
 			case KeyEvent.VK_RIGHT:
-			  game.moveRIGHT(); //move right
-			  this.updateInterface(this.game);
+				//move right
+				right();
 				break;
 			case KeyEvent.VK_UP:
-			  game.moveUP();    //move up
-        this.updateInterface(this.game);
+				//move up
+				up();
 				break;
 			case KeyEvent.VK_DOWN:
-			  game.moveDOWN();  //move down
-        this.updateInterface(this.game);
+				//move down
+				down();
 				break;
 		}
 	}
-  public void updateInterface(Game game) {
-    //Container c = getContentPane();
-    //mainPanel = new MyPanel(game.getMap());
-    //mainPanel.setBounds(200, 150, 400, 400);
-    //c.add(mainPanel);
-		/*MyPanel newPanel = new MyPanel(game.getMap());
-		newPanel.setBounds(200, 150, 400, 400);
-		newPanel.setSize(720,720);*/
-    mainPanel.removeAll();
-    mainPanel.add(new MyPanel(game.getMap()));
-    mainPanel.validate();
-		/*setSize(720, 720);
-		setVisible(true);
-		setLocationRelativeTo(null);*/
-  }
 
 	@Override
-	public void keyReleased(KeyEvent e) {}
-
-	@Override
-  public void keyTyped(KeyEvent e) {
-    // debug key type System.out.println("Key pressed code=" + e.getKeyCode() + ", char=" + e.getKeyChar());
-  }
-
-	private Game game;
-
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+	}
 }

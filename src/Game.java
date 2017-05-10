@@ -5,14 +5,15 @@ import java.util.Scanner;
 
 public class Game {
 	private ArrayList<ArrayList<String>> map;
-	//private ArrayList<String> moves;
+	private ArrayList<ArrayList<String>> initialMap;
+	private int numGoalBoxes;
 	
 	public Game(){
 		this.map = new ArrayList<ArrayList<String>>();
-		//this.moves = new ArrayList<String>();
+		this.initialMap = new ArrayList<ArrayList<String>>();
+		this.numGoalBoxes = 0;
 	}
 
-	
 	public void moveUP() {
 		//first find person P or O
 		int x = 0;
@@ -44,6 +45,7 @@ public class Game {
 					if(map.get(x-2).get(y).equals("T")){
 						map.get(x-2).set(y,"D");
 						map.get(x).set(y,"E");
+						this.numGoalBoxes++;
 					}
 					if(map.get(x-1).get(y).equals("B")){
 						map.get(x-1).set(y,"P");
@@ -65,6 +67,7 @@ public class Game {
 				if(map.get(x-1).get(y).equals("T")){
 					map.get(x-1).set(y,"O");
 					map.get(x).set(y,"T");
+					this.numGoalBoxes++;
 				}
 			} else if(map.get(x-1).get(y).equals("B")||map.get(x-1).get(y).equals("D")){
 				if(map.get(x-2).get(y).equals("E")||map.get(x-2).get(y).equals("T")){
@@ -75,6 +78,7 @@ public class Game {
 					if(map.get(x-2).get(y).equals("T")){
 						map.get(x-2).set(y,"D");
 						map.get(x).set(y,"T");
+						this.numGoalBoxes++;
 					}
 					if(map.get(x-1).get(y).equals("B")){
 						map.get(x-1).set(y,"P");
@@ -120,6 +124,7 @@ public class Game {
 					if(map.get(x+2).get(y).equals("T")){
 						map.get(x+2).set(y,"D");
 						map.get(x).set(y,"E");
+						this.numGoalBoxes++;
 					}
 					if(map.get(x+1).get(y).equals("B")){
 						map.get(x+1).set(y,"P");
@@ -142,6 +147,7 @@ public class Game {
 				if(map.get(x+1).get(y).equals("T")){
 					map.get(x+1).set(y,"O");
 					map.get(x).set(y,"T");
+					this.numGoalBoxes++;
 				}
 			} else if(map.get(x+1).get(y).equals("B")||map.get(x+1).get(y).equals("D")){
 				if(map.get(x+2).get(y).equals("E")||map.get(x+2).get(y).equals("T")){
@@ -152,6 +158,7 @@ public class Game {
 					if(map.get(x+2).get(y).equals("T")){
 						map.get(x+2).set(y,"D");
 						map.get(x).set(y,"T");
+						this.numGoalBoxes++;
 					}
 					if(map.get(x+1).get(y).equals("B")){
 						map.get(x+1).set(y,"P");
@@ -197,6 +204,7 @@ public class Game {
 					if(map.get(x).get(y-2).equals("T")){
 						map.get(x).set(y-2,"D");
 						map.get(x).set(y,"E");
+						this.numGoalBoxes++;
 					}
 					if(map.get(x).get(y-1).equals("B")){
 						map.get(x).set(y-1,"P");
@@ -218,6 +226,7 @@ public class Game {
 				if(map.get(x).get(y-1).equals("T")){
 					map.get(x).set(y-1,"O");
 					map.get(x).set(y,"T");
+					this.numGoalBoxes++;
 				}
 			} else if(map.get(x).get(y-1).equals("B")||map.get(x).get(y-1).equals("D")){
 				if(map.get(x).get(y-2).equals("E")||map.get(x).get(y-2).equals("T")){
@@ -228,6 +237,7 @@ public class Game {
 					if(map.get(x).get(y-2).equals("T")){
 						map.get(x).set(y-2,"D");
 						map.get(x).set(y,"T");
+						this.numGoalBoxes++;
 					}
 					if(map.get(x).get(y-1).equals("B")){
 						map.get(x).set(y-1,"P");
@@ -273,6 +283,7 @@ public class Game {
 					if(map.get(x).get(y+2).equals("T")){
 						map.get(x).set(y+2,"D");
 						map.get(x).set(y,"E");
+						this.numGoalBoxes++;
 					}
 					if(map.get(x).get(y+1).equals("B")){
 						map.get(x).set(y+1,"P");
@@ -304,6 +315,7 @@ public class Game {
 					if(map.get(x).get(y+2).equals("T")){
 						map.get(x).set(y+2,"D");
 						map.get(x).set(y,"T");
+						this.numGoalBoxes++;
 					}
 					if(map.get(x).get(y+1).equals("B")){
 						map.get(x).set(y+1,"P");
@@ -318,12 +330,19 @@ public class Game {
 		}
 		
 	}
+	
+	public boolean checkIfDone(int numGoals) {
+		//System.out.println("numGoals = " + numGoals + " numBoxes = " + this.numGoalBoxes);  //***FOR TESTING***
+		if(numGoals == this.numGoalBoxes) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public ArrayList<ArrayList<String>> getMap() {
 		return map;
 	}
-	/*public ArrayList<String> getMoves() {
-		return moves;
-	}*/
+
 	public void printMap(){
 		System.out.println("MapStart");
 		for(int j=0;j<map.size();j++){
@@ -335,15 +354,19 @@ public class Game {
 		}
 		System.out.println("MapEnd");
 	}
-	/*public void printMoves(){
-		System.out.println("MoveStart");
-		for(int i=0;i<moves.size();i++){
-			System.out.println(moves.get(i));
-		}
-		System.out.println("MoveEnd");
-	}*/
 	
+	public void setInitialMap(ArrayList<ArrayList<String>> map) {
+		this.initialMap = map;
+	}
+	
+	public ArrayList<ArrayList<String>> getInitialMap() {
+		return this.initialMap;
+	}
 	public void setMap(ArrayList<ArrayList<String>> map) {
 		this.map = map;
+	}
+	
+	public void resetGoalBoxes() {	//To be called when the Restart button is pressed
+		this.numGoalBoxes = 0;
 	}
 }
