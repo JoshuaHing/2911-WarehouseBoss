@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -10,10 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -45,10 +41,11 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	boolean upPressed;
 	boolean downPressed;
 	private int numGoals;
+	private int currLevel;
 	private static final int MODE_REFRESH = 0;
 	private static final int MODE_RESTART = 1;
 	private static final int MODE_DONE = 2;
-	public WarehouseBossInterface(Game game, int numGoals) {
+	public WarehouseBossInterface(Game game) {
 		super("Warehouse Boss 2017-COMP2911");
 		//game = new Game();
 		this.map = new ArrayList<ArrayList<String>>();
@@ -66,7 +63,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		upPressed = true;
 		downPressed = true;
 		this.game = game;
-		this.numGoals = numGoals;
+		//this.numGoals = numGoals;
+		this.currLevel = 0;
 		// end of code for arrow keys
 		//map = new ArrayList<ArrayList<String>>();
 		// This is going to set Icon of this game
@@ -147,8 +145,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// This part is going to set the function of each button...
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == WbExit) {
-			String str = "Are you sure you want to quit?\n";
-			JOptionPane.showMessageDialog(this, str,"Warnnig", JOptionPane.WARNING_MESSAGE);
+			String str = "Are you sure you want to exit?\n";
+			JOptionPane.showMessageDialog(this, str,"Warning", JOptionPane.WARNING_MESSAGE);
 			System.exit(0);
 		} else if(e.getSource() == WbRestart) {
 			this.game.setMap(this.game.getInitialMap());	//**IN PROGRESS**
@@ -176,9 +174,11 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 		@Override
 		public void paint(Graphics g) {
+			ArrayList<ArrayList<String>> currMap = game.getLevel(currLevel).getMap();
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
-					String currString = this.map.get(j).get(i);
+					String currString = currMap.get(j).get(i);
+					//System.out.println("currLevel = " + currLevel);
 					if (currString.equals("B")) {	//Box
 						g.drawImage(mapimg[0], i * 32, j * 32, 32, 32, this);
 					} else if (currString.equals("T")) {	//goal square
@@ -206,52 +206,78 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		} else if(mode == MODE_RESTART) { //for going back to start ***IN PROGRESS***
 			mainPanel.add(new MyPanel(game.getInitialMap()));
 		} else if(mode == MODE_DONE) {		//for when the level finishes ***IN PROGRESS***
-			//create a window to be printed 
-			mainPanel.add(new MyPanel(game.getMap()));
-			/*JPanel newPanel = new JPanel();
-			String message = "Congratulations!";*/
+	
 		}
 		mainPanel.validate();
 	}
 
 	public void left() {
 		System.out.println("move left");
-		this.game.moveLEFT();
-		if(this.game.checkIfDone(this.numGoals)) {
-			this.updateInterface(MODE_DONE, this.game);
+		this.game.moveLEFT(this.currLevel);
+		if(game.getLevel(currLevel).isDone()) {
+			if(game.hasNextLevel(currLevel)) {
+				currLevel++;
+				Map nextLevel = game.getLevel(this.currLevel);
+				game.setMap(nextLevel.getMap());
+				updateInterface(MODE_REFRESH, game);
+			} else {
+				//end game
+			}
 		} else {
-			this.updateInterface(MODE_REFRESH, this.game);
+			this.updateInterface(MODE_REFRESH, game);
 		}
 	}
 
 	public void right() {
 		System.out.println("move right");
-		this.game.moveRIGHT();
-		this.game.checkIfDone(this.numGoals);
-		if(this.game.checkIfDone(this.numGoals)) {
-			this.updateInterface(MODE_DONE, this.game);
+		this.game.moveRIGHT(this.currLevel);
+		//if the level is done
+		//if the game is done
+		if(game.getLevel(currLevel).isDone()) {
+			if(game.hasNextLevel(currLevel)) {
+				currLevel++;
+				Map nextLevel = game.getLevel(this.currLevel);
+				game.setMap(nextLevel.getMap());
+				updateInterface(MODE_REFRESH, game);
+			} else {
+				//end game
+			}
 		} else {
-			this.updateInterface(MODE_REFRESH, this.game);
+			this.updateInterface(MODE_REFRESH, game);
 		}
 	}
 
 	public void up() {
 		System.out.println("move up");
-		this.game.moveUP();
-		if(this.game.checkIfDone(this.numGoals)) {
-			this.updateInterface(MODE_DONE, this.game);
+		this.game.moveUP(this.currLevel);
+		if(game.getLevel(currLevel).isDone()) {
+			if(game.hasNextLevel(currLevel)) {
+				currLevel++;
+				Map nextLevel = game.getLevel(this.currLevel);
+				game.setMap(nextLevel.getMap());
+				updateInterface(MODE_REFRESH, game);
+			} else {
+				//end game
+			}
 		} else {
-			this.updateInterface(MODE_REFRESH, this.game);
+			this.updateInterface(MODE_REFRESH, game);
 		}
 	}
 
 	public void down() {
 		System.out.println("move down");
-		this.game.moveDOWN();
-		if(this.game.checkIfDone(this.numGoals)) {
-			this.updateInterface(MODE_DONE, this.game);
+		this.game.moveDOWN(this.currLevel);
+		if(game.getLevel(currLevel).isDone()) {
+			if(game.hasNextLevel(currLevel)) {
+				currLevel++;
+				Map nextLevel = game.getLevel(this.currLevel);
+				game.setMap(nextLevel.getMap());
+				updateInterface(MODE_REFRESH, game);
+			} else {
+				//end game
+			}
 		} else {
-			this.updateInterface(MODE_REFRESH, this.game);
+			this.updateInterface(MODE_REFRESH, game);
 		}
 	}
 

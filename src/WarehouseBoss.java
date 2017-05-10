@@ -8,24 +8,26 @@ import java.util.Scanner;
 
 public class WarehouseBoss {
 	
+	private static final int NUM_ROWS = 10;
+	private static final int NUM_COLS = 10;
 	public static void main(String[] args){
-		ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> map = null;
 		//****************SCANNER STARTS****************
 		Scanner sc = null;
 		int numGoals = 0;
-		try{
+		Game game = new Game();
+		try{	//We need to keep going and take in all the maps
 			sc = new Scanner(new FileReader(args[0]));
-			while(sc.hasNext()){
-				if(sc.hasNext("#")){
+			while(sc.hasNextLine()){
+				while(sc.hasNext("#")){
 					sc.nextLine();
 				}
-				if(sc.hasNext("MapStart")){
-					sc.nextLine();
-					int i = 0;
-					while(!sc.hasNext("MapEnd")){
+				if(sc.hasNextLine()) {
+					map = new ArrayList<ArrayList<String>>();
+					for (int i = 0; i < NUM_COLS; i++) {
 						ArrayList<String> newList = new ArrayList<String>();
 						map.add(newList);
-						while(!sc.hasNext("NextLine")){
+						for (int j = 0; j < NUM_ROWS; j++) {
 							if(sc.hasNext("P")||sc.hasNext("B")||sc.hasNext("T")||sc.hasNext("W")||sc.hasNext("E")||sc.hasNext("O")||sc.hasNext("D")){
 								if(sc.hasNext("T")) {
 									numGoals++;
@@ -33,16 +35,20 @@ public class WarehouseBoss {
 								map.get(i).add(sc.next());
 							}
 						}
-						i++;
+					}
+					System.out.println("numGoals = " + numGoals);
+					Map newMap = new Map(map, numGoals);
+					game.addMap(newMap);
+					numGoals = 0;
+					if(sc.hasNextLine()) {
 						sc.nextLine();
-					}	
-					sc.nextLine();
+					}
 				}
 			}
-			Game game = new Game();
-			game.setInitialMap(map);
-			game.setMap(map);
-			WarehouseBossInterface newInterface = new WarehouseBossInterface(game, numGoals);
+			System.out.println("map size = " + game.numMaps());
+			game.setInitialMap(game.getLevel(0).getMap());
+			game.setMap(game.getLevel(0).getMap());
+			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 		} catch (FileNotFoundException e){}
 		finally{
 			if (sc != null) sc.close();
