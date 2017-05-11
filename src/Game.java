@@ -23,11 +23,14 @@ public class Game {
     for(int j=0;j<map.size();j++){
       for(int i=0;i<map.get(j).size();i++){
         if(map.get(j).get(i).equals("P")||map.get(j).get(i).equals("O")){
-          x = j;
+          x = j; //got the guy
           y = i;
         }
       }
     }
+    //map only changes if the person walks towards empty or target
+    //or if person pushes box towards empty or target
+    //everything else is changed accordingly
     if(map.get(x).get(y).equals("P")){
       if(map.get(x-1).get(y).equals("E")||map.get(x-1).get(y).equals("T")){
         if(map.get(x-1).get(y).equals("E")){
@@ -109,6 +112,9 @@ public class Game {
         }
       }
     }
+    //map only changes if the person walks towards empty or target
+    //or if person pushes box towards empty or target
+    //everything else is changed accordingly
     if(map.get(x).get(y).equals("P")){
       if(map.get(x+1).get(y).equals("E")||map.get(x+1).get(y).equals("T")){
         if(map.get(x+1).get(y).equals("E")){
@@ -191,6 +197,9 @@ public class Game {
         }
       }
     }
+    //map only changes if the person walks towards empty or target
+    //or if person pushes box towards empty or target
+    //everything else is changed accordingly
     if(map.get(x).get(y).equals("P")){
       if(map.get(x).get(y-1).equals("E")||map.get(x).get(y-1).equals("T")){
         if(map.get(x).get(y-1).equals("E")){
@@ -272,6 +281,9 @@ public class Game {
         }
       }
     }
+    //map only changes if the person walks towards empty or target
+    //or if person pushes box towards empty or target
+    //everything else is changed accordingly
     if(map.get(x).get(y).equals("P")){
       if(map.get(x).get(y+1).equals("E")||map.get(x).get(y+1).equals("T")){
         if(map.get(x).get(y+1).equals("E")){
