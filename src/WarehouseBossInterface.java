@@ -31,7 +31,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// Final, If we can, we can play a background music in our game.
 	// JButton WbMusic;
 
-	ArrayList<ArrayList<String>> map;
 	Game game;
 	// Create MyPanel
 	MyPanel mainPanel;
@@ -42,31 +41,31 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	boolean downPressed;
 	private int numGoals;
 	private int currLevel;
-	private static final int MODE_REFRESH = 0;
+	private static final int MODE_REFRESH = 0;			//Different modes for refreshing the interface
 	private static final int MODE_RESTART = 1;
 	private static final int MODE_DONE = 2;
+	private static final int MAP_SIZE = 10;				//Will be removed once we implement auto-generated maps
+	
 	public WarehouseBossInterface(Game game) {
-		super("Warehouse Boss 2017-COMP2911");
-		//game = new Game();
-		this.map = new ArrayList<ArrayList<String>>();
-		/** code for arrow keys */
-		JPanel p = new JPanel();
+		super("Warehouse Boss 2017-COMP2911");			//String of the title bar
+		/* start code for arrow keys */
+		JPanel p = new JPanel();						//Create a new JPanel
 		label = new JLabel("Key Listener!");
-		p.add(label);
-		add(p);
+		/*p.add(label);
+		add(p);											//Is this code necessary?
+		*/
 		addKeyListener(this);
 		setSize(0, 0);
 		setVisible(true);
-		
 		leftPressed = true;
 		rightPressed = true;
 		upPressed = true;
 		downPressed = true;
-		this.game = game;
-		//this.numGoals = numGoals;
+		
+		this.game = game;								//Give the interface the game. The game contains all of the game maps.
 		this.currLevel = 0;
-		// end of code for arrow keys
-		//map = new ArrayList<ArrayList<String>>();
+		/* end of code for arrow keys */
+
 		// This is going to set Icon of this game
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image image = toolkit.getImage("img/box.png");
@@ -86,10 +85,11 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		// Set buttons' location
 		setButtonLocation(c);
 
-		mainPanel = new MyPanel(game.getMap());
-		mainPanel.setBounds(200, 150, 400, 400);
+		// mainPanel contains the game map. When it is instantiated, the images are automatically loaded onto the panel via the "paint" method.
+		mainPanel = new MyPanel(game.getMap());	
+		mainPanel.setBounds(150, 150, 400, 400);	//(x-position, y-position, width, height)
 		c.add(mainPanel);
-		setSize(720, 720);
+		setSize(720, 720);							//set size of the entire container
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -109,7 +109,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbExit = new JButton("Exit");
 		// WbMusic = new JButton("Music");
 
-		// set the locationn of each button
+		// set the location of each button
 		WbUndo.setBounds(600, 80, 120, 30);
 		WbFirst.setBounds(600, 130, 120, 30);
 		WbNext.setBounds(600, 180, 120, 30);
@@ -144,13 +144,14 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	@Override
 	// This part is going to set the function of each button...
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == WbExit) {
+		if (e.getSource() == WbExit) {				//When exit button is pressed, warning message shows up.
 			String str = "Are you sure you want to exit?\n";
 			JOptionPane.showMessageDialog(this, str,"Warning", JOptionPane.WARNING_MESSAGE);
 			System.exit(0);
 		} else if(e.getSource() == WbRestart) {
-			this.game.setMap(this.game.getInitialMap());	//**IN PROGRESS**
-			this.updateInterface(1, this.game);				//When the restart button is pressed, the game should go back to the start.
+			System.out.println("hello!!");
+			this.game.setMap(this.game.getInitialMap());	//**NOT YET IMPLEMENTED**
+			this.updateInterface(MODE_REFRESH, this.game);				//When the restart button is pressed, the game should go back to the start.
 		}
 	}
 
@@ -158,15 +159,15 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	public class MyPanel extends JPanel {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		ArrayList<ArrayList<String>>map;
-		Image mapimg[] = {
+		Image mapimg[] = {						//Gets the image files from "img" folder 
 				kit.getImage("img/box.png"), 
 				kit.getImage("img/goal.png"),
 				kit.getImage("img/ground.png"), 
 				kit.getImage("img/player.png"), 
 				kit.getImage("img/wall.png"), 
-				kit.getImage("img/goal-box.png")};
-
-		public MyPanel(ArrayList<ArrayList<String>>map) {
+				kit.getImage("img/goal-box.png")};		//More images can be added
+					
+		public MyPanel(ArrayList<ArrayList<String>> map) {
 			setSize(640, 640);
 			this.map = map;
 			requestFocus();
@@ -174,109 +175,77 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 		@Override
 		public void paint(Graphics g) {
-			ArrayList<ArrayList<String>> currMap = game.getLevel(currLevel).getMap();
+			ArrayList<ArrayList<String>> currMap = game.getLevel(currLevel).getMap();	//Get the map representing the current level that the player is on
 			for (int i = 0; i < 10; i++) {
 				for (int j = 0; j < 10; j++) {
 					String currString = currMap.get(j).get(i);
-					//System.out.println("currLevel = " + currLevel);
 					if (currString.equals("B")) {	//Box
-						g.drawImage(mapimg[0], i * 32, j * 32, 32, 32, this);
+						g.drawImage(mapimg[0],  i * 40, j * 40, 40, 40, this);
 					} else if (currString.equals("T")) {	//goal square
-						g.drawImage(mapimg[1], i * 32, j * 32, 32, 32, this);
+						g.drawImage(mapimg[1],  i * 40, j * 40, 40, 40, this);
 					} else if (currString.equals("E")) {	//empty
-						g.drawImage(mapimg[2], i * 32, j * 32, 32, 32, this);
+						g.drawImage(mapimg[2],  i * 40, j * 40, 40, 40, this);
 					} else if (currString.equals("O")) {	//player
-						g.drawImage(mapimg[3], i * 32, j * 32, 32, 32, this);
-					} else if (currString.equals("P")) {	//player
-						g.drawImage(mapimg[3], i * 32, j * 32, 32, 32, this);
+						g.drawImage(mapimg[3],  i * 40, j * 40, 40, 40, this);
+					} else if (currString.equals("P")) {	//player				//Probably not needed
+						g.drawImage(mapimg[3],  i * 40, j * 40, 40, 40, this);
 					} else if (currString.equals("W")) {	//wall
-						g.drawImage(mapimg[4], i * 32, j * 32, 32, 32, this);
+						g.drawImage(mapimg[4],  i * 40, j * 40, 40, 40, this);
 					} else if (currString.equals("D")) {	//box is on goal square
-						g.drawImage(mapimg[5], i * 32, j * 32, 32, 32, this);
+						g.drawImage(mapimg[5],  i * 40, j * 40, 40, 40, this);
 					}
 				}
 			}
 		}
 	}
 	
-	public void updateInterface(int mode, Game game) {
-		mainPanel.removeAll();
-		if(mode == MODE_REFRESH) {	//for refreshing
-			mainPanel.add(new MyPanel(game.getMap()));
-		} else if(mode == MODE_RESTART) { //for going back to start ***IN PROGRESS***
+	public void updateInterface(int mode, Game game) {	//This method displays a new version of the map (once a move has been made)
+		mainPanel.removeAll();										
+		if(mode == MODE_REFRESH) {						//Used for general purposes 
+			mainPanel.add(new MyPanel(game.getMap()));					
+		} else if(mode == MODE_RESTART) { 				//**YET TO BE IMPLEMENTED**
+			currLevel = 0;								//Used for when the restart button is pressed	
 			mainPanel.add(new MyPanel(game.getInitialMap()));
-		} else if(mode == MODE_DONE) {		//for when the level finishes ***IN PROGRESS***
-	
+		} else if(mode == MODE_DONE) {		//**YET TO BE IMPLEMENTED**
+			//The program should display a closing message such as "Congratulations!" or something
+			//And the player should not be able to continue to move
 		}
-		mainPanel.validate();
+		mainPanel.validate();							
 	}
 
 	public void left() {
-		System.out.println("move left");
-		this.game.moveLEFT(this.currLevel);
-		if(game.getLevel(currLevel).isDone()) {
-			if(game.hasNextLevel(currLevel)) {
-				currLevel++;
-				Map nextLevel = game.getLevel(this.currLevel);
-				game.setMap(nextLevel.getMap());
-				updateInterface(MODE_REFRESH, game);
-			} else {
-				//end game
-			}
-		} else {
-			this.updateInterface(MODE_REFRESH, game);
-		}
+		System.out.println("move left");				//This line is for testing purposes
+		this.game.moveLEFT(this.currLevel);				//Game sends a request to map to check if a move can be made
+		this.continueIfDone();
 	}
 
 	public void right() {
 		System.out.println("move right");
 		this.game.moveRIGHT(this.currLevel);
-		//if the level is done
-		//if the game is done
-		if(game.getLevel(currLevel).isDone()) {
-			if(game.hasNextLevel(currLevel)) {
-				currLevel++;
-				Map nextLevel = game.getLevel(this.currLevel);
-				game.setMap(nextLevel.getMap());
-				updateInterface(MODE_REFRESH, game);
-			} else {
-				//end game
-			}
-		} else {
-			this.updateInterface(MODE_REFRESH, game);
-		}
+		this.continueIfDone();
 	}
 
 	public void up() {
 		System.out.println("move up");
 		this.game.moveUP(this.currLevel);
-		if(game.getLevel(currLevel).isDone()) {
-			if(game.hasNextLevel(currLevel)) {
-				currLevel++;
-				Map nextLevel = game.getLevel(this.currLevel);
-				game.setMap(nextLevel.getMap());
-				updateInterface(MODE_REFRESH, game);
-			} else {
-				//end game
-			}
-		} else {
-			this.updateInterface(MODE_REFRESH, game);
-		}
+		this.continueIfDone();
 	}
 
 	public void down() {
 		System.out.println("move down");
 		this.game.moveDOWN(this.currLevel);
-		if(game.getLevel(currLevel).isDone()) {
-			if(game.hasNextLevel(currLevel)) {
-				currLevel++;
-				Map nextLevel = game.getLevel(this.currLevel);
-				game.setMap(nextLevel.getMap());
+		this.continueIfDone();
+	}
+	
+	public void continueIfDone() {
+		if(game.getLevel(currLevel).isDone()) {	//If the game is done
+			if(game.hasNextLevel(currLevel)) {	//AND the game has another level
+				currLevel++;					//	THEN move to the next level and refresh the inteface
 				updateInterface(MODE_REFRESH, game);
-			} else {
-				//end game
+			} else {							//ELSE finish the game
+				updateInterface(MODE_DONE, game); //**YET TO BE IMPLEMENTED**
 			}
-		} else {
+		} else {	//If the game isn't done, continue.
 			this.updateInterface(MODE_REFRESH, game);
 		}
 	}

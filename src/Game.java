@@ -1,17 +1,14 @@
 import java.util.ArrayList;
 
 public class Game {
-	private Map map;
-	private ArrayList<ArrayList<String>> initialMap;
-	private ArrayList<Map> gameMaps;
-	//private int numGoalBoxes;
-	//private int currentLevel;
+	private Map map;										//Represents the current map of the game
+	private ArrayList<ArrayList<String>> initialMap;		//The starting map of the game (Used for restart button)
+	private ArrayList<Map> gameMaps;						//Holds all of the maps of the game
 	
 	public Game(){
-		this.map = new Map(new ArrayList<ArrayList<String>>(), 0);
+		this.map = new Map(new ArrayList<ArrayList<String>>(), 0);	
 		this.initialMap = new ArrayList<ArrayList<String>>();
 		this.gameMaps = new ArrayList<Map>();
-		//this.numGoalBoxes = 0;
 	}
 
 	public void moveUP(int level) {
@@ -87,6 +84,7 @@ public class Game {
 					}
 					if(map.get(x-1).get(y).equals("D")){
 						map.get(x-1).set(y,"O");
+						currMap.decNumGoalBoxes();
 					}
 				}
 			} else {
@@ -135,6 +133,7 @@ public class Game {
 					}
 					if(map.get(x+1).get(y).equals("D")){
 						map.get(x+1).set(y,"O");
+						currMap.decNumGoalBoxes();
 					}
 				}
 			} else {
@@ -169,6 +168,7 @@ public class Game {
 					}
 					if(map.get(x+1).get(y).equals("D")){
 						map.get(x+1).set(y,"O");
+						currMap.decNumGoalBoxes();
 					}
 				}
 			} else {
@@ -217,6 +217,7 @@ public class Game {
 					}
 					if(map.get(x).get(y-1).equals("D")){
 						map.get(x).set(y-1,"O");
+						currMap.decNumGoalBoxes();
 					}
 				}
 			} else {
@@ -250,6 +251,7 @@ public class Game {
 					}
 					if(map.get(x).get(y-1).equals("D")){
 						map.get(x).set(y-1,"O");
+						currMap.decNumGoalBoxes();
 					}
 				}
 			} else {
@@ -298,6 +300,7 @@ public class Game {
 					}
 					if(map.get(x).get(y+1).equals("D")){
 						map.get(x).set(y+1,"O");
+						currMap.decNumGoalBoxes();
 					}
 				}
 			} else {
@@ -330,6 +333,7 @@ public class Game {
 					}
 					if(map.get(x).get(y+1).equals("D")){
 						map.get(x).set(y+1,"O");
+						currMap.decNumGoalBoxes();
 					}
 				}
 			} else {
@@ -338,10 +342,9 @@ public class Game {
 		}
 		
 	}
-	
-	
+
 	public Map getLevel(int level) {
-		 return this.gameMaps.get(level);
+		return this.gameMaps.get(level);
 	}
 
 	
@@ -371,12 +374,14 @@ public class Game {
 		return map;
 	}
 	
-	public boolean hasNextLevel(int level) {
-		if(!(level == this.gameMaps.size())) {
+	public boolean hasNextLevel(int level) {							//For checking if the game has another level to progress to.
+		System.out.println("gameMapsSize = " + gameMaps.size());
+		if(level < this.gameMaps.size()-1) {							//If the current level isn't the last, return true
 			System.out.println("wooho!!!");
 			return true;
-		} else {
-			return false;
+		} else {														//If there are no more levels, return false
+			System.out.println("no!!!!!!");
+			return false;											
 		}
 	}
 }
