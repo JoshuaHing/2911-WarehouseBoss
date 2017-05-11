@@ -147,11 +147,23 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		if (e.getSource() == WbExit) {				//When exit button is pressed, warning message shows up.
 			String str = "Are you sure you want to exit?\n";
 			JOptionPane.showMessageDialog(this, str,"Warning", JOptionPane.WARNING_MESSAGE);
+			requestFocus();
 			System.exit(0);
 		} else if(e.getSource() == WbRestart) {
 			System.out.println("hello!!");
-			this.game.setMap(this.game.getInitialMap());	//**NOT YET IMPLEMENTED**
-			this.updateInterface(MODE_REFRESH, this.game);				//When the restart button is pressed, the game should go back to the start.
+			requestFocus();			//When the restart button is pressed, the game should go back to the start.
+		}else if (e.getSource() == WbFinal){
+			requestFocus();
+		}else if (e.getSource() == WbSelect){
+			requestFocus();
+		}else if (e.getSource() == WbPre){
+			requestFocus();
+		}else if (e.getSource() == WbNext){
+			requestFocus();
+		}else if (e.getSource() == WbFirst){
+			requestFocus();
+		}else if (e.getSource() == WbUndo){
+			requestFocus();
 		}
 	}
 
