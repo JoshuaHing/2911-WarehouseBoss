@@ -1,12 +1,12 @@
 W W W W W W W W W W
 W W W W W W W W W W
-W E E E W E E T W W
 W E E E W E E E W W
-W P E B B B E E T W
+W E E E W E E E W W
+W P E E E B E E T W
+W E E E E E E E W W
+W Q E E E E E E W W
 W E E E E E E E W W
 W E E E E E E E W W
-W E E E E E E E W W
-W E E E E E E T W W
 W W W W W W W W W W
 
 W W W W W W W W W W
@@ -17,13 +17,13 @@ W E E B B E B E E W
 W E E B B E E E E W
 W E E E E E T E E W
 W E E E E E E E E W
-W E E E E E E E E W
+W E E E E E E E Q W
 W W W W W W W W W W
 
 W W W W W W W W W W
 W E E E E E E E E W
 W E E T E E B E P W
-W E E E E E E E E W
+W E E E E E E E Q W
 W E E E E E E E E W
 W E E E E E E E E W
 W E E E E E E E E W
@@ -33,7 +33,7 @@ W W W W W W W W W W
 
 W W W W W W W W W W
 W E E E E E E E E W
-W E E P E E E E E W
+W E Q P E E E E E W
 W E E E E E E E E W
 W E E E E E E E E W
 W E E B B B E E E W
