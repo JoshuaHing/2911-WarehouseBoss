@@ -1,3 +1,4 @@
+import java.awt.EventQueue;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -50,6 +51,13 @@ public class WarehouseBoss {
 			//game.setInitialMap(game.getLevel(0).getMap());
 			game.setMap(game.getLevel(0));
 			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					newInterface.canvas.start();
+				}
+			});
+
+		
 		} catch (FileNotFoundException e) {
 		} finally {
 			if (sc != null)

@@ -44,8 +44,12 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	JMenuItem music1, music2;
 
-	// Create MyPanel
+	//Create MyPanel
 	MyPanel mainPanel;
+	
+	//Create pic
+    Animation.pic canvas = null;
+
 
 	JLabel label;
 	boolean leftPressed;
@@ -106,6 +110,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 		this.game = game; // Give the interface the game. The game contains all
 							// of the game maps.
+		
 		this.currLevel = 0;
 
 		this.seconds1 = 0;
@@ -142,9 +147,15 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		// are automatically loaded onto the panel via the "paint" method.
 		mainPanel = new MyPanel(game.getMap());
 		mainPanel.setBounds(150, 150, 400, 400); // (x-position, y-position,
-													// width, height)
+									
+		canvas = new Animation.pic ();
+		canvas.setBounds(850, 150, 400, 400);
+		
+	    c.add (canvas);
+		
+		// width, height)
 		c.add(mainPanel);
-		setSize(720, 720); // set size of the entire container
+		setSize(1420, 720); // set size of the entire container
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -345,14 +356,10 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 							g.drawImage(mapimg[1], i * 40, j * 40, 40, 40, this);
 						} else if (currString.equals("E")) { // empty
 							g.drawImage(mapimg[2], i * 40, j * 40, 40, 40, this);
-						} else if (currString.equals("P")) { // player Probably not needed
+						} else if (currString.equals("P")||currString.equals("Q")||currString.equals("O")||currString.equals("R")) { // player Probably not needed
 							g.drawImage(mapimg[3], i * 40, j * 40, 40, 40, this);
-						} else if(currString.equals("Q")) {
-							g.drawImage(mapimg[3], i * 40, j * 40, 40, 40, this);
-						} else if (currString.equals("O")) { // player Probably not needed
-							g.drawImage(mapimg[3], i * 40, j * 40, 40, 40, this);
-						} else if(currString.equals("R")) {
-							g.drawImage(mapimg[3], i * 40, j * 40, 40, 40, this);
+							Animation.goalX = i * 40;
+							Animation.goalY = j * 40;
 						} else if (currString.equals("W")) { // wall
 							g.drawImage(mapimg[4], i * 40, j * 40, 40, 40, this);
 						} else if (currString.equals("D")) { // box is on goal
@@ -393,7 +400,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		} // Game sends a request to map to check if a move can be made
 		this.continueIfDone();
 	}
-
 
 	public void right(int player) {
 		// System.out.println("move right");
@@ -452,6 +458,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	@Override
 	public void keyPressed(KeyEvent e) {
+		Animation.PRESSED = true;
+		Animation.DIR = e.getKeyCode();
 		// System.out.println("in keypressed " + state);
 		if (state == STATE.GAME) {
 			switch (e.getKeyCode()) {
@@ -493,7 +501,11 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+		Animation.RIGHT_GO = 0;
+		Animation.PRESSED = false;
 	}
 
 	private Game game;
+	
+	private Animation animation;
 }
