@@ -5,68 +5,100 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Animation extends JFrame {
 	public static boolean PRESSED = false;
-	public static int goalX = 0;
+	public static int goalX = 0;				//the pixel need to move to 
 	public static int goalY = 0;
-	public static int pointX = 40;
+	public static int pointX = 40;				//current pixel
 	public static int pointY = 160;
-	public static int RIGHT_GO = 0;
-	public static int LEFT_GO = 0;
-	public static int DIR = 0; // which key press
-	public static int ANGLE = 0;
-	public static int W = 40;
+	public static int RIGHT_GO = 0;				//x-position of sub-image 
+	public static int LEFT_GO = 0;				//y-position of sub-image 
+	public static int DIR = 0; 					// moving direction
+	public static int ANGLE = 0;				//rotate or not
+	public static int W = 40;					//sub-picture dimension
 	public static int H = W;
-	public static int S = 5;
+	public static int S = 2;					//speed
+	public static long sleepTime = 5;			//delay
+	
 
 	public static class pic extends Canvas implements Runnable {
 		public BufferedImage Mario = null;
+		public BufferedImage Box = null;
+		public BufferedImage goalsquare = null;
+		public BufferedImage empty = null;
+		public BufferedImage player = null;
+		public BufferedImage wall = null;
+		public BufferedImage boxongoal = null;
+		
 		public Image oneFPS = null;
 		public Thread thread = null;
-		public long sleepTime = 40;
-
-		public pic() {
-			requestFocus();
+		
+		ArrayList<ArrayList<String>> map;
+		private Game game;
+		
+		public pic(ArrayList<ArrayList<String>> map, Game game) {
+			setSize(640, 640);
+			this.map = map;
+			this.game = game;
 			try {
 				Mario = ImageIO.read(new File("img/mario.png"));
+				Box = ImageIO.read(new File("img/box.png"));
+				goalsquare = ImageIO.read(new File("img/goal.png"));
+				empty = ImageIO.read(new File("img/ground.png"));
+				player = ImageIO.read(new File("img/player.png"));
+				wall = ImageIO.read(new File("img/wall.png"));
+				boxongoal = ImageIO.read(new File("img/goal-box.png"));
+				
 			} catch (IOException e) {
 			}
-			setBackground(Color.RED);
-			addKeyListener(new KeyListener() {
-				@Override
-				public void keyTyped(KeyEvent e) {
-				}
-
-				@Override
-				public void keyReleased(KeyEvent e) {
-					RIGHT_GO = 0;
-					PRESSED = false;
-				}
-
-				@Override
-				public void keyPressed(KeyEvent e) {
-					DIR = e.getKeyCode();
-					PRESSED = true;
-				}
-			});
+			requestFocus();
 		}
 
 		@Override
-		public void paint(Graphics g) // Paints this canvas.
-		{
+		public void paint(Graphics g) 																		// Paints this canvas.
+		{			
 			Graphics2D g2d = (Graphics2D) g;
+
 			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-			g2d.drawImage(rotateImage(Mario.getSubimage(RIGHT_GO, LEFT_GO, W, H), ANGLE, true), pointX, pointY, W, H,
-					this); // print the image here
+
+			if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.GAME) {
+				ArrayList<ArrayList<String>> currMap = game.getLevel(WarehouseBossInterface.currLevel).getMap(); 					// Get the map representing the current level.
+				for (int i = 0; i < 10; i++) {
+					for (int j = 0; j < 10; j++) {
+						String currString = currMap.get(j).get(i);
+						if (currString.equals("B")) { // Box
+							g2d.drawImage(Box, i * 40, j * 40, W, H, this);
+						} else if (currString.equals("T")) { // goal square
+							g2d.drawImage(goalsquare, i * 40, j * 40, W, H, this);
+						} else if (currString.equals("E")) { // empty
+							g2d.drawImage(empty, i * 40, j * 40, W, H, this);
+						} else if (currString.equals("P")||currString.equals("Q")||currString.equals("O")||currString.equals("R")) { // player Probably not needed
+							g2d.drawImage(empty, i * 40, j * 40, W, H, this);
+							Animation.goalX = i * 40;
+							Animation.goalY = j * 40;
+						} else if (currString.equals("W")) { // wall
+							g2d.drawImage(wall, i * 40, j * 40, W, H, this);
+						} else if (currString.equals("D")) { // box is on goal
+							g2d.drawImage(boxongoal, i * 40, j * 40, W, H, this);
+						}
+					}
+				}
+			} else if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.MENU) {
+			}
+			
+			g2d.drawImage(rotateImage(Mario.getSubimage(RIGHT_GO, LEFT_GO, W, H), ANGLE, true), pointX, pointY, W, H, this);
+														// print the image here
 			g2d.dispose();
 		}
 
@@ -185,4 +217,4 @@ public class Animation extends JFrame {
 //			}
 //		});
 //	}
-}
+} 
