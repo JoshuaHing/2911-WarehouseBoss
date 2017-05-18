@@ -149,13 +149,13 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		mainPanel.setBounds(150, 150, 400, 400); // (x-position, y-position,
 									
 		canvas = new Animation.pic (game.getMap(), game);
-		canvas.setBounds(850, 150, 400, 400);
+		canvas.setBounds(850, 120, 880, 440);
 		
 	    c.add (canvas);
 		
 		// width, height)
 		c.add(mainPanel);
-		setSize(1420, 720); // set size of the entire container
+		setSize(1820, 820); // set size of the entire container
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -324,12 +324,12 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		ArrayList<ArrayList<String>> map;
 		Image mapimg[] = { // Gets the image files from "img" folder
-				kit.getImage("img/box.png"), 
-				kit.getImage("img/goal.png"), 
-				kit.getImage("img/ground.png"),
+				kit.getImage("img/box1.png"), 
+				kit.getImage("img/goal1.png"), 
+				kit.getImage("img/ground1.png"),
 				kit.getImage("img/player.png"), 
-				kit.getImage("img/wall.png"), 
-				kit.getImage("img/goal-box.png") }; // More
+				kit.getImage("img/wall1.png"), 
+				kit.getImage("img/goal-box1.png") }; // More
 																													// images
 																													// can
 																													// be

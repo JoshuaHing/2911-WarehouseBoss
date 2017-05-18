@@ -18,18 +18,22 @@ import javax.swing.JFrame;
 
 public class Animation extends JFrame {
 	public static boolean PRESSED = false;
-	public static int goalX = 0;				//the pixel need to move to 
-	public static int goalY = 0;
-	public static int pointX = 40;				//current pixel
-	public static int pointY = 160;
+	public static int goalX;				//the pixel need to move to 
+	public static int goalY;
+	public static int pointX = 280;				//current pixel
+	public static int pointY = 100	;
 	public static int RIGHT_GO = 0;				//x-position of sub-image 
 	public static int LEFT_GO = 0;				//y-position of sub-image 
 	public static int DIR = 0; 					// moving direction
 	public static int ANGLE = 0;				//rotate or not
-	public static int W = 40;					//sub-picture dimension
-	public static int H = W;
-	public static int S = 2;					//speed
-	public static long sleepTime = 5;			//delay
+	public static int W = 80;					//sub-picture dimension
+	public static int M = 60;					//sub-picture dimension
+	public static int H = 75;
+	public static int X = (W/2);					//sub-picture dimension
+	public static int Y = (W/4);					//sub-picture dimension
+
+	public static int S = 3;					//speed
+	public static long sleepTime = 20;			//delay
 	
 
 	public static class pic extends Canvas implements Runnable {
@@ -48,7 +52,7 @@ public class Animation extends JFrame {
 		private Game game;
 		
 		public pic(ArrayList<ArrayList<String>> map, Game game) {
-			setSize(640, 640);
+			setBackground(Color.black);
 			this.map = map;
 			this.game = game;
 			try {
@@ -72,33 +76,40 @@ public class Animation extends JFrame {
 
 			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
+
 			if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.GAME) {
-				ArrayList<ArrayList<String>> currMap = game.getLevel(WarehouseBossInterface.currLevel).getMap(); 					// Get the map representing the current level.
+				ArrayList<ArrayList<String>> currMap = game.getLevel(WarehouseBossInterface.currLevel).getMap();
 				for (int i = 0; i < 10; i++) {
 					for (int j = 0; j < 10; j++) {
 						String currString = currMap.get(j).get(i);
-						if (currString.equals("B")) { // Box
-							g2d.drawImage(Box, i * 40, j * 40, W, H, this);
-						} else if (currString.equals("T")) { // goal square
-							g2d.drawImage(goalsquare, i * 40, j * 40, W, H, this);
-						} else if (currString.equals("E")) { // empty
-							g2d.drawImage(empty, i * 40, j * 40, W, H, this);
-						} else if (currString.equals("P")||currString.equals("Q")||currString.equals("O")||currString.equals("R")) { // player Probably not needed
-							g2d.drawImage(empty, i * 40, j * 40, W, H, this);
-							Animation.goalX = i * 40;
-							Animation.goalY = j * 40;
-						} else if (currString.equals("W")) { // wall
-							g2d.drawImage(wall, i * 40, j * 40, W, H, this);
-						} else if (currString.equals("D")) { // box is on goal
-							g2d.drawImage(boxongoal, i * 40, j * 40, W, H, this);
+						if (currString.equals("B")) { 										// Box
+							g2d.drawImage(Box, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+						} else if (currString.equals("T")) { 								// goal square
+							g2d.drawImage(goalsquare, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+						} else if (currString.equals("E")) { 								// empty
+							g2d.drawImage(empty, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+						} else if (currString.equals("P")||currString.equals("Q")) {
+							g2d.drawImage(empty, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+							goalX = (400+(i * X)-(j * X));
+							goalY =(i+j)*Y;			
+							g2d.drawImage(rotateImage(Mario.getSubimage(RIGHT_GO, LEFT_GO, M, H), 0, true), pointX, (pointY-(H-M)), M, H, this);
+						} else if (currString.equals("O")||currString.equals("R")) {
+							g2d.drawImage(goalsquare, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+							goalX = (400+(i * X)-(j * X));
+							goalY =(i+j)*Y;			
+							g2d.drawImage(rotateImage(Mario.getSubimage(RIGHT_GO, LEFT_GO, M, H), 0, true), pointX, (pointY-(H-M)), M, H, this);
+
+						} else if (currString.equals("W")) { 								// wall
+							g2d.drawImage(wall, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+						} else if (currString.equals("D")) { 								// box is on goal
+							g2d.drawImage(boxongoal, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
 						}
 					}
 				}
 			} else if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.MENU) {
 			}
 			
-			g2d.drawImage(rotateImage(Mario.getSubimage(RIGHT_GO, LEFT_GO, W, H), ANGLE, true), pointX, pointY, W, H, this);
-														// print the image here
+
 			g2d.dispose();
 		}
 
@@ -142,45 +153,64 @@ public class Animation extends JFrame {
 			}
 			while (thread == current && isShowing()) {
 
+				if (PRESSED == false && (!(java.lang.Math.abs(2*(goalY - pointY)) == java.lang.Math.abs(goalX - pointX)))){
+					pointX = goalX;
+					pointY = goalY;
+
+				}
 
 					if (DIR == 37) // left
 					{
-						LEFT_GO = W;
+						LEFT_GO = H;
 						ANGLE = 0;
 
-						if (pointX > goalX) {
-							pointX = pointX - S;
-							RIGHT_GO = RIGHT_GO + W;
+						if (pointX > goalX && pointY > goalY) {
+							pointX = pointX - S*2;
+							pointY = pointY - S;
+
+							RIGHT_GO = RIGHT_GO + M;
+
 						}
 					} else if (DIR == 39) { // right
 						LEFT_GO = 0;
 						ANGLE = 0;
 
-						if (pointX < goalX) {
-							pointX = pointX + S;
-							RIGHT_GO = RIGHT_GO + W;
+						if (pointX < goalX && pointY < goalY) {
+							pointX = pointX + S*2;
+							pointY = pointY + S;
+
+							RIGHT_GO = RIGHT_GO + M;
+
 						}
-					} else if (DIR == 38) { // up
-						if (pointY > goalY) {
+					} else if (DIR == 38) { // up&&
+						if (pointX < goalX && pointY > goalY) {
 							ANGLE = 90;
 							LEFT_GO = 0;
+							pointX = pointX + S*2;
 							pointY = pointY - S;
-							RIGHT_GO = RIGHT_GO + W;
+
+							RIGHT_GO = RIGHT_GO + M;
+
 						}
 					} else if (DIR == 40) { // down
-						if (pointY < goalY) {
+						if (pointX > goalX && pointY < goalY) {
 							ANGLE = -90;
-							LEFT_GO = 0;
+							LEFT_GO = H;
+							pointX = pointX - S*2;
 							pointY = pointY + S;
-							RIGHT_GO = RIGHT_GO + W;
+
+							RIGHT_GO = RIGHT_GO + M;
+
 						}
 					}
 
-					if (RIGHT_GO > (3 * W))
-						RIGHT_GO = 0;
 
-					if ((pointY == goalY) && (pointX == goalX))
-						RIGHT_GO = 0;
+						
+						if (RIGHT_GO > (3 * M))
+							RIGHT_GO = 0;
+
+//					if ((pointY == goalY) && (pointX == goalX))
+//						RIGHT_GO = 0;
 
 					try {
 						Thread.sleep(sleepTime);
