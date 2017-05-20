@@ -146,16 +146,16 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		// mainPanel contains the game map. When it is instantiated, the images
 		// are automatically loaded onto the panel via the "paint" method.
 		mainPanel = new MyPanel(game.getMap());
-		mainPanel.setBounds(150, 150, 400, 400); // (x-position, y-position,
+		mainPanel.setBounds(10, 595, 250, 250); // (x-position, y-position,
 									
 		canvas = new Animation.pic (game.getMap(), game);
-		canvas.setBounds(850, 120, 880, 440);
+		canvas.setBounds(0, 0, 1450, 855);
 		
+		c.add(mainPanel);
 	    c.add (canvas);
 		
 		// width, height)
-		c.add(mainPanel);
-		setSize(1820, 820); // set size of the entire container
+		setSize(1450, 926); // set size of the entire container
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -165,6 +165,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	public void setButtonLocation(Container c) {
 		// this.addMouseListener(new MouseInput());
+		int X = 1270;
 		if (state == STATE.GAME) {
 
 			// This part is going to Set Button in right side of interface
@@ -182,17 +183,17 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			cbMusic = new JComboBox(sMusicList);
 
 			// set the location of each button
-			WbUndo.setBounds(600, 80, 120, 30);
-			WbFirst.setBounds(600, 130, 120, 30);
-			WbNext.setBounds(600, 180, 120, 30);
-			WbPre.setBounds(600, 230, 120, 30);
-			WbSelect.setBounds(600, 280, 120, 30);
-			WbTimer.setBounds(600, 330, 120, 30);
-			WbReset.setBounds(600, 380, 120, 30);
-			WbMusicOn.setBounds(600, 430, 120, 30);
-			musicList.setBounds(615, 470, 120, 30);
-			cbMusic.setBounds(600, 490, 120, 40);
-			WbExit.setBounds(600, 540, 120, 30);
+			WbUndo.setBounds(X, 80, 120, 30);
+			WbFirst.setBounds(X, 130, 120, 30);
+			WbNext.setBounds(X, 180, 120, 30);
+			WbPre.setBounds(X, 230, 120, 30);
+			WbSelect.setBounds(X, 280, 120, 30);
+			WbTimer.setBounds(X, 330, 120, 30);
+			WbReset.setBounds(X, 380, 120, 30);
+			WbMusicOn.setBounds(X, 430, 120, 30);
+			musicList.setBounds(X, 470, 120, 30);
+			cbMusic.setBounds(X, 510, 120, 40);
+			WbExit.setBounds(X, 580, 120, 30);
 
 			// set the function of each button
 			WbUndo.addActionListener(this);
@@ -321,6 +322,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	// Main game interface
 	public class MyPanel extends JPanel {
+		int x = 25;
+
+		
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		ArrayList<ArrayList<String>> map;
 		Image mapimg[] = { // Gets the image files from "img" folder
@@ -336,7 +340,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 																													// added
 
 		public MyPanel(ArrayList<ArrayList<String>> map) {
-			setSize(640, 640);
+			setSize(10*x, 10*x);
 			this.map = map;
 			requestFocus();
 		}
@@ -351,19 +355,17 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 					for (int j = 0; j < 10; j++) {
 						String currString = currMap.get(j).get(i);
 						if (currString.equals("B")) { // Box
-							g.drawImage(mapimg[0], i * 40, j * 40, 40, 40, this);
+							g.drawImage(mapimg[0], i * x, j * x, x, x, this);
 						} else if (currString.equals("T")) { // goal square
-							g.drawImage(mapimg[1], i * 40, j * 40, 40, 40, this);
+							g.drawImage(mapimg[1], i * x, j * x, x, x, this);
 						} else if (currString.equals("E")) { // empty
-							g.drawImage(mapimg[2], i * 40, j * 40, 40, 40, this);
+							g.drawImage(mapimg[2], i * x, j * x, x, x, this);
 						} else if (currString.equals("P")||currString.equals("Q")||currString.equals("O")||currString.equals("R")) { // player Probably not needed
-							g.drawImage(mapimg[3], i * 40, j * 40, 40, 40, this);
-							Animation.goalX = i * 40;
-							Animation.goalY = j * 40;
+							g.drawImage(mapimg[3], i * x, j * x, x, x, this);
 						} else if (currString.equals("W")) { // wall
-							g.drawImage(mapimg[4], i * 40, j * 40, 40, 40, this);
+							g.drawImage(mapimg[4], i * x, j * x, x, x, this);
 						} else if (currString.equals("D")) { // box is on goal
-							g.drawImage(mapimg[5], i * 40, j * 40, 40, 40, this);
+							g.drawImage(mapimg[5], i * x, j * x, x, x, this);
 						}
 					}
 				}
@@ -459,7 +461,11 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	@Override
 	public void keyPressed(KeyEvent e) {
 		Animation.PRESSED = true;
-		Animation.DIR = e.getKeyCode();
+		if (e.getKeyCode()>=37 && e.getKeyCode()<=40){
+			Animation.DIR = e.getKeyCode();
+		}else if (e.getKeyCode() == 65||e.getKeyCode() == 68||e.getKeyCode() == 87||e.getKeyCode() == 83){
+			Animation.DIR_Lu = e.getKeyCode();
+		}
 		// System.out.println("in keypressed " + state);
 		if (state == STATE.GAME) {
 			switch (e.getKeyCode()) {
@@ -501,7 +507,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		Animation.RIGHT_GO = 0;
 		Animation.PRESSED = false;
 	}
 

@@ -5,45 +5,69 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 public class Animation extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static boolean PRESSED = false;
 	public static int goalX;				//the pixel need to move to 
 	public static int goalY;
 	public static int pointX = 280;				//current pixel
 	public static int pointY = 100	;
-	public static int RIGHT_GO = 0;				//x-position of sub-image 
-	public static int LEFT_GO = 0;				//y-position of sub-image 
+	public static int RIGHT_Ma = 0;				//x-position of sub-image 
+	public static int LEFT_Ma = 0;				//y-position of sub-image 
 	public static int DIR = 0; 					// moving direction
+
+	public static int goalX_Lu;					//the pixel need to move to 
+	public static int goalY_Lu;
+	public static int pointX_Lu = 281;				//current pixel
+	public static int pointY_Lu = 100	;
+	public static int RIGHT_Lu = 0;				//x-position of sub-image 
+	public static int LEFT_Lu = 0;				//y-position of sub-image 
+	public static int DIR_Lu = 0; 					// moving direction
+	
 	public static int ANGLE = 0;				//rotate or not
-	public static int W = 80;					//sub-picture dimension
+	public static int W = 80;					//box & wall dimension
 	public static int M = 60;					//sub-picture dimension
 	public static int H = 75;
-	public static int X = (W/2);					//sub-picture dimension
-	public static int Y = (W/4);					//sub-picture dimension
+	public static int X = (W/2);				//sub-picture dimension
+	public static int Y = (W/4);				//sub-picture dimension
 
 	public static int S = 3;					//speed
 	public static long sleepTime = 20;			//delay
 	
+	public static int startX = 684;
+	public static int startY = 169;
 
+	
+	static Random randomGenerator = new Random();
+
+
+	@SuppressWarnings("serial")
 	public static class pic extends Canvas implements Runnable {
 		public BufferedImage Mario = null;
-		public BufferedImage Box = null;
-		public BufferedImage goalsquare = null;
-		public BufferedImage empty = null;
-		public BufferedImage player = null;
-		public BufferedImage wall = null;
-		public BufferedImage boxongoal = null;
+		public BufferedImage Luigi = null;
+
+		public Image Box = null;
+		public Image goalsquare = null;
+		public Image empty = null;
+		public Image player = null;
+		public Image wall = null;		
+		public Image boxongoal = null;
+		
+		public Image bg = null;
+		public Image cl = null;
+
 		
 		public Image oneFPS = null;
 		public Thread thread = null;
@@ -52,17 +76,24 @@ public class Animation extends JFrame {
 		private Game game;
 		
 		public pic(ArrayList<ArrayList<String>> map, Game game) {
-			setBackground(Color.black);
 			this.map = map;
 			this.game = game;
 			try {
 				Mario = ImageIO.read(new File("img/mario.png"));
+				Luigi = ImageIO.read(new File("img/luigi.png"));
 				Box = ImageIO.read(new File("img/box.png"));
+				wall = ImageIO.read(new File ("img/wall01.png"));
 				goalsquare = ImageIO.read(new File("img/goal.png"));
-				empty = ImageIO.read(new File("img/ground.png"));
+				empty = ImageIO.read(new File("img/grass01.png"));
 				player = ImageIO.read(new File("img/player.png"));
-				wall = ImageIO.read(new File("img/wall.png"));
+
 				boxongoal = ImageIO.read(new File("img/goal-box.png"));
+				
+				bg = ImageIO.read(new File("img/bg.png"));
+				cl = ImageIO.read(new File("img/cl.png"));
+
+				
+				
 				
 			} catch (IOException e) {
 			}
@@ -74,41 +105,79 @@ public class Animation extends JFrame {
 		{			
 			Graphics2D g2d = (Graphics2D) g;
 
-			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+//			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
+			g2d.drawImage(bg, 0, 0, 1450, 855, this);                  ///backgound size
 
+			
+			int i = 0;
+			
+			int j = 0;
+			
+			int c = 0;
+			
+			int e = 0;
+					
+			if (RIGHT_Lu > (3 * M))
+				RIGHT_Lu = 0;
+			
+			if (RIGHT_Ma > (3 * M))
+				RIGHT_Ma = 0;
+			
+			for (i = 0; i < 10; i++){
+				for(j = 0; j < 10; j++){
+					g2d.drawImage(empty, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, (W/20*31), this);
+				}
+			}
+			
 			if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.GAME) {
 				ArrayList<ArrayList<String>> currMap = game.getLevel(WarehouseBossInterface.currLevel).getMap();
-				for (int i = 0; i < 10; i++) {
-					for (int j = 0; j < 10; j++) {
+				for (c = 0; c < 19; c++) {
+					if (c < 10){
+						e = c;
+					}else{
+						e = 9;
+					}
+					
+					for (j = (c - e); j < (e + 1); j++) {
+						i = c - j;
 						String currString = currMap.get(j).get(i);
 						if (currString.equals("B")) { 										// Box
-							g2d.drawImage(Box, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+							g2d.drawImage(Box, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
 						} else if (currString.equals("T")) { 								// goal square
-							g2d.drawImage(goalsquare, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
-						} else if (currString.equals("E")) { 								// empty
-							g2d.drawImage(empty, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
-						} else if (currString.equals("P")||currString.equals("Q")) {
-							g2d.drawImage(empty, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
-							goalX = (400+(i * X)-(j * X));
-							goalY =(i+j)*Y;			
-							g2d.drawImage(rotateImage(Mario.getSubimage(RIGHT_GO, LEFT_GO, M, H), 0, true), pointX, (pointY-(H-M)), M, H, this);
-						} else if (currString.equals("O")||currString.equals("R")) {
-							g2d.drawImage(goalsquare, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
-							goalX = (400+(i * X)-(j * X));
-							goalY =(i+j)*Y;			
-							g2d.drawImage(rotateImage(Mario.getSubimage(RIGHT_GO, LEFT_GO, M, H), 0, true), pointX, (pointY-(H-M)), M, H, this);
+							g2d.drawImage(goalsquare, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
+						} else if (currString.equals("P")) {								// Mario
+							goalX = (startX+(i * X)-(j * X));
+							goalY = startY + (i+j)*Y;			
+							g2d.drawImage(Mario.getSubimage(RIGHT_Ma, LEFT_Ma, M, H), pointX+10, (pointY-7), M, H, this);
+						} else if (currString.equals("Q")) {								//Luigi
+							goalX_Lu = (startX+(i * X)-(j * X));
+							goalY_Lu = startY + (i+j)*Y;			
+							g2d.drawImage(Luigi.getSubimage(RIGHT_Lu, LEFT_Lu, M, H), pointX_Lu+10, (pointY_Lu-7), M, H, this);
+						} else if (currString.equals("O")) {								//Mario on goal
+							g2d.drawImage(goalsquare, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
+							goalX = (startX+(i * X)-(j * X));
+							goalY = startY + (i+j)*Y;			
+							g2d.drawImage(Mario.getSubimage(RIGHT_Ma, LEFT_Ma, M, H), pointX +10, (pointY-7), M, H, this);
+
+						} else if (currString.equals("R")) {								//Luigi on goal
+							g2d.drawImage(goalsquare, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
+							goalX_Lu = (startX+(i * X)-(j * X));
+							goalY_Lu =startY + (i+j)*Y;			
+							g2d.drawImage(Luigi.getSubimage(RIGHT_Lu, LEFT_Lu, M, H), pointX_Lu+10,(pointY_Lu-7), M, H, this);
 
 						} else if (currString.equals("W")) { 								// wall
-							g2d.drawImage(wall, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+							g2d.drawImage(wall, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
 						} else if (currString.equals("D")) { 								// box is on goal
-							g2d.drawImage(boxongoal, (400+(i * X)-(j * X)), (i+j)*Y, W, W, this);
+							g2d.drawImage(boxongoal, (startX+(i * X)-(j * X)), startY + (i+j)*Y -(W/2), W, (W/2*3), this);
 						}
 					}
 				}
 			} else if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.MENU) {
 			}
 			
+			g2d.drawImage(cl, 270, 220, 160, 150, this);                  ///backgound size
+
 
 			g2d.dispose();
 		}
@@ -146,105 +215,161 @@ public class Animation extends JFrame {
 
 			while (!isShowing() || getSize().width == 0) {
 				try {
-					Thread.sleep(500);
+					Thread.sleep(50);
 				} catch (InterruptedException e) {
 					return;
 				}
 			}
 			while (thread == current && isShowing()) {
 
-				if (PRESSED == false && (!(java.lang.Math.abs(2*(goalY - pointY)) == java.lang.Math.abs(goalX - pointX)))){
+				if (PRESSED == false){
 					pointX = goalX;
 					pointY = goalY;
+					RIGHT_Ma = 0;
+
+				}
+				
+				if (PRESSED == false ){
+					pointX_Lu = goalX_Lu;
+					pointY_Lu = goalY_Lu;
+					RIGHT_Lu = 0;
 
 				}
 
-					if (DIR == 37) // left
-					{
-						LEFT_GO = H;
+					if (DIR == 37){ 							// left
+						LEFT_Ma = H;
 						ANGLE = 0;
 
 						if (pointX > goalX && pointY > goalY) {
 							pointX = pointX - S*2;
 							pointY = pointY - S;
 
-							RIGHT_GO = RIGHT_GO + M;
+							RIGHT_Ma = RIGHT_Ma + M;
 
 						}
-					} else if (DIR == 39) { // right
-						LEFT_GO = 0;
+					} else if (DIR == 39) { 					// right
+						LEFT_Ma = 0;
 						ANGLE = 0;
 
 						if (pointX < goalX && pointY < goalY) {
 							pointX = pointX + S*2;
 							pointY = pointY + S;
 
-							RIGHT_GO = RIGHT_GO + M;
+							RIGHT_Ma = RIGHT_Ma + M;
 
 						}
-					} else if (DIR == 38) { // up&&
+					} else if (DIR == 38) { 					// up
 						if (pointX < goalX && pointY > goalY) {
 							ANGLE = 90;
-							LEFT_GO = 0;
+							LEFT_Ma = 0;
 							pointX = pointX + S*2;
 							pointY = pointY - S;
 
-							RIGHT_GO = RIGHT_GO + M;
+							RIGHT_Ma = RIGHT_Ma + M;
 
 						}
-					} else if (DIR == 40) { // down
+					} else if (DIR == 40) { 					// down
 						if (pointX > goalX && pointY < goalY) {
 							ANGLE = -90;
-							LEFT_GO = H;
+							LEFT_Ma = H;
 							pointX = pointX - S*2;
 							pointY = pointY + S;
 
-							RIGHT_GO = RIGHT_GO + M;
-
+							RIGHT_Ma = RIGHT_Ma + M;
 						}
 					}
+					
+					
+				if (DIR_Lu == 65) 									// left   //LuiGi
+					{
+						LEFT_Lu = H;
+						ANGLE = 0;
 
+						if (pointX_Lu > goalX_Lu && pointY_Lu > goalY_Lu) {
+							pointX_Lu = pointX_Lu - S*2;
+							pointY_Lu = pointY_Lu - S;
 
-						
-						if (RIGHT_GO > (3 * M))
-							RIGHT_GO = 0;
+							RIGHT_Lu = RIGHT_Lu + M;
 
-//					if ((pointY == goalY) && (pointX == goalX))
-//						RIGHT_GO = 0;
+						}
+					} else if (DIR_Lu == 68) { 					// right
+						LEFT_Lu = 0;
+						ANGLE = 0;
+
+						if (pointX_Lu < goalX_Lu && pointY_Lu < goalY_Lu) {
+							pointX_Lu = pointX_Lu + S*2;
+							pointY_Lu = pointY_Lu + S;
+
+							RIGHT_Lu = RIGHT_Lu + M;
+
+						}
+					} else if (DIR_Lu == 87) { 					// up
+						LEFT_Lu = 0;
+						if (pointX_Lu < goalX_Lu && pointY_Lu > goalY_Lu) {
+							pointX_Lu = pointX_Lu + S*2;
+							pointY_Lu = pointY_Lu - S;
+
+							RIGHT_Lu = RIGHT_Lu + M;
+
+						}
+					} else if (DIR_Lu == 83) { 					// down
+						LEFT_Lu = H;
+						if (pointX_Lu > goalX_Lu && pointY_Lu < goalY_Lu) {
+							pointX_Lu = pointX_Lu - S*2;
+							pointY_Lu = pointY_Lu + S;
+
+							RIGHT_Lu = RIGHT_Lu + M;
+						}
+					}
 
 					try {
 						Thread.sleep(sleepTime);
 						repaint();
 					} catch (InterruptedException e) {
 					}
-				
 			}
 			thread = null;
 		}
 	}
 
-	public static BufferedImage rotateImage(final BufferedImage image, final int angdeg, final boolean d) {
-		int w = image.getWidth();
-		int h = image.getHeight();
-		int type = image.getColorModel().getTransparency();
-		BufferedImage img;
-		Graphics2D graphics2d;
-		(graphics2d = (img = new BufferedImage(w, h, type)).createGraphics())
-				.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		graphics2d.rotate(d ? -Math.toRadians(angdeg) : Math.toRadians(angdeg), w / 2, h / 2);
-		graphics2d.drawImage(image, 0, 0, null);
-		graphics2d.dispose();
-		return img;
-	}
+	public static Image random (int a){
+		
+	    int i = a%6;
 
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//				final Animation runer = new Animation();
-//
-//				runer.canvas.start();
-//			}
-//		});
-//	}
+		
+		Image w1 = null;
+		Image w2 = null;
+		Image w3 = null;
+		Image w4 = null;
+		Image w5 = null;
+		Image w0 = null;
+		
+			try {
+				w1 = ImageIO.read(new File("img/wall01.png"));
+
+			w2 = ImageIO.read(new File("img/wall02.png"));
+			w3 = ImageIO.read(new File("img/wall03.png"));
+			w4 = ImageIO.read(new File("img/wall04.png"));
+			w5 = ImageIO.read(new File("img/wall05.png"));
+			w0 = ImageIO.read(new File("img/wall00.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		if (i == 0){
+			return w0;
+		}else if (i == 1){
+			return w1;
+		}else if (i == 2){
+			return w2;
+		}else if (i == 3){
+			return w3;
+		}else if (i == 4){
+			return w4;
+		}else if (i == 5){
+			return w5;
+		}else{
+			return null;
+		}
+	}
 } 

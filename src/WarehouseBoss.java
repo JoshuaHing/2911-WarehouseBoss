@@ -17,8 +17,8 @@ public class WarehouseBoss {
 		Scanner sc = null;
 		int numGoals = 0;
 		Game game = new Game();
-		try { // We need to keep going and take in all the maps
-			sc = new Scanner(new FileReader("map/SinglePlayer.txt"));
+		try { 														// We need to keep going and take in all the maps
+			sc = new Scanner(new FileReader("map/Singleplayer.txt"));
 			while (sc.hasNextLine()) {
 				while (sc.hasNext("#")) {
 					sc.nextLine();
