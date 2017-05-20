@@ -1,12 +1,23 @@
+W B W B W B W B W B
+B W B W B W B W B W
+B E E E E E E E E W
+W E D T E E D E P B
+B E E B E B E E E W
+W E E E E E E E E B
+B E E E E E E E E W
+W E E E E E E E E B
+B E E E E E E E E W
+W B W B W B W B W B
+
 W W W W W W W W W W
-W W W W W W W W W W
-W E E E W E E T W W
-W E E E W E E E W W
-W P E B B B E E T W
-W E E E E E E E W W
-W E E E E E E E W W
-W E E E E E E E W W
-W E E E E E E T W W
+W E E E E E E E E W
+W E E P E E E E E W
+W E E E E E E E E W
+W E E E E E E E E W
+W E E B B B E E E W
+W E E T T T E E E W
+W E E E E E E E E W
+W E E E E E E E E W
 W W W W W W W W W W
 
 W W W W W W W W W W
@@ -21,26 +32,19 @@ W E E E E E E E E W
 W W W W W W W W W W
 
 W W W W W W W W W W
-W E E E E E E E E W
-W E E T E E B E P W
-W E E E E E E E E W
-W E E E E E E E E W
-W E E E E E E E E W
-W E E E E E E E E W
-W E E E E E E E E W
-W E E E E E E E E W
+W E E E W E E W W W
+W E W E W E E T W W
+W E W E W E E E W W
+W P W B B B E E T W
+W E W E W E W E W W
+W E W E W E W E W W
+W E W E E E E E W W
+W E E E E E E T W W
 W W W W W W W W W W
 
-W W W W W W W W W W
-W E E E E E E E E W
-W E E P E E E E E W
-W E E E E E E E E W
-W E E E E E E E E W
-W E E B B B E E E W
-W E E T T T E E E W
-W E E E E E E E E W
-W E E E E E E E E W
-W W W W W W W W W W
+
+
+
 
 # These are just comments, don't read them in!
 # P = person
