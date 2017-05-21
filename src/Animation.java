@@ -43,11 +43,17 @@ public class Animation extends JFrame {
 	public static int X = (W/2);				//sub-picture dimension
 	public static int Y = (W/4);				//sub-picture dimension
 
-	public static int S = 3;					//speed
-	public static long sleepTime = 20;			//delay
+	public static int S = 4;					//speed
+	public static long sleepTime = 30;			//delay
 	
-	public static int startX = 684;
-	public static int startY = 169;
+	public static int startX = 687;
+	public static int startY = 177;
+
+	public static int an = 0;
+	public static int an_dir = 1;
+
+	public static int bn = 0;
+	public static int bn_dir = 1;
 
 	
 	static Random randomGenerator = new Random();
@@ -67,6 +73,10 @@ public class Animation extends JFrame {
 		
 		public Image bg = null;
 		public Image cl = null;
+		public Image bu = null;
+		public Image go = null;
+		public Image b = null;
+
 
 		
 		public Image oneFPS = null;
@@ -91,6 +101,10 @@ public class Animation extends JFrame {
 				
 				bg = ImageIO.read(new File("img/bg.png"));
 				cl = ImageIO.read(new File("img/cl.png"));
+				bu = ImageIO.read(new File("img/bush.png"));
+				go = ImageIO.read(new File("img/go.png"));
+				b = ImageIO.read(new File("img/1.png"));
+
 
 				
 				
@@ -107,7 +121,7 @@ public class Animation extends JFrame {
 
 //			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
 
-			g2d.drawImage(bg, 0, 0, 1450, 855, this);                  ///backgound size
+			g2d.drawImage(bg, 0, 0, 1675, 865, this);                  ///backgound size
 
 			
 			int i = 0;
@@ -169,14 +183,62 @@ public class Animation extends JFrame {
 						} else if (currString.equals("W")) { 								// wall
 							g2d.drawImage(wall, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
 						} else if (currString.equals("D")) { 								// box is on goal
-							g2d.drawImage(boxongoal, (startX+(i * X)-(j * X)), startY + (i+j)*Y -(W/2), W, (W/2*3), this);
+							g2d.drawImage(boxongoal, (startX+(i * X)-(j * X))+5, startY + (i+j)*Y -(W/2), W-10, (W/2*3), this);
 						}
 					}
 				}
 			} else if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.MENU) {
 			}
 			
-			g2d.drawImage(cl, 270, 220, 160, 150, this);                  ///backgound size
+			
+			g2d.drawImage(bu,(startX+(1 * X)-(0 * X))-40, startY + (1)*Y - M, 80, 80, this);
+			g2d.drawImage(bu,(startX+(3 * X)-(0 * X))-40, startY + (3)*Y - M, 80, 80, this);
+			g2d.drawImage(bu,(startX+(5 * X)-(0 * X))-40, startY + (5)*Y - M, 80, 80, this);
+			g2d.drawImage(bu,(startX+(7 * X)-(0 * X))-40, startY + (7)*Y - M, 80, 80, this);
+			g2d.drawImage(bu,(startX+(9 * X)-(0 * X))-40, startY + (9)*Y - M, 80, 80, this);
+			
+			g2d.drawImage(bu,(startX-(1 * X)-(0 * X))-40, startY + (1)*Y - (M/2), 80, 80, this);
+			g2d.drawImage(bu,(startX-(3 * X)-(0 * X))-40, startY + (3)*Y - (M/2), 80, 80, this);
+			g2d.drawImage(bu,(startX-(5 * X)-(0 * X))-40, startY + (5)*Y - (M/2), 80, 80, this);
+			g2d.drawImage(bu,(startX-(7 * X)-(0 * X))-40, startY + (7)*Y - (M/2), 80, 80, this);
+			
+
+			g2d.drawImage(go,(startX+(8 * X)-(0 * X)), startY -5 + (8)*Y, 80, 80, this);                  ///backgound size
+			g2d.drawImage(go,(startX+(8 * X)-(7 * X)), startY -5 + (8+7)*Y, 80, 80, this);                  ///backgound size
+
+			g2d.drawImage(cl, 330, 410, 160, 150, this);                  ///backgound size
+
+
+			if (an == 0)an_dir = 0;
+			if (an == 200)an_dir = 1;
+
+			
+			if (an_dir == 0){
+				an ++;
+			}else{
+				an --;
+			}
+			
+			if (bn == 0)bn_dir = 0;
+			if (bn == 120)bn_dir = 1;
+
+			
+			if (bn_dir == 0){
+				bn ++;
+			}else{
+				bn --;
+			}
+			
+			g2d.drawImage(b, 930, 10+(an/4), 400, 300, this);                  ///backgound size
+			
+			g2d.drawImage(goalsquare, 200, 510-(an/3), W, W, this);                  ///backgound size
+			g2d.drawImage(wall, 200, 510-(an/3)-(W/2), W, W, this);                  ///backgound size
+			g2d.drawImage(go, 200, 510-(an/3)-W-5, W, W, this);                  ///backgound size
+
+			
+			g2d.drawImage(cl, 250, 110+(bn/5), 120, 110, this);                  ///backgound size
+
+
 
 
 			g2d.dispose();

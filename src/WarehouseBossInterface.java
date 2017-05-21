@@ -146,16 +146,16 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		// mainPanel contains the game map. When it is instantiated, the images
 		// are automatically loaded onto the panel via the "paint" method.
 		mainPanel = new MyPanel(game.getMap());
-		mainPanel.setBounds(10, 595, 250, 250); // (x-position, y-position,
+		mainPanel.setBounds(28, 615, 240, 240); // (x-position, y-position,
 									
 		canvas = new Animation.pic (game.getMap(), game);
-		canvas.setBounds(0, 0, 1450, 855);
+		canvas.setBounds(0, 0, 1675, 865);
 		
 		c.add(mainPanel);
 	    c.add (canvas);
 		
 		// width, height)
-		setSize(1450, 926); // set size of the entire container
+		setSize(1700, 936); // set size of the entire container
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -165,7 +165,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	public void setButtonLocation(Container c) {
 		// this.addMouseListener(new MouseInput());
-		int X = 1270;
+		int X = 1410;
+		int Y = 200;
+		
 		if (state == STATE.GAME) {
 
 			// This part is going to Set Button in right side of interface
@@ -183,17 +185,17 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			cbMusic = new JComboBox(sMusicList);
 
 			// set the location of each button
-			WbUndo.setBounds(X, 80, 120, 30);
-			WbFirst.setBounds(X, 130, 120, 30);
-			WbNext.setBounds(X, 180, 120, 30);
-			WbPre.setBounds(X, 230, 120, 30);
-			WbSelect.setBounds(X, 280, 120, 30);
-			WbTimer.setBounds(X, 330, 120, 30);
-			WbReset.setBounds(X, 380, 120, 30);
-			WbMusicOn.setBounds(X, 430, 120, 30);
-			musicList.setBounds(X, 470, 120, 30);
-			cbMusic.setBounds(X, 510, 120, 40);
-			WbExit.setBounds(X, 580, 120, 30);
+			WbUndo.setBounds(X, Y+80, 120, 30);
+			WbFirst.setBounds(X, Y+130, 120, 30);
+			WbNext.setBounds(X, Y+180, 120, 30);
+			WbPre.setBounds(X, Y+230, 120, 30);
+			WbSelect.setBounds(X, Y+280, 120, 30);
+			WbTimer.setBounds(X, Y+330, 120, 30);
+			WbReset.setBounds(X, Y+80, 120, 30);
+			WbMusicOn.setBounds(X, Y+450, 120, 30);
+			musicList.setBounds(X, Y+490, 120, 30);
+			cbMusic.setBounds(X, Y+530, 120, 40);
+			WbExit.setBounds(X, Y+600, 120, 30);
 
 			// set the function of each button
 			WbUndo.addActionListener(this);
@@ -322,7 +324,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	// Main game interface
 	public class MyPanel extends JPanel {
-		int x = 25;
+		int x = 24;
+		int startx = 0;
+		int starty = 0;
 
 		
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -340,7 +344,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 																													// added
 
 		public MyPanel(ArrayList<ArrayList<String>> map) {
-			setSize(10*x, 10*x);
+			setSize(startx*2+(10*x), starty*2 + (10*x));
 			this.map = map;
 			requestFocus();
 		}
@@ -355,17 +359,18 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 					for (int j = 0; j < 10; j++) {
 						String currString = currMap.get(j).get(i);
 						if (currString.equals("B")) { // Box
-							g.drawImage(mapimg[0], i * x, j * x, x, x, this);
+							g.drawImage(mapimg[0], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("T")) { // goal square
-							g.drawImage(mapimg[1], i * x, j * x, x, x, this);
+							g.drawImage(mapimg[1], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("E")) { // empty
-							g.drawImage(mapimg[2], i * x, j * x, x, x, this);
+							g.drawImage(mapimg[2], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("P")||currString.equals("Q")||currString.equals("O")||currString.equals("R")) { // player Probably not needed
-							g.drawImage(mapimg[3], i * x, j * x, x, x, this);
+							g.drawImage(mapimg[2], i * x + startx, j * x + starty, x, x, this);
+							g.drawImage(mapimg[3], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("W")) { // wall
-							g.drawImage(mapimg[4], i * x, j * x, x, x, this);
+							g.drawImage(mapimg[4], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("D")) { // box is on goal
-							g.drawImage(mapimg[5], i * x, j * x, x, x, this);
+							g.drawImage(mapimg[5], i * x + startx, j * x + starty, x, x, this);
 						}
 					}
 				}
