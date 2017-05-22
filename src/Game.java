@@ -3,12 +3,14 @@ import java.util.ArrayList;
 public class Game {
   private Map map;
   private ArrayList<Map> gameMaps;
+  private int numMoves;
   //private int numGoalBoxes;
   //private int currentLevel;
 
   public Game(){
     this.map = null;
     this.gameMaps = new ArrayList<Map>();
+    this.numMoves = 0;
     //this.numGoalBoxes = 0;
   }
 
@@ -68,6 +70,8 @@ public class Game {
 		//if the thing we are trying to move into is E or T, then we can just do it - update where you were
 		//and where you are going
 		if(map.get(x-1).get(y).equals("E")||map.get(x-1).get(y).equals("T")){
+		    numMovesInc();
+            System.out.println("REMOVE THIS AFTER: numMoves = " + this.numMoves);
 			if(map.get(x-1).get(y).equals("E")){
 				map.get(x-1).set(y,whoAmI);
 				map.get(x).set(y,iAmOn);
@@ -79,6 +83,8 @@ public class Game {
 		//if the thing we are trying to move into is B or D (boxes), then we should analyse the next thing
 		//beyond the box to see if we can - update things accordingly of course
 		} else if(map.get(x-1).get(y).equals("B")||map.get(x-1).get(y).equals("D")){
+            numMovesInc();
+            System.out.println("REMOVE THIS AFTER: numMoves = " + this.numMoves);
 			if(map.get(x-2).get(y).equals("E")||map.get(x-2).get(y).equals("T")){
 				if(map.get(x-2).get(y).equals("E")){
 					map.get(x-2).set(y,"B");
@@ -158,6 +164,8 @@ public class Game {
 			}
 		}
 		if(map.get(x+1).get(y).equals("E")||map.get(x+1).get(y).equals("T")){
+            numMovesInc();
+            System.out.println("REMOVE THIS AFTER: numMoves = " + this.numMoves);
 			if(map.get(x+1).get(y).equals("E")){
 				map.get(x+1).set(y,whoAmI);
 				map.get(x).set(y,iAmOn);
@@ -167,6 +175,8 @@ public class Game {
 				map.get(x).set(y,iAmOn);
 			}
 		} else if(map.get(x+1).get(y).equals("B")||map.get(x+1).get(y).equals("D")){
+            numMovesInc();
+            System.out.println("REMOVE THIS AFTER: numMoves = " + this.numMoves);
 			if(map.get(x+2).get(y).equals("E")||map.get(x+2).get(y).equals("T")){
 				if(map.get(x+2).get(y).equals("E")){
 					map.get(x+2).set(y,"B");
@@ -247,6 +257,8 @@ public class Game {
 			}
 		}
 		if(map.get(x).get(y-1).equals("E")||map.get(x).get(y-1).equals("T")){
+            numMovesInc();
+            System.out.println("REMOVE THIS AFTER: numMoves = " + this.numMoves);
 			if(map.get(x).get(y-1).equals("E")){
 				map.get(x).set(y-1,whoAmI);
 				map.get(x).set(y,iAmOn);
@@ -256,6 +268,8 @@ public class Game {
 				map.get(x).set(y,iAmOn);
 			}
 		} else if(map.get(x).get(y-1).equals("B")||map.get(x).get(y-1).equals("D")){
+            numMovesInc();
+            System.out.println("REMOVE THIS AFTER: numMoves = " + this.numMoves);
 			if(map.get(x).get(y-2).equals("E")||map.get(x).get(y-2).equals("T")){
 				if(map.get(x).get(y-2).equals("E")){
 					map.get(x).set(y-2,"B");
@@ -335,6 +349,8 @@ public class Game {
 			}
 		}
 		if(map.get(x).get(y+1).equals("E")||map.get(x).get(y+1).equals("T")){
+            numMovesInc();
+            System.out.println("REMOVE THIS AFTER: numMoves = " + this.numMoves);
 			if(map.get(x).get(y+1).equals("E")){
 				map.get(x).set(y+1,whoAmI);
 				map.get(x).set(y,iAmOn);
@@ -345,6 +361,8 @@ public class Game {
 				//currMap.incNumGoalBoxes();
 			}
 		} else if(map.get(x).get(y+1).equals("B")||map.get(x).get(y+1).equals("D")){
+            numMovesInc();
+            System.out.println("REMOVE THIS AFTER: numMoves = " + this.numMoves);
 			if(map.get(x).get(y+2).equals("E")||map.get(x).get(y+2).equals("T")){
 				if(map.get(x).get(y+2).equals("E")){
 					map.get(x).set(y+2,"B");
@@ -377,6 +395,10 @@ public class Game {
 	public Map getLevel(int level) {
 		return this.gameMaps.get(level);
 	}
+
+	public void numMovesInc(){
+	    this.numMoves++;
+    }
 	
 	public void setMap(Map map) {
 		this.map = map;
@@ -400,6 +422,7 @@ public class Game {
 	public boolean hasNextLevel(int level) {
 		if (!(level == this.gameMaps.size()-1)) {
 			System.out.println("wooho!!!");
+			this.numMoves = 0;
 			return true;
 		} else {
 			return false;
