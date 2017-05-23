@@ -44,6 +44,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	JMenuItem music1, music2;
 
+	JPanel timerPanel;
 	//Create MyPanel
 	MyPanel mainPanel;
 	
@@ -56,6 +57,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	boolean rightPressed;
 	boolean upPressed;
 	boolean downPressed;
+	
+	boolean timerOn = false;
+	
 	private int numGoals;
 	public static int currLevel;
 	int seconds1;
@@ -151,6 +155,53 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		canvas = new Animation.pic (game.getMap(), game);
 		canvas.setBounds(0, 0, 1675, 865);
 		
+		timerPanel = new JPanel();
+		int FIELD_WIDTH = 10;
+		JTextField textField = new JTextField(FIELD_WIDTH);
+		Font font = new Font("Courier", Font.BOLD,16);
+		textField.setHorizontalAlignment(JTextField.CENTER);
+		textField.setFont(font);
+
+		timerPanel.setLayout(new FlowLayout());
+		timerPanel.add(textField);
+
+		ActionListener listener = new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+
+				String s = "\0" + minutes2 + minutes1 + ":" + seconds2 + seconds1 +"\0";
+				if(tenthSecond == 5) {
+					seconds1++;
+					tenthSecond = 0;
+					if (seconds1 == 10) {
+						seconds2++;
+						seconds1 = 0;
+					}
+				}
+				if (seconds2 == 6 && seconds1 == 0) {
+					minutes1++;
+					seconds2 = 0;
+					seconds1 = 0;
+					if (minutes1 == 10) {
+						minutes2++;
+						minutes1 = 0;
+					}
+				}
+				tenthSecond++;
+				textField.setText(s);
+			}
+		};
+		int DELAY = 200;
+		Timer t = new Timer(DELAY, listener);
+		t.start();
+		//panel.pack();
+	
+		timerPanel.setBounds(90,560,105,35);
+		timerPanel.setVisible(false);
+		timerPanel.setVisible(false);
+		c.add(timerPanel);
+		//mainPanel.add(timerPanel);
+
+		
 		c.add(mainPanel);
 	    c.add (canvas);
 		
@@ -159,8 +210,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//music = new Music();
-		// mainPanel.requestFocus();
 	}
 
 	public void setButtonLocation(Container c) {
@@ -236,7 +285,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				System.exit(0);
 			} else {
 				requestFocus();
-				canvas.requestFocus();
 			}
 		} else if (e.getSource() == WbReset) {
 			// When the restart button is pressed, the game should go back to
@@ -249,64 +297,37 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				// mainPanel.removeAll();
 				// papi = new MyPanel();
 				requestFocus();
-				canvas.requestFocus();
 			} else {
 				requestFocus();
-				canvas.requestFocus();
 			}
 
 		} else if (e.getSource() == WbTimer) {
-			JFrame frame = new JFrame();
-			int FIELD_WIDTH = 20;
-			JTextField textField = new JTextField(FIELD_WIDTH);
-
-			frame.setLayout(new FlowLayout());
-			frame.add(textField);
-
-			ActionListener listener = new ActionListener() {
-				public void actionPerformed(ActionEvent event) {
-
-					String s = " " + minutes2 + minutes1 + ":" + seconds2 + seconds1;
-					if (tenthSecond == 10) {
-						seconds1++;
-						tenthSecond = 0;
-						if (seconds1 == 10) {
-							seconds2++;
-							seconds1 = 0;
-						}
-					}
-					if (seconds2 == 6 && seconds1 == 0) {
-						minutes1++;
-						seconds2 = 0;
-						seconds1 = 0;
-						if (minutes1 == 10) {
-							minutes2++;
-							minutes1 = 0;
-						}
-					}
-					textField.setText(s);
-					tenthSecond++;
+			if(!timerOn) {
+				String str = "Would you like to enable timer mode? Current progress will be lost.\n";
+				int diaResult = JOptionPane.showConfirmDialog(this, str, "Warning", JOptionPane.YES_NO_OPTION);
+				if (diaResult == JOptionPane.YES_OPTION) {
+					resetTimer();
+					timerPanel.setVisible(true);
+					updateInterface(MODE_RESTART,game);
+					requestFocus();
+				} else {
+					requestFocus();
 				}
-			};
-			int DELAY = 100;
-			Timer t = new Timer(DELAY, listener);
-			t.start();
-			frame.pack();
-			frame.setVisible(true);
-			frame.setLocation(350, 170);
-			requestFocus();
-			canvas.requestFocus();
+				timerOn = true;
+			} else {
+				timerPanel.setVisible(false);
+				timerOn = false;
+				requestFocus();
+			}
 		} else if (e.getSource() == WbSelect) {
-			String selectLevel = JOptionPane.showInputDialog(this, "Which level do you want to play ?", "Level",
+			String selectLevel = JOptionPane.showInputDialog(this, "What level would you like to play ?", "Level",
 					JOptionPane.QUESTION_MESSAGE);
 			int selectedLevel = Integer.parseInt(selectLevel)-1;
 			game.resetMovesMade();
 			game.resetMap(currLevel);
 			currLevel = selectedLevel;
 			updateInterface(MODE_REFRESH, game);
-
 			requestFocus();
-			canvas.requestFocus();
 		} else if (e.getSource() == WbPre) {
 			if(currLevel > 0) {
 				currLevel--;
@@ -315,28 +336,23 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			game.resetMovesMade();
 			game.resetMap(currLevel);
 			requestFocus();
-			canvas.requestFocus();
 		} else if (e.getSource() == WbNext) {
 			if(game.hasNextLevel(currLevel)) {
-				System.out.println("woohoO! done.");
 				currLevel++;
 				updateInterface(MODE_REFRESH, game);
 			}
 			game.resetMovesMade();
 			game.resetMap(currLevel);
 			requestFocus();
-			canvas.requestFocus();
 		} else if (e.getSource() == WbFirst) {
 			currLevel = 0;
 			updateInterface(MODE_REFRESH, game);
 			game.resetMovesMade();
 			game.resetMap(currLevel);
 			requestFocus();
-			canvas.requestFocus();
 		} else if (e.getSource() == WbUndo) {
 			game.undo(currLevel);
 			requestFocus();
-			canvas.requestFocus();
 		} else if (e.getSource() == WbMusicOn) {
 			String title = WbMusicOn.getText();
 			if (title.equals("Music On")) {
@@ -347,8 +363,15 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				WbMusicOn.setText("Music On");
 			}
 			requestFocus();
-			canvas.requestFocus();
 		}
+	}
+	
+	public void resetTimer() {
+		this.seconds1 = 0;
+		this.seconds2 = 0;
+		this.minutes1 = 0;
+		this.minutes2 = 0;
+		this.milliseconds = 0;
 	}
 
 	// Main game interface

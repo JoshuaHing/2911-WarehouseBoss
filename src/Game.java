@@ -1,11 +1,10 @@
 import java.util.ArrayList;
 import java.util.Stack;
 
+
 public class Game {
   private Map map;
   private ArrayList<Map> gameMaps;
-  //private int numGoalBoxes;
-  //private int currentLevel;
   private Stack<Integer> movesMade;
   
   private static final int PLAYER_ONE_UP_MOVE = 0;
@@ -25,11 +24,9 @@ public class Game {
   private static final int PLAYER_TWO_RIGHT_MOVE = 14;
   private static final int PLAYER_TWO_RIGHT_MOVE_WB = 15;
   
-
   public Game(){
     this.map = null;
     this.gameMaps = new ArrayList<Map>();
-    //this.numGoalBoxes = 0;
     this.movesMade = new Stack<Integer>();
   }
 
@@ -248,7 +245,6 @@ public class Game {
 		} else {
 			//do nothing
 		}
-
 	}
 
 	public void moveLEFT(int level, int playerNum) {
@@ -422,7 +418,6 @@ public class Game {
 			if(map.get(x).get(y+1).equals("T")){
 				map.get(x).set(y+1,onTargetName);
 				map.get(x).set(y,iAmOn);
-				//currMap.incNumGoalBoxes();
 				if(playerNum == 1) {
 					movesMade.add(PLAYER_ONE_RIGHT_MOVE);
 				} else {
@@ -463,17 +458,7 @@ public class Game {
 		}
 
 	}
-	
-	/*public void printMovesMade() {
-		while(!this.movesMade.isEmpty()) {
-			int curr = movesMade.remove();
-			System.out.println(curr + " ");
-		}
-	}*/
-	
-	//Now, we have to reverse the moves that have been made.
 
-	
 	public void undo(int level) {
 		if(!movesMade.isEmpty()) {
 			int lastMove = movesMade.pop();
@@ -593,7 +578,11 @@ public class Game {
 						currMap.decNumGoalBoxes();
 					}
 					if(map.get(x+1).get(y).equals("B")){
-						map.get(x).set(y,"B");
+						if(map.get(x).get(y).equals("O") || map.get(x).get(y).equals("R")) {
+							map.get(x).set(y, "D");
+						} else {
+							map.get(x).set(y,"B");
+						}
 						if(map.get(x-1).get(y).equals("T")) {
 							if(playerNum == 1) {
 								map.get(x-1).set(y,"O");
@@ -622,7 +611,11 @@ public class Game {
 						currMap.decNumGoalBoxes();
 					}
 					if(map.get(x-1).get(y).equals("B")){
-						map.get(x).set(y,"B");
+						if(map.get(x).get(y).equals("O") || map.get(x).get(y).equals("R")) {
+							map.get(x).set(y, "D");
+						} else {
+							map.get(x).set(y,"B");
+						}
 						if(map.get(x+1).get(y).equals("T")) {
 							if(playerNum == 1) {
 								map.get(x+1).set(y, "O");
@@ -654,7 +647,11 @@ public class Game {
 						currMap.decNumGoalBoxes();
 					}
 					if(map.get(x).get(y-1).equals("B")){
-						map.get(x).set(y,"B");
+						if(map.get(x).get(y).equals("O") || map.get(x).get(y).equals("R")) {
+							map.get(x).set(y, "D");
+						} else {
+							map.get(x).set(y,"B");
+						}
 						if(map.get(x).get(y+1).equals("T")) {
 							if(playerNum == 1) {
 								map.get(x).set(y+1,"O");
@@ -682,7 +679,11 @@ public class Game {
 						currMap.decNumGoalBoxes();
 					}
 					if(map.get(x).get(y+1).equals("B")){
-						map.get(x).set(y,"B");
+						if(map.get(x).get(y).equals("O") || map.get(x).get(y).equals("R")) {
+							map.get(x).set(y, "D");
+						} else {
+							map.get(x).set(y,"B");
+						}
 						if(map.get(x).get(y-1).equals("T")) {
 							map.get(x).set(y-1,"O");
 						} else {
@@ -718,7 +719,6 @@ public class Game {
 		this.map = map;
 	}
 	
-
 	public void addMap(Map newMap) {
 		this.gameMaps.add(newMap);
 	}
@@ -727,7 +727,6 @@ public class Game {
 		return this.gameMaps.size();
 	}
 
-	
 	public ArrayList<ArrayList<String>> getMap() {
 		ArrayList<ArrayList<String>> map = this.map.getMap();
 		return map;
@@ -735,7 +734,6 @@ public class Game {
 
 	public boolean hasNextLevel(int level) {
 		if (!(level == this.gameMaps.size()-1)) {
-			System.out.println("wooho!!!");
 			return true;
 		} else {
 			return false;
