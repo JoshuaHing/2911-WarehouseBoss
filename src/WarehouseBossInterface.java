@@ -308,7 +308,10 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				if (diaResult == JOptionPane.YES_OPTION) {
 					resetTimer();
 					timerPanel.setVisible(true);
-					updateInterface(MODE_RESTART,game);
+					game.resetMap(currLevel);
+					game.resetMovesMade();
+					currLevel = 0;
+					updateInterface(MODE_RESTART, game);
 					requestFocus();
 				} else {
 					requestFocus();
@@ -491,7 +494,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	
 	public void continueIfDone() {
 		if (game.getLevel(currLevel).isDone()) { // If the game is done
-			System.out.println("currLevel = " + currLevel);
+			resetTimer();
 			//game.printMovesMade();
 			game.resetMap(currLevel);
 			game.resetMovesMade();
