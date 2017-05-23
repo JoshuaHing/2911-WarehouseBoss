@@ -159,7 +159,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		music = new Music();
+		//music = new Music();
 		// mainPanel.requestFocus();
 	}
 

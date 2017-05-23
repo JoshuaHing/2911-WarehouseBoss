@@ -594,10 +594,14 @@ public class Game {
 					}
 					if(map.get(x+1).get(y).equals("B")){
 						map.get(x).set(y,"B");
-						if(playerNum == 1) {
-							map.get(x-1).set(y, "P");
+						if(map.get(x-1).get(y).equals("T")) {
+							map.get(x-1).set(y,"O");
 						} else {
-							map.get(x-1).set(y, "Q");
+							if(playerNum == 1) {
+								map.get(x-1).set(y, "P");
+							} else {
+								map.get(x-1).set(y, "Q");
+							}
 						}
 						map.get(x+1).set(y, "E");
 					}
@@ -610,20 +614,26 @@ public class Game {
 						} else {
 							map.get(x+1).set(y, "Q");
 						}
+						
 						currMap.decNumGoalBoxes();
 					}
 					if(map.get(x-1).get(y).equals("B")){
 						map.get(x).set(y,"B");
-						if(playerNum == 1) {
-							map.get(x+1).set(y, "P");
+						if(map.get(x+1).get(y).equals("T")) {
+							map.get(x+1).set(y,"O");
 						} else {
-							map.get(x+1).set(y, "Q");
+							if(playerNum == 1) {
+								map.get(x+1).set(y, "P");
+							} else {
+								map.get(x+1).set(y, "Q");
+							}
 						}
 						map.get(x-1).set(y, "E");
 						currMap.decNumGoalBoxes();
 					}
 					
 				} else if(lastMove == PLAYER_ONE_LEFT_MOVE_WB || lastMove == PLAYER_TWO_LEFT_MOVE_WB) {
+					System.out.println("move = " + map.get(x).get(y+1));
 					if(map.get(x).get(y-1).equals("D")){
 						map.get(x).set(y-1,"T");
 						map.get(x).set(y, "B");
@@ -635,12 +645,15 @@ public class Game {
 						currMap.decNumGoalBoxes();
 					}
 					if(map.get(x).get(y-1).equals("B")){
-						System.out.println("woohoo!!");
 						map.get(x).set(y,"B");
-						if(playerNum == 1) {
-							map.get(x).set(y+1, "P");
+						if(map.get(x).get(y+1).equals("T")) {
+							map.get(x).set(y+1,"O");
 						} else {
-							map.get(x).set(y+1, "Q");
+							if(playerNum == 1) {
+								map.get(x).set(y+1, "P");
+							} else {
+								map.get(x).set(y+1, "Q");
+							}
 						}
 						map.get(x).set(y-1, "E");
 					}	
@@ -656,12 +669,15 @@ public class Game {
 						currMap.decNumGoalBoxes();
 					}
 					if(map.get(x).get(y+1).equals("B")){
-						System.out.println("woohoo!!");
 						map.get(x).set(y,"B");
-						if(playerNum == 1) {
-							map.get(x).set(y-1, "P");
+						if(map.get(x).get(y-1).equals("T")) {
+							map.get(x).set(y-1,"O");
 						} else {
-							map.get(x).set(y-1, "Q");
+							if(playerNum == 1) {
+								map.get(x).set(y-1, "P");
+							} else {
+								map.get(x).set(y-1, "Q");
+							}
 						}
 						map.get(x).set(y+1, "E");
 					}
