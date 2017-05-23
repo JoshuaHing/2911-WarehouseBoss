@@ -236,6 +236,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				System.exit(0);
 			} else {
 				requestFocus();
+				canvas.requestFocus();
 			}
 		} else if (e.getSource() == WbReset) {
 			// When the restart button is pressed, the game should go back to
@@ -248,8 +249,10 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				// mainPanel.removeAll();
 				// papi = new MyPanel();
 				requestFocus();
+				canvas.requestFocus();
 			} else {
 				requestFocus();
+				canvas.requestFocus();
 			}
 
 		} else if (e.getSource() == WbTimer) {
@@ -292,23 +295,48 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			frame.setVisible(true);
 			frame.setLocation(350, 170);
 			requestFocus();
+			canvas.requestFocus();
 		} else if (e.getSource() == WbSelect) {
 			String selectLevel = JOptionPane.showInputDialog(this, "Which level do you want to play ?", "Level",
 					JOptionPane.QUESTION_MESSAGE);
 			int selectedLevel = Integer.parseInt(selectLevel)-1;
+			game.resetMovesMade();
 			game.resetMap(currLevel);
 			currLevel = selectedLevel;
 			updateInterface(MODE_REFRESH, game);
 
 			requestFocus();
+			canvas.requestFocus();
 		} else if (e.getSource() == WbPre) {
+			if(currLevel > 0) {
+				currLevel--;
+				updateInterface(MODE_REFRESH, game);
+			}
+			game.resetMovesMade();
+			game.resetMap(currLevel);
 			requestFocus();
+			canvas.requestFocus();
 		} else if (e.getSource() == WbNext) {
+			if(game.hasNextLevel(currLevel)) {
+				System.out.println("woohoO! done.");
+				currLevel++;
+				updateInterface(MODE_REFRESH, game);
+			}
+			game.resetMovesMade();
+			game.resetMap(currLevel);
 			requestFocus();
+			canvas.requestFocus();
 		} else if (e.getSource() == WbFirst) {
+			currLevel = 0;
+			updateInterface(MODE_REFRESH, game);
+			game.resetMovesMade();
+			game.resetMap(currLevel);
 			requestFocus();
+			canvas.requestFocus();
 		} else if (e.getSource() == WbUndo) {
+			game.undo(currLevel);
 			requestFocus();
+			canvas.requestFocus();
 		} else if (e.getSource() == WbMusicOn) {
 			String title = WbMusicOn.getText();
 			if (title.equals("Music On")) {
@@ -319,6 +347,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				WbMusicOn.setText("Music On");
 			}
 			requestFocus();
+			canvas.requestFocus();
 		}
 	}
 
@@ -440,7 +469,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	public void continueIfDone() {
 		if (game.getLevel(currLevel).isDone()) { // If the game is done
 			System.out.println("currLevel = " + currLevel);
+			//game.printMovesMade();
 			game.resetMap(currLevel);
+			game.resetMovesMade();
 			if (game.hasNextLevel(currLevel)) { // AND the game has another
 												// level
 				currLevel++; // THEN move to the next level and refresh the interface
