@@ -595,7 +595,11 @@ public class Game {
 					if(map.get(x+1).get(y).equals("B")){
 						map.get(x).set(y,"B");
 						if(map.get(x-1).get(y).equals("T")) {
-							map.get(x-1).set(y,"O");
+							if(playerNum == 1) {
+								map.get(x-1).set(y,"O");
+							} else if(playerNum == 2) {
+								map.get(x-1).set(y,"P");
+							}
 						} else {
 							if(playerNum == 1) {
 								map.get(x-1).set(y, "P");
@@ -620,7 +624,11 @@ public class Game {
 					if(map.get(x-1).get(y).equals("B")){
 						map.get(x).set(y,"B");
 						if(map.get(x+1).get(y).equals("T")) {
-							map.get(x+1).set(y,"O");
+							if(playerNum == 1) {
+								map.get(x+1).set(y, "O");
+							} else if(playerNum == 2) {
+								map.get(x+1).set(y, "P");
+							}
 						} else {
 							if(playerNum == 1) {
 								map.get(x+1).set(y, "P");
@@ -642,12 +650,17 @@ public class Game {
 						} else {
 							map.get(x).set(y+1, "Q");
 						}
+						
 						currMap.decNumGoalBoxes();
 					}
 					if(map.get(x).get(y-1).equals("B")){
 						map.get(x).set(y,"B");
 						if(map.get(x).get(y+1).equals("T")) {
-							map.get(x).set(y+1,"O");
+							if(playerNum == 1) {
+								map.get(x).set(y+1,"O");
+							} else if(playerNum == 2) {
+								map.get(x).set(y+1,"R");
+							}
 						} else {
 							if(playerNum == 1) {
 								map.get(x).set(y+1, "P");
