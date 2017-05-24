@@ -23,7 +23,7 @@ public class TempGenerator{
 	
 	public boolean validStartFlag;
 	public int randomStartX,randomStartY,randomWayX,randomWayY,randomTX,randomTY;
-	
+	public int wallDestroyed;
 	
 	
 	public TempGenerator(int boxNeeded){
@@ -36,6 +36,7 @@ public class TempGenerator{
 		this.randomWayY = 0;
 		this.randomTX = 0;
 		this.randomTY = 0;
+		this.wallDestroyed = 0;
 	}	
 	public void setAllWall(){
 		for (int n=0;n<N;n++){
@@ -49,14 +50,17 @@ public class TempGenerator{
 	public void generate(int boxNeeded){
 		int boxSum =0;
 		//set player & box binded at start 
-		randomStartX = (int )(Math.random() * 6+2);
-		randomStartY = (int )(Math.random() * 6+2);
+		randomStartX = (int )(Math.random() * 6)+2;
+		randomStartY = (int )(Math.random() * 6)+2;
 		//2~7
 		//System.out.println(randomStartX);
 		//set box ,maybe multiple boxes
 		while(boxSum<boxNeeded){
-			randomWayX = (int )(Math.random()*3 -1);
-			randomWayY = (int )(Math.random()*3 -1);
+			//indicate place(1,0) means left (0,-1)means down, this does mean the index of box 
+			randomWayX = (int )(Math.random()*3) -1;
+			randomWayY = (int )(Math.random()*3) -1;
+			System.out.println(randomWayX);
+			System.out.println(randomWayY+"yy");
 			this.validStartFlag = checkStartPoint(randomStartX,randomStartY,randomWayX,randomWayY);
 			//should always valid 
 			if(validStartFlag){
@@ -67,18 +71,43 @@ public class TempGenerator{
 					map[randomStartX+randomWayX][randomStartY+randomWayY] = 'B';
 					boxSum ++;
 				}
-				//now set target place
+				
 			}
-			else{
-				System.out.println("need Debug ?");
+			//else{
+			//	System.out.println("invalid box ? going next loop");
+			//}
+		}
+		
+		//now set target place
+		int targetSum = 0;
+		while(targetSum<boxNeeded){
+			randomTX = (int)(Math.random()*10);
+			randomTY = (int)(Math.random()*10);
+			if(map[randomTX][randomTY]!='P'&&map[randomTX][randomTY]!='B'){
+				map[randomTX][randomTY] = 'T';
+				targetSum++;
 			}
 		}
 		
+		//now simulate path, minimize wall destroying. eg: when able to move box to get road..
+		//so it's like step by step.
+		
+		int currentWallDestroyed = 0; 
+		
+		
+		
+		
 		print();
-		//indicate place(1,0) means left (0,-1)means down, this does mean the index of box tho
+		
+		
+		
+		//difficulty for generating puzzle is decided by how many walls are passed through which becomes empty then
+		// targets locate togther? more together more harder, since need to move box on target to another target 
+		//to achieve less wall expansion
+		//targets seperate?
 		//need to guarantee one of them is 0
 		//now it can guarantee the player & box place are valid
-
+		
 		
 		
 		
@@ -89,8 +118,27 @@ public class TempGenerator{
 				
 	}
 	
+	//calculating distance function |x| + |y| instead of sqrt((y-y0)^2 + (x-x0)^2)
+	//needs to consider situation that two method of distance equals eg: up and left would cause
+	//same distance to target
+	public int calDistance(int boxX,int boxY,int tarX,int tarY){
+		return Math.abs(boxX-tarX) + Math.abs(boxY-tarY);
+	}
+	
+	//check if all box are at targets
+	public boolean checkFinished(int boxNeeded){
+		int countOnTarget = 0;
+		for(int i = 0;i<N;i++){
+			for(int j = 0;j<M;j++){
+				if(map[i][j] == 'O'){countOnTarget++;}
+			}
+		}
+		return (countOnTarget == boxNeeded);
+	}
+	
 	//x for start x index, y for start y index, rw for randomway eg:0 for up 1 for down
 	public boolean checkStartPoint(int x ,int y,int rx,int ry){
+		System.out.println("lll");
 		if((rx==0 && ry != 0) ||(rx!= 0 && ry == 0)){
 			//if touches edge, then start point is invalid
 			if(rx + x== 0 || ry + y == 0 || rx + x ==9 || ry+ y == 9){return false;}
@@ -108,11 +156,13 @@ public class TempGenerator{
 		System.out.println();
 	}
 	
-
+	
+	
+	
 
 
 	public static void main(String[] args){
-		TempGenerator a = new TempGenerator(2);
+		TempGenerator a = new TempGenerator(3);
 		System.out.println("doing");
 	}
 
