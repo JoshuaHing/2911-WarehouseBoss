@@ -212,58 +212,83 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		int X = 1410;
 		int Y = 200;
 
+		// This part is going to Set Button in right side of interface
 
-			// This part is going to Set Button in right side of interface
+		WbUndo = new JButton("Undo");
+		WbNext = new JButton("Next Level");
+		WbPre = new JButton("Previous Level");
+		WbSelect = new JButton("Select Level");
+		WbTimer = new JButton("Timer");
+		WbReset = new JButton("Reset");
+		WbMusicOn = new JButton("Music On");
+		WbExit = new JButton("Exit");
+		JLabel musicList = new JLabel("Choose Music");
+		cbMusic = new JComboBox(sMusicList);
 
-			WbUndo = new JButton("Undo");
-			WbFirst = new JButton("First Level");
-			WbNext = new JButton("Next Level");
-			WbPre = new JButton("Previous Level");
-			WbSelect = new JButton("Select Level");
-			WbTimer = new JButton("Timer");
-			WbReset = new JButton("Reset");
-			WbMusicOn = new JButton("Music On");
-			WbExit = new JButton("Exit");
-			JLabel musicList = new JLabel("Choose Music");
-			cbMusic = new JComboBox(sMusicList);
+		// set the location of each button
+		WbUndo.setBounds(X, Y+20, 120, 30);
+		WbNext.setBounds(X, Y+60, 120, 30);
+		WbPre.setBounds(X, Y+100, 120, 30);
+		WbSelect.setBounds(X, Y+140, 120, 30);
+		WbTimer.setBounds(X, Y+180, 120, 30);
+		WbReset.setBounds(X, Y+220, 120, 30);
+		WbMusicOn.setBounds(X, Y+260, 120, 30);
+		musicList.setBounds(X+10, Y+290, 120, 30);
+		cbMusic.setBounds(X, Y+310, 120, 40);
+		WbExit.setBounds(X, Y+360, 120, 30);
 
-			// set the location of each button
-			WbUndo.setBounds(X, Y+80, 120, 30);
-			WbFirst.setBounds(X, Y+130, 120, 30);
-			WbNext.setBounds(X, Y+180, 120, 30);
-			WbPre.setBounds(X, Y+230, 120, 30);
-			WbSelect.setBounds(X, Y+280, 120, 30);
-			WbTimer.setBounds(X, Y+330, 120, 30);
-			WbReset.setBounds(X, Y+80, 120, 30);
-			WbMusicOn.setBounds(X, Y+450, 120, 30);
-			musicList.setBounds(X, Y+490, 120, 30);
-			cbMusic.setBounds(X, Y+530, 120, 40);
-			WbExit.setBounds(X, Y+600, 120, 30);
+		WbUndo.setBackground(new Color(254,232,156));
+		WbUndo.setOpaque(true);
+		WbNext.setBackground(new Color(254,232,156));
+		WbNext.setOpaque(true);
 
-			// set the function of each button
-			WbUndo.addActionListener(this);
-			WbFirst.addActionListener(this);
-			WbNext.addActionListener(this);
-			WbPre.addActionListener(this);
-			WbSelect.addActionListener(this);
-			WbTimer.addActionListener(this);
-			WbReset.addActionListener(this);
-			WbMusicOn.addActionListener(this);
-			cbMusic.addItemListener(this);
-			WbExit.addActionListener(this);
+		WbPre.setBackground(new Color(254,232,156));
+		WbPre.setOpaque(true);
 
-			// Let buttons display on the screen
-			c.add(WbUndo);
-			c.add(WbFirst);
-			c.add(WbNext);
-			c.add(WbPre);
-			c.add(WbSelect);
-			c.add(WbTimer);
-			c.add(WbReset);
-			c.add(WbExit);
-			c.add(WbMusicOn);
-			c.add(musicList);
-			c.add(cbMusic);
+		WbSelect.setBackground(new Color(254,232,156));
+		WbSelect.setOpaque(true);
+
+		WbTimer.setBackground(new Color(254,232,156));
+		WbTimer.setOpaque(true);
+
+		WbReset.setBackground(new Color(254,232,156));
+		WbReset.setOpaque(true);
+
+		WbMusicOn.setBackground(new Color(254,232,156));
+		WbMusicOn.setOpaque(true);
+
+		WbExit.setBackground(new Color(254,232,156));
+		WbExit.setOpaque(true);
+
+		musicList.setBackground(new Color(254,232,156));
+		musicList.setOpaque(true);
+
+		cbMusic.setBackground(new Color(254,232,156));
+		cbMusic.setOpaque(true);
+
+
+		// set the function of each button
+		WbUndo.addActionListener(this);
+		WbNext.addActionListener(this);
+		WbPre.addActionListener(this);
+		WbSelect.addActionListener(this);
+		WbTimer.addActionListener(this);
+		WbReset.addActionListener(this);
+		WbMusicOn.addActionListener(this);
+		cbMusic.addItemListener(this);
+		WbExit.addActionListener(this);
+
+		// Let buttons display on the screen
+		c.add(WbUndo);
+		c.add(WbNext);
+		c.add(WbPre);
+		c.add(WbSelect);
+		c.add(WbTimer);
+		c.add(WbReset);
+		c.add(WbExit);
+		c.add(WbMusicOn);
+		c.add(musicList);
+		c.add(cbMusic);
 
 	}
 
