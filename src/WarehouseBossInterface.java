@@ -201,7 +201,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	    c.add (canvas);
 		
 		// width, height)
-		setSize(1700, 936); // set size of the entire container
+		setSize(1678, 888); // set size of the entire container
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
