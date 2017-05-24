@@ -144,7 +144,6 @@ public class Animation extends JFrame {
 				}
 			}
 			
-			if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.GAME) {
 				ArrayList<ArrayList<String>> currMap = game.getLevel(WarehouseBossInterface.currLevel).getMap();
 				for (c = 0; c < 19; c++) {
 					if (c < 10){
@@ -187,8 +186,6 @@ public class Animation extends JFrame {
 						}
 					}
 				}
-			} else if (WarehouseBossInterface.state == WarehouseBossInterface.STATE.MENU) {
-			}
 			
 			
 			g2d.drawImage(bu,(startX+(1 * X)-(0 * X))-40, startY + (1)*Y - M, 80, 80, this);

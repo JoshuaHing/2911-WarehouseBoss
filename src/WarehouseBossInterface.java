@@ -77,7 +77,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	private static final int MODE_DONE = 2;
 	private static final int MAP_SIZE = 10; // Will be removed once we implement
 											// auto-generated maps
-	private StartMenu startMenu;
 	private Music music;
 
 	@Override
@@ -91,11 +90,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		music.loadMusic();
 	}
 
-	public enum STATE {
-		MENU, GAME
-	}
-
-	public static STATE state = STATE.GAME;
 
 	public WarehouseBossInterface(Game game) {
 		super("Warehouse Boss 2017-COMP2911"); // String of the title bar
@@ -124,9 +118,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		this.tenthSecond = 0;
 		this.minutes1 = 0;
 		this.minutes2 = 0;
-
-		startMenu = new StartMenu();
-		this.addMouseListener(new MouseInput());
 
 		/* end of code for arrow keys */
 
@@ -220,8 +211,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		// this.addMouseListener(new MouseInput());
 		int X = 1410;
 		int Y = 200;
-		
-		if (state == STATE.GAME) {
+
 
 			// This part is going to Set Button in right side of interface
 
@@ -274,7 +264,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			c.add(WbMusicOn);
 			c.add(musicList);
 			c.add(cbMusic);
-		}
 
 	}
 
@@ -416,7 +405,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 		public void paint(Graphics g) {
 			// System.out.println("in paint " + state);
-			if (state == STATE.GAME) {
 				// new WarehouseBossInterface(game);
 				// System.out.println("in paint2 " + state);
 				ArrayList<ArrayList<String>> currMap = game.getLevel(currLevel).getMap(); // Get the map representing the current level.
@@ -439,9 +427,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 						}
 					}
 				}
-			} else if (state == STATE.MENU) {
-				startMenu.render(g);
-			}
 		}
 	}
 
@@ -539,7 +524,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			Animation.DIR_Lu = e.getKeyCode();
 		}
 		if(keyReleased) {
-			if (state == STATE.GAME) {
 				switch (e.getKeyCode()) {
 				case KeyEvent.VK_LEFT:
 					// move left;
@@ -576,7 +560,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				}
 			}
 			keyReleased = false;
-		}
 	}
 
 	@Override
