@@ -1,0 +1,120 @@
+import java.util.concurrent.ThreadLocalRandom;
+
+
+
+/*
+ * TO WHOEVER IMPLEMENTS THIS INTO THE PROGRAM:
+ * STEPS:
+ * 1. call the Generate() function.
+ * 2. scroll down, and change print to print to the file, not the command line
+ */
+public class TempGenerator{
+	final static int N = 10; 		// SIZE OF MAP. CHANGE IF NEEDED
+	final static int M = 10;
+	public static char[][] map = new char[N][M];
+	static int Y;
+	static int X;
+	static int testY;
+	static int testX;
+	static int delta;
+	static String direction;
+	static int boxes;
+	static int walks; // number of directional walks for each box
+	
+	public boolean validStartFlag;
+	public int randomStartX,randomStartY,randomWayX,randomWayY,randomTX,randomTY;
+	
+	
+	
+	public TempGenerator(int boxNeeded){
+		setAllWall();
+		generate(boxNeeded);
+		this.validStartFlag = false;
+		this.randomStartX = 0;
+		this.randomStartY = 0;
+		this.randomWayX = 0;
+		this.randomWayY = 0;
+		this.randomTX = 0;
+		this.randomTY = 0;
+	}	
+	public void setAllWall(){
+		for (int n=0;n<N;n++){
+			for(int m=0;m<M;m++){
+				map[n][m] = 'W';
+			}
+		}
+		
+	}
+	
+	public void generate(int boxNeeded){
+		int boxSum =0;
+		//set player & box binded at start 
+		randomStartX = (int )(Math.random() * 6+2);
+		randomStartY = (int )(Math.random() * 6+2);
+		//2~7
+		//System.out.println(randomStartX);
+		//set box ,maybe multiple boxes
+		while(boxSum<boxNeeded){
+			randomWayX = (int )(Math.random()*3 -1);
+			randomWayY = (int )(Math.random()*3 -1);
+			this.validStartFlag = checkStartPoint(randomStartX,randomStartY,randomWayX,randomWayY);
+			//should always valid 
+			if(validStartFlag){
+				//set player && box location for real
+				if(map[randomStartX+randomWayX][randomStartY+randomWayY]=='W'){
+					//if it's not wall then it's duplicated box place, then skip to next loop
+					map[randomStartX][randomStartY] = 'P';
+					map[randomStartX+randomWayX][randomStartY+randomWayY] = 'B';
+					boxSum ++;
+				}
+				//now set target place
+			}
+			else{
+				System.out.println("need Debug ?");
+			}
+		}
+		
+		print();
+		//indicate place(1,0) means left (0,-1)means down, this does mean the index of box tho
+		//need to guarantee one of them is 0
+		//now it can guarantee the player & box place are valid
+
+		
+		
+		
+		//simulate path
+		//hard point is cornering
+		
+		
+				
+	}
+	
+	//x for start x index, y for start y index, rw for randomway eg:0 for up 1 for down
+	public boolean checkStartPoint(int x ,int y,int rx,int ry){
+		if((rx==0 && ry != 0) ||(rx!= 0 && ry == 0)){
+			//if touches edge, then start point is invalid
+			if(rx + x== 0 || ry + y == 0 || rx + x ==9 || ry+ y == 9){return false;}
+			else{return true;}
+		}
+		return false;
+	}
+
+	public static void print(){
+		for(int i = 0; i< N; i++){
+			for(int j = 0; j < M; j++)
+				System.out.print(map[i][j]);
+			System.out.println();
+		}
+		System.out.println();
+	}
+	
+
+
+
+	public static void main(String[] args){
+		TempGenerator a = new TempGenerator(2);
+		System.out.println("doing");
+	}
+
+}
+
