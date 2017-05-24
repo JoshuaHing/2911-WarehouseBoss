@@ -188,6 +188,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				}
 				tenthSecond++;
 				textField.setText(s);
+				requestFocus();
 			}
 		};
 		int DELAY = 200;
@@ -355,6 +356,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			requestFocus();
 		} else if (e.getSource() == WbUndo) {
 			game.undo(currLevel);
+			updateInterface(MODE_REFRESH, game);
 			requestFocus();
 		} else if (e.getSource() == WbMusicOn) {
 			String title = WbMusicOn.getText();
@@ -528,7 +530,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		}else if (e.getKeyCode() == 65||e.getKeyCode() == 68||e.getKeyCode() == 87||e.getKeyCode() == 83){
 			Animation.DIR_Lu = e.getKeyCode();
 		}
-		// System.out.println("in keypressed " + state);
 		if (state == STATE.GAME) {
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_LEFT:

@@ -16,13 +16,16 @@ public class WarehouseBoss {
 		// ****************SCANNER STARTS****************
 		Scanner sc = null;
 		int numGoals = 0;
+		int numRows = 0;
+		int numCols = 0;
 		Game game = new Game();
 		try { 														// We need to keep going and take in all the maps
-			sc = new Scanner(new FileReader("map/Singleplayer.txt"));
+			sc = new Scanner(new FileReader("map/Multiplayer.txt"));
 			while (sc.hasNextLine()) {
 				while (sc.hasNext("#")) {
 					sc.nextLine();
 				}
+				//Let's go through the elements
 				if (sc.hasNextLine()) {
 					map = new ArrayList<ArrayList<String>>();
 					for (int i = 0; i < NUM_COLS; i++) {
@@ -38,6 +41,7 @@ public class WarehouseBoss {
 							}
 						}
 					}
+					
 					// System.out.println("numGoals = " + numGoals);
 					Map newMap = new Map(map, numGoals);
 					game.addMap(newMap);
