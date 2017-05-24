@@ -59,6 +59,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	boolean downPressed;
 	
 	boolean timerOn = false;
+	boolean keyReleased = true;
 	
 	private int numGoals;
 	public static int currLevel;
@@ -164,6 +165,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 		timerPanel.setLayout(new FlowLayout());
 		timerPanel.add(textField);
+		timerPanel.setBackground(new java.awt.Color(70, 0, 0));
+		//timerPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
 		ActionListener listener = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -301,6 +304,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			} else {
 				requestFocus();
 			}
+			resetTimer();
 
 		} else if (e.getSource() == WbTimer) {
 			if(!timerOn) {
@@ -332,6 +336,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			currLevel = selectedLevel;
 			updateInterface(MODE_REFRESH, game);
 			requestFocus();
+			resetTimer();
 		} else if (e.getSource() == WbPre) {
 			if(currLevel > 0) {
 				currLevel--;
@@ -339,6 +344,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			}
 			game.resetMovesMade();
 			game.resetMap(currLevel);
+			resetTimer();
 			requestFocus();
 		} else if (e.getSource() == WbNext) {
 			if(game.hasNextLevel(currLevel)) {
@@ -347,6 +353,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			}
 			game.resetMovesMade();
 			game.resetMap(currLevel);
+			resetTimer();
 			requestFocus();
 		} else if (e.getSource() == WbFirst) {
 			currLevel = 0;
@@ -357,6 +364,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		} else if (e.getSource() == WbUndo) {
 			game.undo(currLevel);
 			updateInterface(MODE_REFRESH, game);
+			resetTimer();
 			requestFocus();
 		} else if (e.getSource() == WbMusicOn) {
 			String title = WbMusicOn.getText();
@@ -530,47 +538,53 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		}else if (e.getKeyCode() == 65||e.getKeyCode() == 68||e.getKeyCode() == 87||e.getKeyCode() == 83){
 			Animation.DIR_Lu = e.getKeyCode();
 		}
-		if (state == STATE.GAME) {
-			switch (e.getKeyCode()) {
-			case KeyEvent.VK_LEFT:
-				// move left;
-				left(PLAYER_ONE);
-				break;
-			case KeyEvent.VK_RIGHT:
-				// move right
-				right(PLAYER_ONE);
-				break;
-			case KeyEvent.VK_UP:
-				// move up
-				up(PLAYER_ONE);
-				break;
-			case KeyEvent.VK_DOWN:
-				// move down
-				down(PLAYER_ONE);
-				break;
-			case KeyEvent.VK_A:
-				// move left;
-				left(PLAYER_TWO);
-				break;
-			case KeyEvent.VK_D:
-				// move right
-				right(PLAYER_TWO);
-				break;
-			case KeyEvent.VK_W:
-				// move up
-				up(PLAYER_TWO);
-				break;
-			case KeyEvent.VK_S:
-				// move down
-				down(PLAYER_TWO);
-				break;
+		if(keyReleased) {
+			if (state == STATE.GAME) {
+				switch (e.getKeyCode()) {
+				case KeyEvent.VK_LEFT:
+					// move left;
+					left(PLAYER_ONE);
+					break;
+				case KeyEvent.VK_RIGHT:
+					// move right
+					right(PLAYER_ONE);
+					break;
+				case KeyEvent.VK_UP:
+					// move up
+					up(PLAYER_ONE);
+					break;
+				case KeyEvent.VK_DOWN:
+					// move down
+					down(PLAYER_ONE);
+					break;
+				case KeyEvent.VK_A:
+					// move left;
+					left(PLAYER_TWO);
+					break;
+				case KeyEvent.VK_D:
+					// move right
+					right(PLAYER_TWO);
+					break;
+				case KeyEvent.VK_W:
+					// move up
+					up(PLAYER_TWO);
+					break;
+				case KeyEvent.VK_S:
+					// move down
+					down(PLAYER_TWO);
+					break;
+				}
 			}
+			keyReleased = false;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		Animation.PRESSED = false;
+		if(!keyReleased) {
+			Animation.PRESSED = false;
+			keyReleased = true;
+		} 
 	}
 
 	public Game game;
