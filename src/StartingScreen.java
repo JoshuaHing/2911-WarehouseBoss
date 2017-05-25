@@ -36,25 +36,28 @@ public class StartingScreen extends JFrame implements ActionListener
     setContentPane(new JLabel(new ImageIcon("MenuImage/bg_start menu.png")));
     setLayout(null);
 
-    JLabel title = new JLabel("Ware House Boss");
-    title.setBounds(X-250, Y-80, 200, 92);
-    title.setFont(new Font("Arial Black", Font.BOLD,20));
+    JLabel title = new JLabel("Warehouse Boss");
+    title.setBounds(X-335, Y-85, 400, 100);
+    title.setFont(new Font("Arial Black", Font.BOLD,30));
     add(title);
 
     SPlayer = new JButton("Single Player");
-    SPlayer.setBounds(X-250, Y+80, 200, 92);
+    SPlayer.setFont(new Font("Arial", Font.PLAIN, 25));
+    SPlayer.setBounds(X-280, Y+80, 200, 92);
     SPlayer.setIcon(new ImageIcon("MenuImage/gui_07.bmp"));
     SPlayer.addActionListener(this);
     add(SPlayer);
 
     TPlayer = new JButton("Two Player");
-    TPlayer.setBounds(X-250, Y+250, 200, 92);
+    TPlayer.setFont(new Font("Arial", Font.PLAIN, 25));
+    TPlayer.setBounds(X-280, Y+250, 200, 92);
     TPlayer.setIcon(new ImageIcon("MenuImage/gui_07.bmp"));
     TPlayer.addActionListener(this);
     add(TPlayer);
 
     Exit = new JButton("Exit");
-    Exit.setBounds(X-250, Y+420, 200, 92);
+    Exit.setFont(new Font("Arial", Font.PLAIN, 25));
+    Exit.setBounds(X-280, Y+420, 200, 92);
     Exit.setIcon(new ImageIcon("MenuImage/gui_07.bmp"));
     Exit.addActionListener(this);
     add(Exit);
