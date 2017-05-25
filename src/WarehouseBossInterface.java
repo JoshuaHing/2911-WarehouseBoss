@@ -12,6 +12,9 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -24,7 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 
-public class WarehouseBossInterface extends JFrame implements ActionListener, KeyListener, ItemListener {
+public class WarehouseBossInterface extends JFrame implements ActionListener, KeyListener, ItemListener, MouseListener {
 	// We want to bulid ipnterface with basic steps including
 	// first pass, next level, previous level, last level and undo the last
 	// move;
@@ -104,6 +107,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		 * p.add(label); add(p); //Is this code necessary?
 		 */
 		addKeyListener(this);
+		//addMouseListener(this);
+		
 		setSize(0, 0);
 		setVisible(true);
 		leftPressed = true;
@@ -186,7 +191,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				}
 				tenthSecond++;
 				textField.setText(s);
-				requestFocus();
+				//requestFocus();
 			}
 		};
 		int DELAY = 200;
@@ -198,7 +203,76 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		timerPanel.setVisible(false);
 		timerPanel.setVisible(false);
 		c.add(timerPanel);
-		//mainPanel.add(timerPanel);
+		mainPanel.addMouseListener(new MouseAdapter() {
+            @Override
+        	public void mouseClicked(MouseEvent arg0) {
+        		requestFocus();
+        	}
+
+        	@Override
+        	public void mouseEntered(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mouseExited(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mousePressed(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mouseReleased(MouseEvent arg0) {
+        		requestFocus();
+        		
+        	}});
+		canvas.addMouseListener(new MouseAdapter() {
+            @Override
+        	public void mouseClicked(MouseEvent arg0) {
+        		requestFocus();
+        	}
+
+        	@Override
+        	public void mouseEntered(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mouseExited(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mousePressed(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mouseReleased(MouseEvent arg0) {
+        		requestFocus();
+        		
+        	}});
+		c.addMouseListener(new MouseAdapter() {
+            @Override
+        	public void mouseClicked(MouseEvent arg0) {
+        		requestFocus();
+        	}
+
+        	@Override
+        	public void mouseEntered(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mouseExited(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mousePressed(MouseEvent arg0) {
+        		requestFocus();
+        	}
+        	@Override
+        	public void mouseReleased(MouseEvent arg0) {
+        		requestFocus();
+        		
+        	}});
+		
 
 		
 		c.add(mainPanel);
@@ -591,4 +665,39 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	public Game game;
 	
 	private Animation animation;
-}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	}
+
