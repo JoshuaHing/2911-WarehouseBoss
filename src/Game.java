@@ -586,8 +586,8 @@ public class Game {
 						if(map.get(x-1).get(y).equals("T")) {
 							if(playerNum == 1) {
 								map.get(x-1).set(y,"O");
-							} else if(playerNum == 2) {
-								map.get(x-1).set(y,"P");
+							} else {
+								map.get(x-1).set(y,"R");
 							}
 						} else {
 							if(playerNum == 1) {
@@ -619,8 +619,8 @@ public class Game {
 						if(map.get(x+1).get(y).equals("T")) {
 							if(playerNum == 1) {
 								map.get(x+1).set(y, "O");
-							} else if(playerNum == 2) {
-								map.get(x+1).set(y, "P");
+							} else {
+								map.get(x+1).set(y, "R");
 							}
 						} else {
 							if(playerNum == 1) {
@@ -685,7 +685,11 @@ public class Game {
 							map.get(x).set(y,"B");
 						}
 						if(map.get(x).get(y-1).equals("T")) {
-							map.get(x).set(y-1,"O");
+							if(playerNum == 1) {
+								map.get(x).set(y-1,"O");
+							} else {
+								map.get(x).set(y-1,"R");
+							}
 						} else {
 							if(playerNum == 1) {
 								map.get(x).set(y-1, "P");
