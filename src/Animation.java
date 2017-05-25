@@ -105,10 +105,6 @@ public class Animation extends JFrame {
 				go = ImageIO.read(new File("img/go.png"));
 				b = ImageIO.read(new File("img/1.png"));
 
-
-				
-				
-				
 			} catch (IOException e) {
 			}
 			requestFocus();
@@ -132,11 +128,7 @@ public class Animation extends JFrame {
 			
 			int e = 0;
 					
-			if (RIGHT_Lu > (3 * M))
-				RIGHT_Lu = 0;
-			
-			if (RIGHT_Ma > (3 * M))
-				RIGHT_Ma = 0;
+
 			
 			for (i = 0; i < 10; i++){
 				for(j = 0; j < 10; j++){
@@ -162,6 +154,11 @@ public class Animation extends JFrame {
 						} else if (currString.equals("P")) {								// Mario
 							goalX = (startX+(i * X)-(j * X));
 							goalY = startY + (i+j)*Y;			
+							if (RIGHT_Lu == (3 * M))
+								RIGHT_Lu = 0;
+							
+							if (RIGHT_Ma == (3 * M))
+								RIGHT_Ma = 0;
 							g2d.drawImage(Mario.getSubimage(RIGHT_Ma, LEFT_Ma, M, H), pointX+10, (pointY-7), M, H, this);
 						} else if (currString.equals("Q")) {								//Luigi
 							goalX_Lu = (startX+(i * X)-(j * X));
