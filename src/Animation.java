@@ -45,7 +45,7 @@ public class Animation extends JFrame {
 	public static long sleepTime = 30;			//delay
 	
 	public static int startX = 687;
-	public static int startY = 177;
+	public static int startY = 97;
 
 	public static int an = 0;
 	public static int an_dir = 1;
@@ -139,11 +139,11 @@ public class Animation extends JFrame {
 			}
 			
 				ArrayList<ArrayList<String>> currMap = game.getLevel(WarehouseBossInterface.currLevel).getMap();
-				for (c = 0; c < 19; c++) {
-					if (c < 10){
+				for (c = 0; c < 23; c++) {
+					if (c < 12){
 						e = c;
 					}else{
-						e = 9;
+						e =11;
 					}
 					
 					for (j = (c - e); j < (e + 1); j++) {
@@ -155,12 +155,7 @@ public class Animation extends JFrame {
 							g2d.drawImage(goalsquare, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
 						} else if (currString.equals("P")) {								// Mario
 							goalX = (startX+(i * X)-(j * X));
-							goalY = startY + (i+j)*Y;			
-							if (RIGHT_Lu == (3 * M))
-								RIGHT_Lu = 0;
-							
-							if (RIGHT_Ma == (3 * M))
-								RIGHT_Ma = 0;
+							goalY = startY + (i+j)*Y;
 							g2d.drawImage(Mario.getSubimage(RIGHT_Ma, LEFT_Ma, M, H), pointX+10, (pointY-7), M, H, this);
 						} else if (currString.equals("Q")) {								//Luigi
 							goalX_Lu = (startX+(i * X)-(j * X));
@@ -181,7 +176,7 @@ public class Animation extends JFrame {
 						} else if (currString.equals("W")) { 								// wall
 							g2d.drawImage(wall, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
 						} else if (currString.equals("D")) { 								// box is on goal
-							g2d.drawImage(boxongoal, (startX+(i * X)-(j * X))+5, startY + (i+j)*Y -(W/2), W-10, (W/2*3), this);
+							g2d.drawImage(boxongoal, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
 						}
 					}
 				}
@@ -192,15 +187,19 @@ public class Animation extends JFrame {
 			g2d.drawImage(bu,(startX+(5 * X)-(0 * X))-40, startY + (5)*Y - M, 80, 80, this);
 			g2d.drawImage(bu,(startX+(7 * X)-(0 * X))-40, startY + (7)*Y - M, 80, 80, this);
 			g2d.drawImage(bu,(startX+(9 * X)-(0 * X))-40, startY + (9)*Y - M, 80, 80, this);
+			g2d.drawImage(bu,(startX+(11 * X)-(0 * X))-40, startY + (11)*Y - M, 80, 80, this);
+
 			
 			g2d.drawImage(bu,(startX-(1 * X)-(0 * X))-40, startY + (1)*Y - (M/2), 80, 80, this);
 			g2d.drawImage(bu,(startX-(3 * X)-(0 * X))-40, startY + (3)*Y - (M/2), 80, 80, this);
 			g2d.drawImage(bu,(startX-(5 * X)-(0 * X))-40, startY + (5)*Y - (M/2), 80, 80, this);
 			g2d.drawImage(bu,(startX-(7 * X)-(0 * X))-40, startY + (7)*Y - (M/2), 80, 80, this);
+			g2d.drawImage(bu,(startX-(9 * X)-(0 * X))-40, startY + (9)*Y - (M/2), 80, 80, this);
+
 			
 
-			g2d.drawImage(go,(startX+(8 * X)-(0 * X)), startY -5 + (8)*Y, 80, 80, this);                  ///backgound size
-			g2d.drawImage(go,(startX+(8 * X)-(7 * X)), startY -5 + (8+7)*Y, 80, 80, this);                  ///backgound size
+			g2d.drawImage(go,(startX+(10 * X)-(0 * X)), startY -5 + (10)*Y, 80, 80, this);                  ///backgound Animation
+			g2d.drawImage(go,(startX+(10 * X)-(9 * X)), startY -5 + (10+9)*Y, 80, 80, this);                  ///backgound Animation
 
 			g2d.drawImage(cl, 330, 410, 160, 150, this);                  ///backgound size
 
@@ -225,14 +224,14 @@ public class Animation extends JFrame {
 				bn --;
 			}
 			
-			g2d.drawImage(b, 930, 10+(an/4), 400, 300, this);                  ///backgound size
+			g2d.drawImage(b, 1000, 10+(an/4), 320, 240, this);                  ///backgound Animation
 			
-			g2d.drawImage(goalsquare, 200, 510-(an/3), W, W, this);                  ///backgound size
-			g2d.drawImage(wall, 200, 510-(an/3)-(W/2), W, W, this);                  ///backgound size
-			g2d.drawImage(go, 200, 510-(an/3)-W-5, W, W, this);                  ///backgound size
+			g2d.drawImage(goalsquare, 200, 510-(an/3), W, W, this);              ///backgound Animation
+			g2d.drawImage(wall, 200, 510-(an/3)-(W/2), W, W, this);              ///backgound Animation
+			g2d.drawImage(go, 200, 510-(an/3)-W-5, W, W, this);                  ///backgound Animation
 
 			
-			g2d.drawImage(cl, 250, 110+(bn/5), 120, 110, this);                  ///backgound size
+			g2d.drawImage(cl, 250, 110+(bn/5), 120, 110, this);                  ///backgound Animation
 
 
 
@@ -379,6 +378,12 @@ public class Animation extends JFrame {
 							RIGHT_Lu = RIGHT_Lu + M;
 						}
 					}
+				
+					if (RIGHT_Lu >= (3 * M))
+						RIGHT_Lu = 0;
+				
+					if (RIGHT_Ma >= (3 * M))
+						RIGHT_Ma = 0;
 
 					try {
 						Thread.sleep(sleepTime);
@@ -390,44 +395,4 @@ public class Animation extends JFrame {
 		}
 	}
 
-	public static Image random (int a){
-		
-	    int i = a%6;
-
-		
-		Image w1 = null;
-		Image w2 = null;
-		Image w3 = null;
-		Image w4 = null;
-		Image w5 = null;
-		Image w0 = null;
-		
-			try {
-				w1 = ImageIO.read(new File("img/wall01.png"));
-
-			w2 = ImageIO.read(new File("img/wall02.png"));
-			w3 = ImageIO.read(new File("img/wall03.png"));
-			w4 = ImageIO.read(new File("img/wall04.png"));
-			w5 = ImageIO.read(new File("img/wall05.png"));
-			w0 = ImageIO.read(new File("img/wall00.png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		if (i == 0){
-			return w0;
-		}else if (i == 1){
-			return w1;
-		}else if (i == 2){
-			return w2;
-		}else if (i == 3){
-			return w3;
-		}else if (i == 4){
-			return w4;
-		}else if (i == 5){
-			return w5;
-		}else{
-			return null;
-		}
-	}
 } 
