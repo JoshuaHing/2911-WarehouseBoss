@@ -205,7 +205,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	    c.add (canvas);
 		
 		// width, height)
-		setSize(1678, 888); // set size of the entire container
+		setSize(1678, 936); // set size of the entire container
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -407,7 +407,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	// Main game interface
 	public class MyPanel extends JPanel {
-		int x = 24;
+		int x = 20;
 		int startx = 0;
 		int starty = 0;
 
