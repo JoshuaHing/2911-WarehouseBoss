@@ -1,13 +1,13 @@
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import javax.swing.*;
-import java.awt.*;
-import javax.imageio.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class EndingScreen extends JFrame implements ActionListener {
 	JButton Quit, continueGame, mainMenu;
@@ -69,7 +69,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 			startScreen = new StartingScreen();
 			setVisible(false);
 		} else if(e.getSource() == continueGame) {
-			startScreen.turnOn();
+			//startScreen.turnOn();
 			setVisible(false);
 		}
 	}

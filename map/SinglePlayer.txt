@@ -1,79 +1,29 @@
-W B W B W B W B W B
-B W B W B W B W B W
-W W E E E E E E E B
-B W E E D T D E E W
-W B E E E B E E E B
-B W E E E E E E E W
-W B E E E E E E E B
-B W E E E P E E E W
-W B E E E E E E E B
-B W B W B W B W B W
+W B W B W B W B W B W W
+B W B W B W B W B W W W
+W W E E E E E E E B W W
+B W E E D T D E E W W W
+W B E E E B E E E B W W
+B W E E E E E E E W W W
+W B E E E E E E E B W W
+B W E E E P E E E W W W
+W B E E E E E E E B W W
+B W B W B W B W B W W W
+W W W W W W W W W W W W
+W W W W W W W W W W W W
 
-W W W W W W W W W W
-W W W W W W W W W W
-W T W E E W W W B W
-W T T T E E W W W W
-W E W B E E E W D W
-W E B P W E E W W W
-W W E B E B E W B W
-W W B E B E E W W W
-W W E E E E E W D W
-W W W W W W W W W W
+W B W B W B W B W B W W
+B E E E E E E E E W W W
+W E E E E E E E E B W W
+B E E E E T E E E W W W
+W E E E E B E E E B W W
+B E E E E E E E E W W W
+W E E E E E E E E B W W
+B E E E E P E E E W W W
+W E E E E E E E E B W W
+B W B W B W B W B W W W
+W W W W W W W W W W W W
+W W W W W W W W W W W W
 
-W W W W W W W W W W
-W W W W W W W W W W
-W W W W W W W W W W
-W W E E W E E E W W
-W W E B T T B E W W
-W W P B T D E W W W
-W W E B T T B E W W
-W W E E W E E E W W
-W W W W W W W W W W
-W W W W W W W W W W
-
-W W W W W W W W W W
-W W W W W W W W W W
-W W W W W W W W W W
-W W E E E E E W W W
-W W B W W W E E E W
-W E P E B E E B E W
-W E T T W E B E W W
-W W T T W E E E W W
-W W W W W W W W W W
-W W W W W W W W W W
-
-W W W W W W W W W W
-W W W W W W W W W W
-W W E E E W E E E W
-W W E T B E B T E W
-W W E B T B T B E W
-W W W E B P B E W W
-W W E B T B T B E W
-W W E T B E B T E W
-W W E E E W E E E W
-W W W W W W W W W W
-
-W W W W W W W W W W
-W W W W W W E E W W
-W E E B E E P E W W
-W E E W E W W E W W
-W W E W T T E E E W
-W W E E T T W W B W
-W W B W W E W W E W
-W W E E E E B E E E
-W W E E W W W E E E
-W W W W W W W W W W
-
-W W W W W W W W W W
-W W B W W W W W W W
-W B W D W W E E W W
-W W D W W E P B W W
-W B W D W W B E W W
-W W D W W W E E W W
-W B W D W W E B E W
-W W D W W T B E E W
-W B W D W T T D T W
-W W W W W W W W W W
 
 
 

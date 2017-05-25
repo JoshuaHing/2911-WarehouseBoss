@@ -1,10 +1,8 @@
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +52,10 @@ public class Animation extends JFrame {
 
 	public static int bn = 0;
 	public static int bn_dir = 1;
+	
+	/*public static final int NUM_ROWS = 12;
+	public static final int NUM_COLS = 12;*/
+	public static final int MAP_SIZE = 12;
 
 	
 	static Random randomGenerator = new Random();
@@ -130,8 +132,8 @@ public class Animation extends JFrame {
 					
 
 			
-			for (i = 0; i < 10; i++){
-				for(j = 0; j < 10; j++){
+			for (i = 0; i < MAP_SIZE; i++){
+				for(j = 0; j < MAP_SIZE; j++){
 					g2d.drawImage(empty, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, (W/20*31), this);
 				}
 			}
@@ -162,7 +164,7 @@ public class Animation extends JFrame {
 							g2d.drawImage(Mario.getSubimage(RIGHT_Ma, LEFT_Ma, M, H), pointX+10, (pointY-7), M, H, this);
 						} else if (currString.equals("Q")) {								//Luigi
 							goalX_Lu = (startX+(i * X)-(j * X));
-							goalY_Lu = startY + (i+j)*Y;			
+							goalY_Lu = startY + (i+j)*Y;
 							g2d.drawImage(Luigi.getSubimage(RIGHT_Lu, LEFT_Lu, M, H), pointX_Lu+10, (pointY_Lu-7), M, H, this);
 						} else if (currString.equals("O")) {								//Mario on goal
 							g2d.drawImage(goalsquare, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);

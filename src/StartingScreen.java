@@ -1,13 +1,17 @@
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javax.swing.*;
-import java.awt.*;
-import javax.imageio.*;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 
 public class StartingScreen extends JFrame implements ActionListener
@@ -17,8 +21,8 @@ public class StartingScreen extends JFrame implements ActionListener
   int X = 1410;
   int Y = 200;
 
-  private static final int NUM_ROWS = 10;
-  private static final int NUM_COLS = 10;
+  private static final int NUM_ROWS = 12;
+  private static final int NUM_COLS = 12;
 
   public StartingScreen()
   {
@@ -76,8 +80,6 @@ public class StartingScreen extends JFrame implements ActionListener
     // ****************SCANNER STARTS****************
     Scanner sc = null;
     int numGoals = 0;
-    int numRows = 0;
-    int numCols = 0;
     Game game = new Game();
     try { 														// We need to keep going and take in all the maps
       sc = new Scanner(new FileReader("map/"+ mode + ".txt"));

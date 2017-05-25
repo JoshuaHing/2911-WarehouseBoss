@@ -6,14 +6,14 @@ public class Map {
 	private ArrayList<ArrayList<String>> initialMap;
 	private int numGoalBoxes;
 	private int numGoals;
-
+	private static final int MAP_SIZE = 12;
 	public Map(ArrayList<ArrayList<String>> map, int numGoals) {
 		this.map = map;
 		this.numGoals = numGoals;
 		this.numGoalBoxes = 0;	
 		this.initialMap = new ArrayList<ArrayList<String>>();
-		for(int i = 0; i < 10; i++) {
-			for(int j = 0; j < 10; j++) {
+		for(int i = 0; i < MAP_SIZE; i++) {
+			for(int j = 0; j < MAP_SIZE; j++) {
 				String currString = map.get(i).get(j);
 				ArrayList<String> newList = new ArrayList<String>();
 				initialMap.add(newList);
@@ -24,8 +24,8 @@ public class Map {
 
 	public void resetMap() {
 		ArrayList<ArrayList<String>> initialMap = new ArrayList<ArrayList<String>>();
-		for(int i = 0; i < 10; i++) {
-			for(int j = 0; j < 10; j++) {
+		for(int i = 0; i < MAP_SIZE; i++) {
+			for(int j = 0; j < MAP_SIZE; j++) {
 				String currString = this.initialMap.get(i).get(j);
 				ArrayList<String> newList = new ArrayList<String>();
 				initialMap.add(newList);
@@ -62,8 +62,8 @@ public class Map {
 	}
 	
 	public void printMap(ArrayList<ArrayList<String>> initialMap) {
-		for(int i = 0; i < 10; i++) {
-			for(int j = 0; j < 10; j++) {
+		for(int i = 0; i < MAP_SIZE; i++) {
+			for(int j = 0; j < MAP_SIZE; j++) {
 				String currString = initialMap.get(i).get(j);
 				System.out.print(currString + " ");
 			}

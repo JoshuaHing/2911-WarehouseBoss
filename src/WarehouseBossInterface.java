@@ -62,6 +62,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	boolean keyReleased = true;
 	
 	private int numGoals;
+
 	public static int currLevel;
 	int seconds1;
 	int seconds2;
@@ -69,13 +70,16 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	int tenthSecond;
 	int minutes1;
 	int minutes2;
+	
+	private static final int NUM_ROWS = 12;
+	private static final int NUM_COLS = 12;
 	private static final int PLAYER_ONE = 1;
 	private static final int PLAYER_TWO = 2;
 	private static final int MODE_REFRESH = 0; // Different modes for refreshing
 												// the interface
 	private static final int MODE_RESTART = 1;
 	private static final int MODE_DONE = 2;
-	private static final int MAP_SIZE = 10; // Will be removed once we implement
+	private static final int MAP_SIZE = 12; // Will be removed once we implement
 											// auto-generated maps
 	private Music music;
 
@@ -433,8 +437,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				// new WarehouseBossInterface(game);
 				// System.out.println("in paint2 " + state);
 				ArrayList<ArrayList<String>> currMap = game.getLevel(currLevel).getMap(); // Get the map representing the current level.
-				for (int i = 0; i < 10; i++) {
-					for (int j = 0; j < 10; j++) {
+				for (int i = 0; i < NUM_COLS; i++) {
+					for (int j = 0; j < NUM_ROWS; j++) {
 						String currString = currMap.get(j).get(i);
 						if (currString.equals("B")) { // Box
 							g.drawImage(mapimg[0], i * x + startx, j * x + starty, x, x, this);
