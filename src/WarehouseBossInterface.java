@@ -136,10 +136,10 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		c.setBackground(Color.white);
 
 		// Set the title of this game in the interface
-		JLabel WbTile = new JLabel("Warehouse Boss 2017-COMP2911", JLabel.CENTER);
+		/*JLabel WbTile = new JLabel("Warehouse Boss 2017-COMP2911", JLabel.CENTER);
 		WbTile.setFont(new Font("American Typewriter", Font.BOLD, 16));
 		WbTile.setBounds(100, 20, 500, 30);
-		add(WbTile, BorderLayout.NORTH);
+		add(WbTile, BorderLayout.NORTH);*/
 
 		// Set buttons' location
 		setButtonLocation(c);
@@ -160,7 +160,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 		timerPanel.setLayout(new FlowLayout());
 		timerPanel.add(textField);
-		timerPanel.setBackground(new java.awt.Color(70, 0, 0));
+		timerPanel.setBackground(new java.awt.Color(224, 131, 38));
 		//timerPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
 		ActionListener listener = new ActionListener() {
@@ -194,7 +194,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		t.start();
 		//panel.pack();
 	
-		timerPanel.setBounds(90,560,105,35);
+		timerPanel.setBounds(90,560,110,35);
 		timerPanel.setVisible(false);
 		timerPanel.setVisible(false);
 		c.add(timerPanel);
@@ -238,8 +238,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbReset.setBounds(X, Y+220, 120, 30);
 		WbMusicOn.setBounds(X, Y+260, 120, 30);
 		musicList.setBounds(X+10, Y+290, 120, 30);
-		cbMusic.setBounds(X, Y+310, 120, 40);
-		WbExit.setBounds(X, Y+360, 120, 30);
+		cbMusic.setBounds(X, Y+320, 120, 40);
+		WbExit.setBounds(X, Y+370, 120, 30);
 
 		WbUndo.setBackground(new Color(254,232,156));
 		WbUndo.setOpaque(true);
@@ -315,9 +315,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			int diaResult = JOptionPane.showConfirmDialog(this, str, "Warning", JOptionPane.YES_NO_OPTION);
 			if (diaResult == JOptionPane.YES_OPTION) {
 				updateInterface(MODE_RESTART, game);
-				// Not finish Part right now
-				// mainPanel.removeAll();
-				// papi = new MyPanel();
 				requestFocus();
 			} else {
 				requestFocus();
@@ -433,9 +430,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		}
 
 		public void paint(Graphics g) {
-			// System.out.println("in paint " + state);
-				// new WarehouseBossInterface(game);
-				// System.out.println("in paint2 " + state);
 				ArrayList<ArrayList<String>> currMap = game.getLevel(currLevel).getMap(); // Get the map representing the current level.
 				for (int i = 0; i < NUM_COLS; i++) {
 					for (int j = 0; j < NUM_ROWS; j++) {
@@ -552,51 +546,46 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		}else if (e.getKeyCode() == 65||e.getKeyCode() == 68||e.getKeyCode() == 87||e.getKeyCode() == 83){
 			Animation.DIR_Lu = e.getKeyCode();
 		}
-		if(keyReleased) {
-				switch (e.getKeyCode()) {
-				case KeyEvent.VK_LEFT:
-					// move left;
-					left(PLAYER_ONE);
-					break;
-				case KeyEvent.VK_RIGHT:
-					// move right
-					right(PLAYER_ONE);
-					break;
-				case KeyEvent.VK_UP:
-					// move up
-					up(PLAYER_ONE);
-					break;
-				case KeyEvent.VK_DOWN:
-					// move down
-					down(PLAYER_ONE);
-					break;
-				case KeyEvent.VK_A:
-					// move left;
-					left(PLAYER_TWO);
-					break;
-				case KeyEvent.VK_D:
-					// move right
-					right(PLAYER_TWO);
-					break;
-				case KeyEvent.VK_W:
-					// move up
-					up(PLAYER_TWO);
-					break;
-				case KeyEvent.VK_S:
-					// move down
-					down(PLAYER_TWO);
-					break;
-				}
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_LEFT:
+				// move left;
+				left(PLAYER_ONE);
+				break;
+			case KeyEvent.VK_RIGHT:
+				// move right
+				right(PLAYER_ONE);
+				break;
+			case KeyEvent.VK_UP:
+				// move up
+				up(PLAYER_ONE);
+				break;
+			case KeyEvent.VK_DOWN:
+				// move down
+				down(PLAYER_ONE);
+				break;
+			case KeyEvent.VK_A:
+				// move left;
+				left(PLAYER_TWO);
+				break;
+			case KeyEvent.VK_D:
+				// move right
+				right(PLAYER_TWO);
+				break;
+			case KeyEvent.VK_W:
+				// move up
+				up(PLAYER_TWO);
+				break;
+			case KeyEvent.VK_S:
+				// move down
+				down(PLAYER_TWO);
+				break;
 			}
-			keyReleased = false;
-	}
+		}
+	
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(!keyReleased) {
-			Animation.PRESSED = false;
-			keyReleased = true;
-		} 
+		Animation.PRESSED = false;
 	}
 
 	public Game game;
