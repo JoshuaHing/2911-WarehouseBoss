@@ -1,13 +1,8 @@
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -15,13 +10,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 
 public class StartingScreen extends JFrame implements ActionListener
 {
   JButton Exit, SPlayer, TPlayer;
-
+  
+  String mode;
   int X = 1410;
   int Y = 200;
 
@@ -129,61 +124,16 @@ public class StartingScreen extends JFrame implements ActionListener
 			requestFocus();
 		}
     }else if (e.getSource() == SPlayer){
-      readMap("SinglePlayer");
+    	mode = "Single Player";
+    	setVisible(false);
+    	DifficultyScreen dS = new DifficultyScreen(mode);
     }else if (e.getSource() == TPlayer) {
-      readMap("MultiPlayer");
+    	mode = "Multi Player";
+    	setVisible(false);
+    	DifficultyScreen dS = new DifficultyScreen(mode);
     }
   }
 
-  public void readMap(String mode){
-    ArrayList<ArrayList<String>> map = null;
-    // ****************SCANNER STARTS****************
-    Scanner sc = null;
-    int numGoals = 0;
-    Game game = new Game();
-    try { 														// We need to keep going and take in all the maps
-      sc = new Scanner(new FileReader("map/"+ mode + ".txt"));
-      while (sc.hasNextLine()) {
-        while (sc.hasNext("#")) {
-          sc.nextLine();
-        }
-        //Let's go through the elements
-        if (sc.hasNextLine()) {
-          map = new ArrayList<ArrayList<String>>();
-          for (int i = 0; i < NUM_COLS; i++) {
-            ArrayList<String> newList = new ArrayList<String>();
-            map.add(newList);
-            for (int j = 0; j < NUM_ROWS; j++) {
-              if (sc.hasNext("P") || sc.hasNext("B") || sc.hasNext("T") || sc.hasNext("W")
-                  || sc.hasNext("E") || sc.hasNext("O") || sc.hasNext("D") || sc.hasNext("Q")) {
-                if (sc.hasNext("T")) {
-                  numGoals++;
-                }
-                map.get(i).add(sc.next());
-              }
-            }
-          }
-
-          // System.out.println("numGoals = " + numGoals);
-          Map newMap = new Map(map, numGoals);
-          game.addMap(newMap);
-          numGoals = 0;
-          if (sc.hasNextLine()) {
-            sc.nextLine();
-          }
-        }
-      }
-      // System.out.println("map size = " + game.numMaps());
-      //game.setInitialMap(game.getLevel(0).getMap());
-      game.setMap(game.getLevel(0));
-      setVisible(false);
-      WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
-      EventQueue.invokeLater(() -> newInterface.canvas.start());
-    } catch (FileNotFoundException f) {
-    } finally {
-      if (sc != null)
-        sc.close();
-    }
-  }
+  
 
 }

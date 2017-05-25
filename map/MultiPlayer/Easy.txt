@@ -1,0 +1,38 @@
+W B W B W B W B W B W W
+B E E E E E E E E E E W
+W E E E E E E E E E E W
+B E E E P E E B T E E W
+W E E E Q E E E E E E W
+B E E E E E E E E E E W
+W E E E E E E E E E E W
+B E E E E E E E E E E W
+W E E E E E E E E E E W
+B E E E E E E E E E E W
+W E E E E E E E E E E W
+W W W W W W W W W W W W
+
+W B W B W B W B W B W W
+B E E E E E E E E E E W
+W E E E E E E E E E E W
+B E E E P E E B T E E W
+W E E E Q E E B T E E W
+B E E E E E E E E E E W
+W E E E E E E E E E E W
+B E E E E E E E E E E W
+W E E E E E E E E E E W
+B E E E E E E E E E E W
+W E E E E E E E E E E W
+W W W W W W W W W W W W
+
+
+
+
+
+
+# These are just comments, don't read them in!
+# P = person
+# B = box
+# T = target
+# W = wall
+# E = empty space
+# O = person on target
