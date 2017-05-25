@@ -36,7 +36,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// Then we can provide more actions like select which level gamer want to
 	// challenge
 	// and restart this level's game, Exit game.
-	JButton WbSelect, WbReset, WbExit;
+	JButton WbSelect, WbReset, WbQuit;
 
 	// Final, If we can, we can play a background music in our game.
 	JButton WbMusicOn;
@@ -166,7 +166,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		timerPanel.setLayout(new FlowLayout());
 		timerPanel.add(textField);
 		timerPanel.setBackground(new java.awt.Color(224, 131, 38));
-		//timerPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
 		ActionListener listener = new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
@@ -201,7 +200,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	
 		timerPanel.setBounds(90,560,110,35);
 		timerPanel.setVisible(false);
-		timerPanel.setVisible(false);
 		c.add(timerPanel);
 		mainPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -225,7 +223,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
         	public void mouseReleased(MouseEvent arg0) {
         		requestFocus();
         		
-        	}});
+        	}
+        });
 		canvas.addMouseListener(new MouseAdapter() {
             @Override
         	public void mouseClicked(MouseEvent arg0) {
@@ -248,7 +247,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
         	public void mouseReleased(MouseEvent arg0) {
         		requestFocus();
         		
-        	}});
+        	}
+        });
 		c.addMouseListener(new MouseAdapter() {
             @Override
         	public void mouseClicked(MouseEvent arg0) {
@@ -271,9 +271,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
         	public void mouseReleased(MouseEvent arg0) {
         		requestFocus();
         		
-        	}});
-		
-
+        	}
+        });
 		
 		c.add(mainPanel);
 	    c.add (canvas);
@@ -299,7 +298,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbTimer = new JButton("Timer");
 		WbReset = new JButton("Reset");
 		WbMusicOn = new JButton("Music On");
-		WbExit = new JButton("Exit");
+		WbQuit = new JButton("Quit");
 		JLabel musicList = new JLabel("Choose Music");
 		cbMusic = new JComboBox(sMusicList);
 
@@ -313,7 +312,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbMusicOn.setBounds(X, Y+260, 120, 30);
 		musicList.setBounds(X+10, Y+290, 120, 30);
 		cbMusic.setBounds(X, Y+320, 120, 40);
-		WbExit.setBounds(X, Y+370, 120, 30);
+		WbQuit.setBounds(X, Y+370, 120, 30);
 
 		WbUndo.setBackground(new Color(254,232,156));
 		WbUndo.setOpaque(true);
@@ -335,8 +334,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbMusicOn.setBackground(new Color(254,232,156));
 		WbMusicOn.setOpaque(true);
 
-		WbExit.setBackground(new Color(254,232,156));
-		WbExit.setOpaque(true);
+		WbQuit.setBackground(new Color(254,232,156));
+		WbQuit.setOpaque(true);
 
 		musicList.setBackground(new Color(254,232,156));
 		musicList.setOpaque(true);
@@ -354,7 +353,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbReset.addActionListener(this);
 		WbMusicOn.addActionListener(this);
 		cbMusic.addItemListener(this);
-		WbExit.addActionListener(this);
+		WbQuit.addActionListener(this);
 
 		// Let buttons display on the screen
 		c.add(WbUndo);
@@ -363,7 +362,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		c.add(WbSelect);
 		c.add(WbTimer);
 		c.add(WbReset);
-		c.add(WbExit);
+		c.add(WbQuit);
 		c.add(WbMusicOn);
 		c.add(musicList);
 		c.add(cbMusic);
@@ -373,9 +372,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	@Override
 	// This part is going to set the function of each button...
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == WbExit) { // When exit button is pressed, warning
+		if (e.getSource() == WbQuit) { // When exit button is pressed, warning
 										// message shows up.
-			String str = "Are you sure you want to exit?\n";
+			String str = "Are you sure you want to quit?\n";
 			int diaResult = JOptionPane.showConfirmDialog(this, str, "Warning", JOptionPane.YES_NO_OPTION);
 			if (diaResult == JOptionPane.YES_OPTION) {
 				System.exit(0);
@@ -599,6 +598,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				//replace the current panel with a closing message
 				//System.exit(0);
 				updateInterface(MODE_DONE, game); // **YET TO BE IMPLEMENTED**F
+				new EndingScreen();
+				setVisible(false);
 			}
 		} else { // If the game isn't done, continue.
 			this.updateInterface(MODE_REFRESH, game);
