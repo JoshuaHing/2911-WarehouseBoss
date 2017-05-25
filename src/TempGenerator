@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -23,7 +24,14 @@ public class TempGenerator{
 	
 	public boolean validStartFlag;
 	public int randomStartX,randomStartY,randomWayX,randomWayY,randomTX,randomTY;
+	public int goingX,goingY;
 	public int wallDestroyed;
+	public Pair[] boxIndex = new Pair[3];
+	public Pair[] targetIndex  = new Pair[3];
+	public int[] moves;
+
+	public char[][] stra;
+	public int index;
 	
 	
 	public TempGenerator(int boxNeeded){
@@ -37,6 +45,12 @@ public class TempGenerator{
 		this.randomTX = 0;
 		this.randomTY = 0;
 		this.wallDestroyed = 0;
+		this.goingX = 0;
+		this.goingY = 0;
+		 
+		this.moves = new int[30];
+		this.stra = new char[5][30];
+		this.index = 0;
 	}	
 	public void setAllWall(){
 		for (int n=0;n<N;n++){
@@ -69,6 +83,11 @@ public class TempGenerator{
 					//if it's not wall then it's duplicated box place, then skip to next loop
 					map[randomStartX][randomStartY] = 'P';
 					map[randomStartX+randomWayX][randomStartY+randomWayY] = 'B';
+					System.out.println(randomStartX);
+					System.out.println(randomWayX);
+					
+					boxIndex[boxSum].indexX = randomStartX+randomWayX;
+					boxIndex[boxSum].indexY = randomStartY+randomWayY;
 					boxSum ++;
 				}
 				
@@ -85,15 +104,100 @@ public class TempGenerator{
 			randomTY = (int)(Math.random()*10);
 			if(map[randomTX][randomTY]!='P'&&map[randomTX][randomTY]!='B'){
 				map[randomTX][randomTY] = 'T';
+				targetIndex[targetSum].indexX = randomTX;
+				targetIndex[targetSum].indexY = randomTY;
 				targetSum++;
 			}
 		}
 		
 		//now simulate path, minimize wall destroying. eg: when able to move box to get road..
 		//so it's like step by step.
-		
+		int walls = 0,finalwalls = 0,finalindex = 0;
+
 		int currentWallDestroyed = 0; 
-		
+		int possibleMoveDis[] = new int[4];//used to record possible move distance from box to target
+		//[0] contains up [1]contains down [2] contains left [3] contains right
+		while(!checkFinished(boxNeeded)){
+			
+			//do the simulation
+			//check the distance between possible box move and the target
+			//check first box,note whichbox notates both box index & targetindex in some cases
+			 
+			for(int t = 0;t<boxIndex.length;t++){
+				//do works until it is last step
+				int tempResult = 0;
+				
+				while(calDistance(boxIndex[t].indexX,boxIndex[t].indexY,targetIndex[t].indexX,targetIndex[t].indexY)!= 1){
+					//change box location with least distance
+					possibleMoveDis[0] = calDistance(boxIndex[t].indexX,boxIndex[t].indexY-1,targetIndex[t].indexX,targetIndex[t].indexY);
+					possibleMoveDis[1] = calDistance(boxIndex[t].indexX,boxIndex[t].indexY+1,targetIndex[t].indexX,targetIndex[t].indexY);
+					possibleMoveDis[2] = calDistance(boxIndex[t].indexX-1,boxIndex[t].indexY,targetIndex[t].indexX,targetIndex[t].indexY);
+					possibleMoveDis[3] = calDistance(boxIndex[t].indexX+1,boxIndex[t].indexY,targetIndex[t].indexX,targetIndex[t].indexY);
+					tempResult = findMinimum(possibleMoveDis[0],possibleMoveDis[1],possibleMoveDis[2],possibleMoveDis[3]);
+					//possible minimal move leaves one possibility
+					//need to note that box cant go to the 4 corners.
+					if(tempResult!= 0 && tempResult <10){
+						//should not meet box in a row/col in this case, if so, it is fked, needs another map.
+						if(tempResult == 1){
+							//need to note that box cant go to the 4 corners.
+							ArrayList<String> a = new ArrayList<String>();
+							while(index < 5){
+								walls = calWalls(randomStartX,randomStartY,boxIndex[t].indexX,boxIndex[t].indexY+1,t,index);
+								if(walls<=finalwalls){
+									finalwalls = walls;
+									finalindex = index;
+								}
+								index ++;
+							}
+							walls = 0;
+							index = 0;
+							finalwalls = 0;
+							//use finalindex to simulate player moves and change passed wall to empty
+							
+							//then needs to set finalindex back to 0
+							finalindex = 0;
+							
+							goingX = boxIndex[t].indexX;
+							goingY = boxIndex[t].indexY-1;
+							//make person able to move to the tail of box
+							
+							
+						}else if(tempResult == 2){
+							
+						}else if(tempResult == 3){
+							
+						}else if(tempResult == 4){
+							
+						}
+					
+						//make box moving!
+						//consider about walls now
+					}
+					//possible minimal move leaves two possibility
+					else{
+						//maybe meet box in a row/col in this case, if so, try skip current loop and loop again
+						if(findRandom(tempResult)==1){
+							
+						}else if(findRandom(tempResult) == 2){
+							
+						}else if(findRandom(tempResult) == 3){
+							
+						}else if(findRandom(tempResult) == 4){
+							
+						}
+						
+						//choose direction and make box moving!
+						
+						//consider about walls now
+						
+					}
+				}
+				
+				//now set stuff for last step
+				
+			}
+			
+		}
 		
 		
 		
@@ -116,6 +220,319 @@ public class TempGenerator{
 		
 		
 				
+	}
+	//find random move from input minimum moves
+	public int findRandom(int number){
+		int result=0,tens=0,single= 0;
+		if(number == 13 || number ==14){
+			tens = 1;
+			single = number - tens*10;
+			int ranS = (int)(Math.random() *2);
+			if(ranS == 0){result = tens;}
+			else{result = single;}
+		}
+		else if(number == 23 || number ==24){
+			tens = 2;
+			single = number - tens*10;
+			int ranS = (int)(Math.random() *2);
+			if(ranS == 0){result = tens;}
+			else{result = single;}
+		}
+		else if(number == 31 || number ==32){
+			tens = 3;
+			single = number - tens*10;
+			int ranS = (int)(Math.random() *2);
+			if(ranS == 0){result = tens;}
+			else{result = single;}
+		}
+		else if(number == 41 || number ==42){
+			tens = 4;
+			single = number - tens*10;
+			int ranS = (int)(Math.random() *2);
+			if(ranS == 0){result = tens;}
+			else{result = single;}
+		}
+		return result;
+	}
+	
+	//find minimum moves
+	public int findMinimum(int a,int b,int c,int d){
+		int result =0;
+		if(a<=b&& a<=c && a<=d){
+			//up & down not possible
+			if (a==c){
+				result = 13;//means up&left
+			}
+			else if(a == d){
+				result = 14;//means up&right
+			}
+			else{
+				result = 1;//means up
+			}
+		}
+		else if (b<=a && b<=c && b<=d){
+			if (b==c){
+				result = 23;//means down&left
+			}
+			else if(b == d){
+				result = 24;//means down&right
+			}
+			else{
+				result = 2;//means down
+			}
+		}
+		else if (c<=a && c<=b && c<=d){
+			if(c== a){
+				result = 31;//means left & up
+			}
+			else if (c==b){
+				result = 32;//means left&down
+			}
+			else{
+				result = 3;//means left
+			}
+		}
+		else if (d<=a && d<=b && d<=c){
+			if(d== a){
+				result = 41;//means right & up
+			}
+			else if (d==b){
+				result = 42;//means right&down
+			}
+			else{
+				result = 4;
+			}
+		}
+		return result;
+	}
+	
+	//create a inner class to represent box and targets
+	class Pair{
+		public int indexX;
+		public int indexY;
+		
+		public Pair(int xValue,int yValue){
+			indexX = xValue;
+			indexY = yValue;
+		}
+	}
+	
+	//calculating how many walls around
+	//x0 means current player position in x index,
+	//x means destination position in x index
+	public int calWalls(int x0,int y0,int x,int y,int whichBox,int straIndex){
+		int wallDestroyed = 0;
+		int distance = calDistance(x0,y0,x,y);
+		int playerMove[] = new int[4];
+		int xV = x0;
+		int yV = y0;
+		int tempIndex = 0;
+		while(xV!=x && yV!= y){
+			//shouldnt over bounds
+			playerMove[0] = calDistance(xV,yV-1,x,y);
+			playerMove[1] = calDistance(xV,yV+1,x,y);
+			playerMove[2] = calDistance(xV-1,yV,x,y);
+			playerMove[3] = calDistance(xV+1,yV,x,y);
+			int result = 0;
+			boolean flag = false;
+			result = findMinimum(playerMove[0],playerMove[1],playerMove[2],playerMove[3]);
+			if(result != 0 && result < 10){
+				if(result ==1){
+					yV -=1;
+					//record move now
+					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
+						//valid move
+						wallDestroyed++;
+						flag = true;
+					}else if(map[xV][yV]=='B'){
+						//it may push box when creating map,implement later
+						if(yV-1 == 0){
+							//invalid in this case
+							flag = false;
+						}else{
+							wallDestroyed++;
+							flag = true;
+						}
+					}
+					if(flag == true){
+						char s = 'U';
+						stra[straIndex][tempIndex] = s;
+						tempIndex++;
+					}
+					//if not valid then nothing changes and keep looping
+						
+				}else if(result ==2){
+					yV +=1;
+					//record move now
+					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
+						//valid move
+						wallDestroyed++;
+						flag = true;
+					}else if(map[xV][yV]=='B'){
+						//it may push box when creating map,implement later
+						if(yV+1 == M-1){
+							//invalid in this case
+							flag = false;
+						}else{
+							wallDestroyed++;
+							flag = true;
+						}
+					}
+					if(flag == true){
+						char s = 'D';
+						stra[straIndex][tempIndex] = s;
+						tempIndex++;
+					}
+					//if not valid then nothing changes and keep looping
+				}else if(result ==3){
+					xV -=1;
+					//record move now
+					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
+						//valid move
+						wallDestroyed++;
+						flag = true;
+					}else if(map[xV][yV]=='B'){
+						//it may push box when creating map,implement later
+						if(xV-1 == 0){
+							//invalid in this case
+							flag = false;
+						}else{
+							wallDestroyed++;
+							flag = true;
+						}
+					}
+					if(flag == true){
+						char s = 'L';
+						stra[straIndex][tempIndex] = s;
+						tempIndex++;
+					}
+					//if not valid then nothing changes and keep looping
+				}else if(result ==4){
+					xV +=1;
+					//record move now
+					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
+						//valid move
+						wallDestroyed++;
+						flag = true;
+					}else if(map[xV][yV]=='B'){
+						//it may push box when creating map,implement later
+						if(xV+1 == N-1){
+							//invalid in this case
+							flag = false;
+						}else{
+							wallDestroyed++;
+							flag = true;
+						}
+					}
+					if(flag == true){
+						char s = 'R';
+						stra[straIndex][tempIndex] = s;
+						tempIndex++;
+					}
+					//if not valid then nothing changes and keep looping
+				}
+			}
+			else{
+				if(findRandom(result) == 1){
+					yV -=1;
+					//record move now
+					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
+						//valid move
+						wallDestroyed++;
+						flag = true;
+					}else if(map[xV][yV]=='B'){
+						//it may push box when creating map,implement later
+						if(yV-1 == 0){
+							//invalid in this case
+							flag = false;
+						}else{
+							wallDestroyed++;
+							flag = true;
+						}
+					}
+					if(flag == true){
+						char s = 'U';
+						stra[straIndex][tempIndex] = s;
+						tempIndex++;
+					}
+					//if not valid then nothing changes and keep looping
+				}else if(findRandom(result) == 2){
+					yV +=1;
+					//record move now
+					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
+						//valid move
+						wallDestroyed++;
+						flag = true;
+					}else if(map[xV][yV]=='B'){
+						//it may push box when creating map,implement later
+						if(yV+1 == M-1){
+							//invalid in this case
+							flag = false;
+						}else{
+							wallDestroyed++;
+							flag = true;
+						}
+					}
+					if(flag == true){
+						char s = 'D';
+						stra[straIndex][tempIndex] = s;
+						tempIndex++;
+					}
+					//if not valid then nothing changes and keep looping
+				}else if(findRandom(result) == 3){
+					xV -=1;
+					//record move now
+					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
+						//valid move
+						wallDestroyed++;
+						flag = true;
+					}else if(map[xV][yV]=='B'){
+						//it may push box when creating map,implement later
+						if(xV-1 == 0){
+							//invalid in this case
+							flag = false;
+						}else{
+							wallDestroyed++;
+							flag = true;
+						}
+					}
+					if(flag == true){
+						char s = 'L';
+						stra[straIndex][tempIndex] = s;
+						tempIndex++;
+					}
+					//if not valid then nothing changes and keep looping
+				}else if(findRandom(result) == 4){
+					xV +=1;
+					//record move now
+					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
+						//valid move
+						wallDestroyed++;
+						flag = true;
+					}else if(map[xV][yV]=='B'){
+						//it may push box when creating map,implement later
+						if(xV+1 == N-1){
+							//invalid in this case
+							flag = false;
+						}else{
+							wallDestroyed++;
+							flag = true;
+						}
+					}
+					if(flag == true){
+						char s = 'R';
+						stra[straIndex][tempIndex] = s;
+						tempIndex++;
+					}
+					//if not valid then nothing changes and keep looping
+				}
+				
+			}
+			
+		}
+
+		
+		return 0;
 	}
 	
 	//calculating distance function |x| + |y| instead of sqrt((y-y0)^2 + (x-x0)^2)
