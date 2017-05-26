@@ -430,7 +430,11 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			String str = "Are you sure you want to go to the menu?\n";
 			int diaResult = JOptionPane.showConfirmDialog(this, str, "Menu", JOptionPane.YES_NO_OPTION);
 			if(diaResult == JOptionPane.YES_OPTION) {
-				setVisible(false);
+				//setVisible(false);
+				if(music.isPlay()) {
+					music.stopPlay();
+				}
+				dispose();
 				StartingScreen startMenu = new StartingScreen();
 			} else {
 				requestFocus();
@@ -626,7 +630,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				//System.exit(0);
 				updateInterface(MODE_DONE, game); // **YET TO BE IMPLEMENTED**F
 				new EndingScreen();
-				setVisible(false);
+				music.stopPlay();
+				dispose();
+				//setVisible(false);
 				resetTimer();
 			}
 		} else { // If the game isn't done, continue.
