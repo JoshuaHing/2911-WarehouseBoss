@@ -528,7 +528,7 @@ public class Game {
 			}
 
 			if(lastMove == PLAYER_ONE_UP_MOVE || lastMove == PLAYER_TWO_UP_MOVE) {
-				System.out.println("a");
+				//System.out.println("a");
 				if(map.get(x+1).get(y).equals("E")){
 					map.get(x+1).set(y,whoAmI);
 					map.get(x).set(y,iAmOn);
@@ -538,7 +538,7 @@ public class Game {
 					map.get(x).set(y,iAmOn);
 				}
 			} else if(lastMove == PLAYER_ONE_DOWN_MOVE || lastMove == PLAYER_TWO_DOWN_MOVE) {
-				System.out.println("b");
+				//System.out.println("b");
 				if(map.get(x-1).get(y).equals("E")){
 					map.get(x-1).set(y,whoAmI);
 					map.get(x).set(y,iAmOn);
@@ -548,7 +548,7 @@ public class Game {
 					map.get(x).set(y,iAmOn);
 				}
 			} else if(lastMove == PLAYER_ONE_LEFT_MOVE || lastMove == PLAYER_TWO_LEFT_MOVE) {
-				System.out.println("c");
+				//System.out.println("c");
 				if(map.get(x).get(y+1).equals("E")){
 					map.get(x).set(y+1,whoAmI);
 					map.get(x).set(y,iAmOn);
@@ -560,7 +560,7 @@ public class Game {
 				}
 
 			} else if(lastMove == PLAYER_ONE_RIGHT_MOVE || lastMove == PLAYER_TWO_RIGHT_MOVE) {
-				System.out.println("d");
+				//System.out.println("d");
 				if(map.get(x).get(y-1).equals("E")){
 					map.get(x).set(y-1,whoAmI);
 					map.get(x).set(y,iAmOn);
@@ -639,7 +639,7 @@ public class Game {
 					}
 					
 				} else if(lastMove == PLAYER_ONE_LEFT_MOVE_WB || lastMove == PLAYER_TWO_LEFT_MOVE_WB) {
-					System.out.println("move = " + map.get(x).get(y+1));
+					//System.out.println("move = " + map.get(x).get(y+1));
 					if(map.get(x).get(y-1).equals("D")){
 						map.get(x).set(y-1,"T");
 						map.get(x).set(y, "B");
@@ -707,7 +707,7 @@ public class Game {
 				}
 			}
 		} else {
-			System.out.println("Moves list is empty. Cannot undo.");
+			//System.out.println("Moves list is empty. Cannot undo.");
 		}
 	}
 

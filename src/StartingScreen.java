@@ -4,10 +4,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -58,9 +54,6 @@ public class StartingScreen extends JFrame implements ActionListener
     SPlayer.setFont(new Font("Arial", Font.BOLD, 25));
     SPlayer.setHorizontalTextPosition(JButton.CENTER);
     SPlayer.setVerticalTextPosition(JButton.CENTER);
-    /*sPlayerText.setAlignmentX(X-280);
-    sPlayerText.setAlignmentX(Y-80);
-    sPlayerText.setVisible(true);*/
     try {
       Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_01.png"));
       Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_02.png"));
@@ -70,7 +63,7 @@ public class StartingScreen extends JFrame implements ActionListener
       SPlayer.setSelectedIcon(new ImageIcon(img2));
       SPlayer.setDisabledSelectedIcon(new ImageIcon(img2));
     } catch (Exception ex) {
-      System.out.println(ex);
+      //System.out.println(ex);
     }
     SPlayer.setOpaque(false);
     SPlayer.setContentAreaFilled(false);
@@ -97,7 +90,7 @@ public class StartingScreen extends JFrame implements ActionListener
         TPlayer.setSelectedIcon(new ImageIcon(img2));
         TPlayer.setDisabledSelectedIcon(new ImageIcon(img2));
     } catch (Exception ex) {
-      System.out.println(ex);
+      //System.out.println(ex);
     }
     TPlayer.setOpaque(false);
     TPlayer.setContentAreaFilled(false);
@@ -120,7 +113,7 @@ public class StartingScreen extends JFrame implements ActionListener
         Exit.setSelectedIcon(new ImageIcon(img2));
         Exit.setDisabledSelectedIcon(new ImageIcon(img2));
       } catch (Exception ex) {
-        System.out.println(ex);
+        //System.out.println(ex);
       }
     Exit.setOpaque(false);
     Exit.setContentAreaFilled(false);
@@ -138,7 +131,7 @@ public class StartingScreen extends JFrame implements ActionListener
         Image img1 = ImageIO.read(getClass().getResource("MenuImage/button_05.png"));
         help.setIcon(new ImageIcon(img1));
       } catch (Exception ex) {
-        System.out.println(ex);
+        //System.out.println(ex);
       }
     help.setOpaque(false);
     help.setContentAreaFilled(false);

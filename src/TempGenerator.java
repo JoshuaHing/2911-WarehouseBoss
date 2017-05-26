@@ -634,7 +634,7 @@ public class TempGenerator{
 			}*/
 			Map newMap = new Map(stringMap, a.getBoxesNeeded());
 			game.addMap(newMap);
-			print();
+			//print();
 		}
 		return game;
 

@@ -4,17 +4,12 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 public class HelpScreen extends JFrame implements ActionListener {
 	JButton Return;
@@ -52,7 +47,7 @@ public class HelpScreen extends JFrame implements ActionListener {
 			Return.setSelectedIcon(new ImageIcon(img2));
 			Return.setDisabledSelectedIcon(new ImageIcon(img2));
 		} catch (Exception ex) {
-			System.out.println(ex);
+			//System.out.println(ex);
 		}
 		Return.setOpaque(false);
 		Return.setContentAreaFilled(false);

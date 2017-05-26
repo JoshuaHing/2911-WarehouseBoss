@@ -27,9 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.Timer;
 
 public class WarehouseBossInterface extends JFrame implements ActionListener, KeyListener, ItemListener, MouseListener {
-	// We want to bulid ipnterface with basic steps including
-	// first pass, next level, previous level, last level and undo the last
-	// move;
+
 	JButton WbFirst, WbNext, WbPre, WbTimer, WbUndo, help;
 
 	// Then we can provide more actions like select which level gamer want to
@@ -63,16 +61,15 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	boolean timerOn = false;
 	boolean keyReleased = true;
 	
-	private int numGoals;
 
 	public static int currLevel;
-	int seconds1;
-	int seconds2;
-	int milliseconds;
-	int tenthSecond;
-	int minutes1;
-	int minutes2;
-	int secondsPlayed;
+	private int seconds1;
+	private int seconds2;
+	private int milliseconds;
+	private int tenthSecond;
+	private int minutes1;
+	private int minutes2;
+	private int secondsPlayed;
 	
 	private static final int NUM_ROWS = 12;
 	private static final int NUM_COLS = 12;
@@ -119,7 +116,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		this.game = game; // Give the interface the game. The game contains all
 							// of the game maps.
 		
-		this.currLevel = 0;
+		//this.currLevel = 0;
 
 		this.seconds1 = 0;
 		this.seconds2 = 0;

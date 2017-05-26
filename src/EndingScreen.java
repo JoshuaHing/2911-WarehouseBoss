@@ -49,7 +49,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 	        menu.setSelectedIcon(new ImageIcon(img2));
 	        menu.setDisabledSelectedIcon(new ImageIcon(img2));
 	    } catch (Exception ex) {
-	      System.out.println(ex);
+	      //System.out.println(ex);
 	    }
 	    menu.setOpaque(false);
 	    menu.setContentAreaFilled(false);
@@ -72,7 +72,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 	        Quit.setSelectedIcon(new ImageIcon(img2));
 	        Quit.setDisabledSelectedIcon(new ImageIcon(img2));
 	      } catch (Exception ex) {
-	        System.out.println(ex);
+	       // System.out.println(ex);
 	      }
 	    Quit.setOpaque(false);
 	    Quit.setContentAreaFilled(false);

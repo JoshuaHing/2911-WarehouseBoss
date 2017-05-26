@@ -44,12 +44,12 @@ public class Generator {
 			} while(delta == 0) ; // make new delta if d=0
 			direction = ThreadLocalRandom.current().nextInt(0, 2) == 1 ? "horizontal" : "vertical";
 			for(int i = 0; i < walks; i++){
-				System.out.println("direction = "+direction+" delta = "+delta);
+				//System.out.println("direction = "+direction+" delta = "+delta);
 				for(int j = 0; j != delta; j = delta < 0 ? j-1 : j+1){ //j-- if delta < 0, else j++
 					if(direction.equals("horizontal")){
 						testX = X + ((delta > 0) ? 1:-1); 
 						testY = Y;
-						System.out.println("memehorizontal"+((delta > 0) ? 1:-1));
+						//System.out.println("memehorizontal"+((delta > 0) ? 1:-1));
 					}
 					else{testY = Y + ((delta > 0) ? 1:-1); testX = X; System.out.println("memevertical");}
 					
