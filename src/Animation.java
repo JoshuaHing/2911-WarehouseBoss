@@ -130,7 +130,13 @@ public class Animation extends JFrame {
 			
 			int e = 0;
 					
-
+			if (game.getLevel(game.getSize()-1).isDone()) { // If the game is done
+				int x = game.getXPosition(1);
+				int y = game.getXPosition(1);
+				pointX = startX+(x * X)-(y * X);
+				pointY = startY + (x+y)*Y;
+			}
+			
 			
 			for (i = 0; i < MAP_SIZE; i++){
 				for(j = 0; j < MAP_SIZE; j++){
@@ -153,7 +159,8 @@ public class Animation extends JFrame {
 							g2d.drawImage(Box, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
 						} else if (currString.equals("T")) { 								// goal square
 							g2d.drawImage(goalsquare, (startX+(i * X)-(j * X)), startY + (i+j)*Y, W, W, this);
-						} else if (currString.equals("P")) {								// Mario
+						} else if (currString.equals("P")) {
+							//System.out.println("If you see me, then fixed");// Mario
 							goalX = (startX+(i * X)-(j * X));
 							goalY = startY + (i+j)*Y;
 							g2d.drawImage(Mario.getSubimage(RIGHT_Ma, LEFT_Ma, M, H), pointX+10, (pointY-7), M, H, this);

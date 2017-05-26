@@ -489,14 +489,17 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				kit.getImage("img/ground1.png"),
 				kit.getImage("img/player.png"), 
 				kit.getImage("img/wall1.png"), 
-				kit.getImage("img/goal-box1.png") }; // More
+				kit.getImage("img/goal-box1.png"),
+				kit.getImage("img/player.png")};
+// More
+		
 																													// images
 																													// can
 																													// be
 																													// added
 
 		public MyPanel(ArrayList<ArrayList<String>> map) {
-			setSize(startx*2+(10*x), starty*2 + (10*x));
+			setSize(startx*2+(12*x), starty*2 + (12*x));
 			this.map = map;
 			requestFocus();
 		}
@@ -512,9 +515,12 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 							g.drawImage(mapimg[1], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("E")) { // empty
 							g.drawImage(mapimg[2], i * x + startx, j * x + starty, x, x, this);
-						} else if (currString.equals("P")||currString.equals("Q")||currString.equals("O")||currString.equals("R")) { // player Probably not needed
+						} else if (currString.equals("P")||currString.equals("O")) { // player Probably not needed
 							g.drawImage(mapimg[2], i * x + startx, j * x + starty, x, x, this);
 							g.drawImage(mapimg[3], i * x + startx, j * x + starty, x, x, this);
+						} else if (currString.equals("Q")||currString.equals("R")) { // player Probably not needed
+							g.drawImage(mapimg[2], i * x + startx, j * x + starty, x, x, this);
+							g.drawImage(mapimg[6], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("W")) { // wall
 							g.drawImage(mapimg[4], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("D")) { // box is on goal
@@ -729,6 +735,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	@Override
 	public void keyReleased(KeyEvent e) {
 		Animation.PRESSED = false;
+		System.out.println("WAAAAAAAAAAAAAAAAA");
 	}
 
 	public Game game;

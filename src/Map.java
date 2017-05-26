@@ -6,6 +6,7 @@ public class Map {
 	private ArrayList<ArrayList<String>> initialMap;
 	private int numGoalBoxes;
 	private int numGoals;
+	
 	private static final int MAP_SIZE = 12;
 	public Map(ArrayList<ArrayList<String>> map, int numGoals) {
 		this.map = map;
