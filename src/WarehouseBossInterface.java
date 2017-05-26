@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -17,8 +16,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -75,6 +72,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	int tenthSecond;
 	int minutes1;
 	int minutes2;
+	int secondsPlayed;
 	
 	private static final int NUM_ROWS = 12;
 	private static final int NUM_COLS = 12;
@@ -129,6 +127,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		this.tenthSecond = 0;
 		this.minutes1 = 0;
 		this.minutes2 = 0;
+		this.secondsPlayed = 0;
 
 		/* end of code for arrow keys */
 
@@ -192,6 +191,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				}
 				tenthSecond++;
 				textField.setText(s);
+				secondsPlayed++;
 				//requestFocus();
 			}
 		};
@@ -430,11 +430,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			String str = "Are you sure you want to go to the menu?\n";
 			int diaResult = JOptionPane.showConfirmDialog(this, str, "Menu", JOptionPane.YES_NO_OPTION);
 			if(diaResult == JOptionPane.YES_OPTION) {
-			  if (music.isPlay()){
-			    music.stopPlay();
-        }
-				dispose();
-			  //setVisible(false);
+				setVisible(false);
 				StartingScreen startMenu = new StartingScreen();
 			} else {
 				requestFocus();
@@ -490,6 +486,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		this.minutes1 = 0;
 		this.minutes2 = 0;
 		this.milliseconds = 0;
+		this.secondsPlayed = 0;
 	}
 
 	// Main game interface
@@ -610,23 +607,27 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	
 	public void continueIfDone() {
 		if (game.getLevel(currLevel).isDone()) { // If the game is done
-			resetTimer();
+			
 			//game.printMovesMade();
 			game.resetMap(currLevel);
 			game.resetMovesMade();
+			
 			if (game.hasNextLevel(currLevel)) { // AND the game has another
-												// level
+				//MiddleScreen mS = new MiddleScreen(game.getLevel(currLevel).getNumGoalBoxes(), secondsPlayed);		
+
 				currLevel++; // THEN move to the next level and refresh the interface
 				updateInterface(MODE_REFRESH, game);
+				//boxesOnGoal, secondsPlayed
+				resetTimer();
+				
 			} else { // ELSE finish the game
 				//System.out.println("done.");
 				//replace the current panel with a closing message
 				//System.exit(0);
 				updateInterface(MODE_DONE, game); // **YET TO BE IMPLEMENTED**F
 				new EndingScreen();
-        dispose();
-        music.stopPlay();
-				//setVisible(false);
+				setVisible(false);
+				resetTimer();
 			}
 		} else { // If the game isn't done, continue.
 			this.updateInterface(MODE_REFRESH, game);
@@ -769,30 +770,34 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
+	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-	}
-
-
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
+	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
+
+
+
+	}
+
 

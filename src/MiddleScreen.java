@@ -12,13 +12,17 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-public class EndingScreen extends JFrame implements ActionListener {
-	JButton Quit, continueGame, menu;
+public class MiddleScreen extends JFrame implements ActionListener {
+	JButton Close, continueGame, menu;
 
 	int X = 1410;
 	int Y = 200;
+	int boxesOnGoal;
+	int secondsPlayed;
 
-	public EndingScreen() {
+	public MiddleScreen(int boxesOnGoal, int secondsPlayed) {
+		this.boxesOnGoal = boxesOnGoal;
+		this.secondsPlayed = secondsPlayed;
 		setTitle("Warehouse Boss 2017-COMP2911");
 		setSize(1678, 888);
 		setLocationRelativeTo(null);
@@ -32,55 +36,53 @@ public class EndingScreen extends JFrame implements ActionListener {
 	    Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Image image = toolkit.getImage("img/box.png");
 		setIconImage(image);
-
-	    menu = new JButton("Main Menu");
-	    menu.setFont(new Font("Arial", Font.BOLD, 25));
-	    menu.setHorizontalTextPosition(JButton.CENTER);
-	    menu.setVerticalTextPosition(JButton.CENTER);
-	    /*sPlayerText.setAlignmentX(X-280);
-	    sPlayerText.setAlignmentX(Y-80);
-	    sPlayerText.setVisible(true);*/
+	    second = new JButton("Close");
+	    second.setFont(new Font("Arial", Font.BOLD, 25));
+	    second.setHorizontalTextPosition(JButton.CENTER);
+	    Close.setVerticalTextPosition(JButton.CENTER);
 	    try {
 	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_05.png"));
 	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_06.png"));
-	        menu.setIcon(new ImageIcon(img1));
-	        menu.setDisabledIcon(new ImageIcon(img2));
-	        menu.setPressedIcon(new ImageIcon(img2));
-	        menu.setSelectedIcon(new ImageIcon(img2));
-	        menu.setDisabledSelectedIcon(new ImageIcon(img2));
-	    } catch (Exception ex) {
-	      System.out.println(ex);
-	    }
-	    menu.setOpaque(false);
-	    menu.setContentAreaFilled(false);
-	    menu.setBorderPainted(false);
-	    menu.setFocusPainted(false);	
-	    menu.setBounds(X - 277, Y + 140, 200, 92);
-	    menu.addActionListener(this);
-	    add(menu);
-
-	    Quit = new JButton("Quit");
-	    Quit.setFont(new Font("Arial", Font.BOLD, 25));
-	    Quit.setHorizontalTextPosition(JButton.CENTER);
-	    Quit.setVerticalTextPosition(JButton.CENTER);
-	    try {
-	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_05.png"));
-	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_06.png"));
-	        Quit.setIcon(new ImageIcon(img1));
-	        Quit.setDisabledIcon(new ImageIcon(img2));
-	        Quit.setPressedIcon(new ImageIcon(img2));
-	        Quit.setSelectedIcon(new ImageIcon(img2));
-	        Quit.setDisabledSelectedIcon(new ImageIcon(img2));
+	        second.setIcon(new ImageIcon(img1));
+	        second.setDisabledIcon(new ImageIcon(img2));
+	        second.setPressedIcon(new ImageIcon(img2));
+	        second.setSelectedIcon(new ImageIcon(img2));
+	        second.setDisabledSelectedIcon(new ImageIcon(img2));
 	      } catch (Exception ex) {
 	        System.out.println(ex);
 	      }
-	    Quit.setOpaque(false);
-	    Quit.setContentAreaFilled(false);
-	    Quit.setBorderPainted(false);
-	    Quit.setFocusPainted(false);
-	    Quit.setBounds(X - 277, Y + 280, 200, 92);
-	    Quit.addActionListener(this);
-	    add(Quit);
+	    second.setOpaque(false);
+	    second.setContentAreaFilled(false);
+	    second.setBorderPainted(false);
+	    second.setFocusPainted(false);
+	    second.setBounds(X - 277, Y + 280, 200, 92);
+	    second.addActionListener(this);
+	    add(second);
+		setSize(1678, 888);
+
+
+	    Close = new JButton("Close");
+	    Close.setFont(new Font("Arial", Font.BOLD, 25));
+	    Close.setHorizontalTextPosition(JButton.CENTER);
+	    Close.setVerticalTextPosition(JButton.CENTER);
+	    try {
+	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_05.png"));
+	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_06.png"));
+	        Close.setIcon(new ImageIcon(img1));
+	        Close.setDisabledIcon(new ImageIcon(img2));
+	        Close.setPressedIcon(new ImageIcon(img2));
+	        Close.setSelectedIcon(new ImageIcon(img2));
+	        Close.setDisabledSelectedIcon(new ImageIcon(img2));
+	      } catch (Exception ex) {
+	        System.out.println(ex);
+	      }
+	    Close.setOpaque(false);
+	    Close.setContentAreaFilled(false);
+	    Close.setBorderPainted(false);
+	    Close.setFocusPainted(false);
+	    Close.setBounds(X - 277, Y + 280, 200, 92);
+	    Close.addActionListener(this);
+	    add(Close);
 		setSize(1678, 888);
 	}
 
@@ -89,7 +91,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == Quit) {
+		if(e.getSource() == Close) {
 			String str = "Are you sure you want to exit?\n";
 			int diaResult = JOptionPane.showConfirmDialog(this, str, "Warning", JOptionPane.YES_NO_OPTION);
 			if(diaResult == JOptionPane.YES_OPTION) {
@@ -108,3 +110,4 @@ public class EndingScreen extends JFrame implements ActionListener {
 	
 
 }
+

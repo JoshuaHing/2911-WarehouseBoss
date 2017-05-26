@@ -171,8 +171,7 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 			readMap("Hard");
 			Animation.PRESSED = false;
 		} else if(e.getSource() == menuButton) {
-      dispose();
-		  //setVisible(false);
+			setVisible(false);
 			StartingScreen sS = new StartingScreen();
 		}
 	}
@@ -222,8 +221,7 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 			// System.out.println("map size = " + game.numMaps());
 			// game.setInitialMap(game.getLevel(0).getMap());
 			game.setMap(game.getLevel(0));
-      dispose();
-			//setVisible(false);
+			setVisible(false);
 			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 			EventQueue.invokeLater(() -> newInterface.canvas.start());
 		} catch (FileNotFoundException f) {

@@ -12,6 +12,7 @@ import java.util.Iterator;
 public class TempGenerator{
 	final static int N = 12; 		// SIZE OF MAP. CHANGE IF NEEDED
 	final static int M = 12;
+	int boxesNeeded;
 	public static char[][] map = new char[N][M];
 	
 	public boolean validStartFlag;
@@ -40,6 +41,7 @@ public class TempGenerator{
 	
 	public void generate(int boxNeeded){
 		//first initialize boxIndex & targetIndex arrayList of pair
+		this.boxesNeeded = boxNeeded;
 		for (int g = 0;g<boxNeeded;g++){
 			boxIndex.add(new Pair(0,0));
 			targetIndex.add(new Pair(0,0));
@@ -47,9 +49,8 @@ public class TempGenerator{
 		
 		int boxSum =0;
 		//set player & box binded at start 
-		randomStartX = (int )(Math.random() * (N-6))+4;
-		randomStartY = (int )(Math.random() * (M-6))+4;
-
+		randomStartX = (int )(Math.random() * (N-8))+5;
+		randomStartY = (int )(Math.random() * (M-8))+5;
 		//5~8
 		//set box ,maybe multiple boxes
 		while(boxSum<boxNeeded){
@@ -107,7 +108,7 @@ public class TempGenerator{
 				targetSum++;
 			}
 		}
-		//print();
+		print();
 		
 		//now simulate path, minimize wall destroying. 
 
@@ -537,7 +538,7 @@ public class TempGenerator{
 	
 	//x for start x index, y for start y index, rw for randomway eg:0 for up 1 for down
 	public boolean checkStartPoint(int x ,int y,int rx,int ry){
-		if(!(rx ==0&&ry==0)){
+		if((rx==0 && ry != 0) ||(rx!= 0 && ry == 0)){
 			//if touches edge, then start point is invalid
 			if(rx + x== 0 || ry + y == 0 || rx + x ==N-1 || ry+ y == M-1){return false;}
 			else{return true;}
@@ -554,46 +555,79 @@ public class TempGenerator{
 		System.out.println();
 	}
 	
+	public int getBoxesNeeded() {
+		return this.boxesNeeded;
+	}
+	
 	public static void main(String[] args){
-		TempGenerator a = new TempGenerator(8) ;
-		int px = 0,py = 0;
-		for(int i = 0;i <20;i++){
-			a = new TempGenerator(8);
-			if(a.checkFinished(8)){
-				break;
-			}
-		}
-		px = a.randomStartX;
-		py = a.randomStartY;
-
-		//set back player & box & target
-
-		map[px][py] = 'P';
-		Iterator<Pair> boxes = a.boxIndex.iterator();
-		Iterator<Pair> targets = a.targetIndex.iterator();
-		while(boxes.hasNext()){
-			Pair tmp = boxes.next();
-			map[tmp.indexX][tmp.indexY] = 'B';
-			//set empty around B in order to get rid of edge cases
-			dodgySet(tmp.indexX,tmp.indexY);
-		}
-		
-		while(targets.hasNext()){
-			Pair tmpT = targets.next();
-			map[tmpT.indexX][tmpT.indexY] = 'T';
-		}	
-		
-		//edit map so that outer bound is wall
-		for(int j = 0;j<N;j++){
-			for(int k = 0;k<M;k++){
-				if(j ==0 || k == 0 ||j==N-1||k==M-1){
-					map[j][k] = 'W';
+		Game game = new Game();
+		for(int i = 0; i < 3; i++) {
+			TempGenerator a = new TempGenerator(3) ;
+			int px = 0,py = 0;
+			for(int j = 0;j <20;j++){
+				a = new TempGenerator(3);
+				if(a.checkFinished(3)){
+					break;
 				}
 			}
+			px = a.randomStartX;
+			py = a.randomStartY;
+	
+			//set back player & box & target
+	
+			map[px][py] = 'P';
+			Iterator<Pair> boxes = a.boxIndex.iterator();
+			Iterator<Pair> targets = a.targetIndex.iterator();
+			while(boxes.hasNext()){
+				Pair tmp = boxes.next();
+				map[tmp.indexX][tmp.indexY] = 'B';
+				//set empty around B in order to get rid of edge cases
+				dodgySet(tmp.indexX,tmp.indexY);
+			}
+			
+			while(targets.hasNext()){
+				Pair tmpT = targets.next();
+				map[tmpT.indexX][tmpT.indexY] = 'T';
+			}	
+			
+			//edit map so that outer bound is wall
+			
+			for(int j = 0;j<N;j++){
+				for(int k = 0;k<M;k++){
+					if(j ==0 || k == 0 ||j==N-1||k==M-1){
+						map[j][k] = 'W';
+					}
+				}
+			}
+	
+			ArrayList<ArrayList<String>>stringMap = new ArrayList<ArrayList<String>>();
+			for(int k = 0; k < 12; k++) {
+				ArrayList<String> newList = new ArrayList<String>();
+				stringMap.add(newList);
+				for(int j = 0; j < 12; j++) {
+					char c = map[k][j];
+					String s = Character.toString(c );
+					stringMap.get(k).add(s);	
+				}
+			}
+			System.out.println("Map = ");
+			for(int k = 0; k < 12; k++) {
+				ArrayList<String> newList = new ArrayList<String>();
+				stringMap.add(newList);
+				for(int j = 0; j < 12; j++) {
+					
+					System.out.print(stringMap.get(k).get(j) + " ");	
+				}
+				System.out.println();
+			}
+			Map newMap = new Map(stringMap, a.getBoxesNeeded());
+			game.addMap(newMap);
+			//print();
 		}
-		print();
 
 	}
 
 }
+
+
 
