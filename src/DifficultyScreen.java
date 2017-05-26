@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class DifficultyScreen extends JFrame implements ActionListener {
-	JButton hardButton, easyButton, medButton;
+	JButton hardButton, easyButton, medButton, menuButton;
 
 	int X = 1410;
 	int Y = 200;
@@ -36,10 +36,6 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		setContentPane(new JLabel(new ImageIcon("MenuImage/bg_start menu.png")));
 		setLayout(null);
 
-		JLabel title = new JLabel("Select Difficulty");
-		title.setBounds(X - 332, Y - 85, 400, 100);
-		title.setFont(new Font("Arial Black", Font.BOLD, 30));
-		add(title);
 
 		// ImageIcon icon = new ImageIcon("MenuImage/gui_07.bmp");
 		// JButton button = new JButton(icon);
@@ -111,6 +107,28 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		hardButton.addActionListener(this);
 		add(hardButton);
 
+		menuButton = new JButton("Back");
+		menuButton.setFont(new Font("Arial", Font.PLAIN, 25));
+		menuButton.setHorizontalTextPosition(JButton.CENTER);
+		menuButton.setVerticalTextPosition(JButton.CENTER);
+		/*
+		 * easyButtonText.setAlignmentX(X-280);
+		 * easyButtonText.setAlignmentX(Y-80); easyButtonText.setVisible(true);
+		 */
+		try {
+			Image img = ImageIO.read(getClass().getResource("MenuImage/icon3.png"));
+			menuButton.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+		menuButton.setOpaque(false);
+		menuButton.setContentAreaFilled(false);
+		menuButton.setBorderPainted(false);
+		menuButton.setFocusPainted(false);
+		menuButton.setBounds(X - 277, Y + 500, 200, 92);
+		// easyButton.setIcon(new ImageIcon("MenuImage/gui_07.bmp"));
+		menuButton.addActionListener(this);
+		add(menuButton);
 		// Just for refresh :) Not optional!
 		setSize(1677, 887);
 		setSize(1678, 888);
@@ -127,6 +145,9 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		} else if (e.getSource() == hardButton) {
 			readMap("Hard");
 			Animation.PRESSED = false;
+		} else if(e.getSource() == menuButton) {
+			setVisible(false);
+			StartingScreen sS = new StartingScreen();
 		}
 	}
 

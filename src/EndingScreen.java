@@ -28,10 +28,6 @@ public class EndingScreen extends JFrame implements ActionListener {
 		setContentPane(new JLabel(new ImageIcon("MenuImage/bg_start menu.png")));
 		setLayout(null);
 
-	    JLabel title = new JLabel("Congratulations!");
-	    title.setBounds(X-332, Y-85, 400, 100);
-		title.setFont(new Font("Arial Black", Font.BOLD, 30));
-		add(title);
 
 	    menu = new JButton("Main Menu");
 	    menu.setFont(new Font("Arial", Font.PLAIN, 25));
