@@ -5,10 +5,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -179,15 +175,15 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 	public void readMap(String mode) {
 		TempGenerator tG;
 		if(mode.equals("Easy")) {	
-			tG = new TempGenerator(2, this.gameMode);
-			Game game = tG.getGame(2, this.gameMode);
+			tG = new TempGenerator(3, this.gameMode);
+			Game game = tG.getGame(3, this.gameMode);
 			game.setMap(game.getLevel(0));
 			setVisible(false);
 			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 			EventQueue.invokeLater(() -> newInterface.canvas.start());
 		} else if(mode.equals("Medium")) {
-			tG = new TempGenerator(5, this.gameMode);
-			Game game = tG.getGame(5, this.gameMode);
+			tG = new TempGenerator(6, this.gameMode);
+			Game game = tG.getGame(6, this.gameMode);
 			game.setMap(game.getLevel(0));
 			setVisible(false);
 			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
