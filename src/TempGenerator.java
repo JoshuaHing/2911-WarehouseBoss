@@ -21,14 +21,16 @@ public class TempGenerator{
 	public ArrayList<Pair> targetIndex = new ArrayList<Pair>();
 	public int[] movesX = new int[102];
 	public int[] movesY = new int[102];
+	String mode;
 		
 	public int preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY;
 	
 	
-	public TempGenerator(int boxNeeded){
+	public TempGenerator(int boxNeeded, String mode){
 		setAllWall();
 		generate(boxNeeded);
 		this.validStartFlag = false;
+		this.mode = mode;
 	}	
 	public void setAllWall(){
 		for (int n=0;n<N;n++){
@@ -559,13 +561,13 @@ public class TempGenerator{
 		return this.boxesNeeded;
 	}
 	
-	public static Game getGame(int num) {
+	public static Game getGame(int num, String mode) {
 		Game game = new Game();
 		for(int i = 0; i < 3; i++) {
-			TempGenerator a = new TempGenerator(num) ;
+			TempGenerator a = new TempGenerator(num,mode) ;
 			int px = 0,py = 0;
 			for(int j = 0;j <20;j++){
-				a = new TempGenerator(num);
+				a = new TempGenerator(num, mode);
 				if(a.checkFinished(num )){
 					break;
 				}
@@ -599,7 +601,18 @@ public class TempGenerator{
 					}
 				}
 			}
-	
+			if(mode.equals("Multi Player")) {
+				boolean flagQ = false;
+				while(!flagQ){
+					int tempX = 0,tempY = 0;
+					tempX = (int)(Math.random() * (N-1))+1;
+					tempY = (int)(Math.random() * (M-1))+1;
+					if(map[tempX][tempY] =='E'){
+						map[tempX][tempY] = 'Q';
+						flagQ = true;
+					}
+				}
+			}
 			ArrayList<ArrayList<String>>stringMap = new ArrayList<ArrayList<String>>();
 			for(int k = 0; k < 12; k++) {
 				ArrayList<String> newList = new ArrayList<String>();
