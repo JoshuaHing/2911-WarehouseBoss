@@ -276,7 +276,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		
 		c.add(mainPanel);
 	    c.add (canvas);
-		
+		music = new Music();
 		// width, height)
 		setSize(1678, 936); // set size of the entire container
 		setVisible(true);
