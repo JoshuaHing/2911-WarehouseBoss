@@ -15,14 +15,11 @@ import javax.swing.JOptionPane;
 
 public class StartingScreen extends JFrame implements ActionListener
 {
-  JButton Exit, SPlayer, TPlayer, help;
+	private JButton Exit, SPlayer, TPlayer, help;
   
-  String mode;
-  int X = 1410;
-  int Y = 200;
-
-  private static final int NUM_ROWS = 12;
-  private static final int NUM_COLS = 12;
+  private String mode;
+  private int X = 1410;
+  private int Y = 200;
 
   public StartingScreen()
   {

@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class EndingScreen extends JFrame implements ActionListener {
-	JButton Quit, continueGame, menu;
+	JButton quit, continueGame, menu;
 
 	int X = 1410;
 	int Y = 200;
@@ -59,28 +59,28 @@ public class EndingScreen extends JFrame implements ActionListener {
 	    menu.addActionListener(this);
 	    add(menu);
 
-	    Quit = new JButton("Quit");
-	    Quit.setFont(new Font("Arial", Font.BOLD, 25));
-	    Quit.setHorizontalTextPosition(JButton.CENTER);
-	    Quit.setVerticalTextPosition(JButton.CENTER);
+	    quit = new JButton("quit");
+	    quit.setFont(new Font("Arial", Font.BOLD, 25));
+	    quit.setHorizontalTextPosition(JButton.CENTER);
+	    quit.setVerticalTextPosition(JButton.CENTER);
 	    try {
 	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_05.png"));
 	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_06.png"));
-	        Quit.setIcon(new ImageIcon(img1));
-	        Quit.setDisabledIcon(new ImageIcon(img2));
-	        Quit.setPressedIcon(new ImageIcon(img2));
-	        Quit.setSelectedIcon(new ImageIcon(img2));
-	        Quit.setDisabledSelectedIcon(new ImageIcon(img2));
+	        quit.setIcon(new ImageIcon(img1));
+	        quit.setDisabledIcon(new ImageIcon(img2));
+	        quit.setPressedIcon(new ImageIcon(img2));
+	        quit.setSelectedIcon(new ImageIcon(img2));
+	        quit.setDisabledSelectedIcon(new ImageIcon(img2));
 	      } catch (Exception ex) {
 	       // System.out.println(ex);
 	      }
-	    Quit.setOpaque(false);
-	    Quit.setContentAreaFilled(false);
-	    Quit.setBorderPainted(false);
-	    Quit.setFocusPainted(false);
-	    Quit.setBounds(X - 277, Y + 280, 200, 92);
-	    Quit.addActionListener(this);
-	    add(Quit);
+	    quit.setOpaque(false);
+	    quit.setContentAreaFilled(false);
+	    quit.setBorderPainted(false);
+	    quit.setFocusPainted(false);
+	    quit.setBounds(X - 277, Y + 280, 200, 92);
+	    quit.addActionListener(this);
+	    add(quit);
 		setSize(1678, 888);
 	}
 
@@ -89,7 +89,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == Quit) {
+		if(e.getSource() == quit) {
 			String str = "Are you sure you want to exit?\n";
 			int diaResult = JOptionPane.showConfirmDialog(this, str, "Warning", JOptionPane.YES_NO_OPTION);
 			if(diaResult == JOptionPane.YES_OPTION) {

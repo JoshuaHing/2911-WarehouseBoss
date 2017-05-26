@@ -28,38 +28,38 @@ import javax.swing.Timer;
 
 public class WarehouseBossInterface extends JFrame implements ActionListener, KeyListener, ItemListener, MouseListener {
 
-	JButton WbFirst, WbNext, WbPre, WbTimer, WbUndo, help;
+	private JButton WbFirst, WbNext, WbPre, WbTimer, WbUndo, help;
 
 	// Then we can provide more actions like select which level gamer want to
 	// challenge
 	// and restart this level's game, Exit game.
-	JButton WbMenu, WbReset, WbQuit;
+	private JButton WbMenu, WbReset, WbQuit;
 
 	// Final, If we can, we can play a background music in our game.
-	JButton WbMusicOn;
-	JComboBox<String> cbMusic;
+	private JButton WbMusicOn;
+	private JComboBox<String> cbMusic;
 
-	String sMusicFiles[] = { "He's a Pirate.midi", "Snow Dream-Bandari.midi" };
-	String sMusicList[] = { "He's a Pirate", "Snow Deam" };
+	private String sMusicFiles[] = { "He's a Pirate.midi", "Snow Dream-Bandari.midi" };
+	private String sMusicList[] = { "He's a Pirate", "Snow Deam" };
 
-	JMenuItem music1, music2;
+	private JMenuItem music1, music2;
 
-	JPanel timerPanel;
+	private JPanel timerPanel;
 	//Create MyPanel
-	MyPanel mainPanel;
+	private MyPanel mainPanel;
 	
 	//Create pic
-    Animation.pic canvas = null;
+	public Animation.pic canvas = null;
 
 
 	JLabel label;
-	boolean leftPressed;
-	boolean rightPressed;
-	boolean upPressed;
-	boolean downPressed;
+	private boolean leftPressed;
+	private boolean rightPressed;
+	private boolean upPressed;
+	private boolean downPressed;
 	
-	boolean timerOn = false;
-	boolean keyReleased = true;
+	private boolean timerOn = false;
+	private boolean keyReleased = true;
 	
 
 	public static int currLevel;
@@ -69,7 +69,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	private int tenthSecond;
 	private int minutes1;
 	private int minutes2;
-	private int secondsPlayed;
 	
 	private static final int NUM_ROWS = 12;
 	private static final int NUM_COLS = 12;
@@ -124,7 +123,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		this.tenthSecond = 0;
 		this.minutes1 = 0;
 		this.minutes2 = 0;
-		this.secondsPlayed = 0;
 
 		/* end of code for arrow keys */
 
@@ -188,7 +186,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				}
 				tenthSecond++;
 				textField.setText(s);
-				secondsPlayed++;
 				//requestFocus();
 			}
 		};
@@ -487,7 +484,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		this.minutes1 = 0;
 		this.minutes2 = 0;
 		this.milliseconds = 0;
-		this.secondsPlayed = 0;
+
 	}
 
 	// Main game interface

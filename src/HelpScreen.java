@@ -12,9 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class HelpScreen extends JFrame implements ActionListener {
-	JButton Return;
-	  int X = 1410;
-	  int Y = 200;
+	private JButton Return;
+	  private int X = 1410;
+	  private int Y = 200;
 
 
 	public HelpScreen() {

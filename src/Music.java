@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
@@ -7,11 +8,11 @@ import javax.sound.midi.Sequence;
 import javax.sound.midi.Sequencer;
 
 public class Music {
-  String path = new String("music//");
-  String file = new String("He's a Pirate.midi");
+  private String path = new String("music//");
+  private String file = new String("He's a Pirate.midi");
 
-  Sequence seq;
-  Sequencer midi;
+  private Sequence seq;
+  private Sequencer midi;
   boolean sign; // determining playing or not
   public Music() {
     loadMusic();
@@ -41,13 +42,13 @@ public class Music {
     sign = true;
   }
 
-  void stopPlay() {
+  public void stopPlay() {
     midi.stop();
     midi.close();
     sign = false;
   }
 
-  boolean isPlay() {
+  public boolean isPlay() {
     return sign;
   }
 

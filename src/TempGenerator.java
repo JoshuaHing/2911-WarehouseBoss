@@ -10,9 +10,9 @@ import java.util.Iterator;
  * 2. scroll down, and change print to print to the file, not the command line
  */
 public class TempGenerator{
-	final static int N = 12; 		// SIZE OF MAP. CHANGE IF NEEDED
-	final static int M = 12;
-	int boxesNeeded;
+	public final static int N = 12; 		// SIZE OF MAP. CHANGE IF NEEDED
+	public final static int M = 12;
+	public int boxesNeeded;
 	public static char[][] map = new char[N][M];
 	
 	public boolean validStartFlag;
@@ -21,7 +21,7 @@ public class TempGenerator{
 	public ArrayList<Pair> targetIndex = new ArrayList<Pair>();
 	public int[] movesX = new int[102];
 	public int[] movesY = new int[102];
-	String mode;
+	public String mode;
 		
 	public int preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY;
 	
@@ -510,7 +510,7 @@ public class TempGenerator{
 	}
 	
 	//create a inner class to represent box and targets
-	class Pair{
+	private class Pair{
 		public int indexX;
 		public int indexY;
 		
@@ -623,15 +623,6 @@ public class TempGenerator{
 					stringMap.get(k).add(s);	
 				}
 			}
-			/*for(int k = 0; k < 12; k++) {
-				ArrayList<String> newList = new ArrayList<String>();
-				stringMap.add(newList);
-				for(int j = 0; j < 12; j++) {
-					
-					System.out.print(stringMap.get(k).get(j) + " ");	
-				}
-				System.out.println();
-			}*/
 			Map newMap = new Map(stringMap, a.getBoxesNeeded());
 			game.addMap(newMap);
 			//print();
