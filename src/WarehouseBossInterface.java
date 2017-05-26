@@ -36,7 +36,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// Then we can provide more actions like select which level gamer want to
 	// challenge
 	// and restart this level's game, Exit game.
-	JButton WbSelect, WbReset, WbQuit;
+	JButton WbMenu, WbReset, WbQuit;
 
 	// Final, If we can, we can play a background music in our game.
 	JButton WbMusicOn;
@@ -293,8 +293,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 		WbUndo = new JButton("Undo");
 		WbNext = new JButton("Next Level");
-		WbPre = new JButton("Previous Level");
-		WbSelect = new JButton("Select Level");
+		WbPre = new JButton("Prev Level");
+		WbMenu = new JButton("Menu");
 		WbTimer = new JButton("Timer");
 		WbReset = new JButton("Reset");
 		WbMusicOn = new JButton("Music On");
@@ -306,7 +306,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbUndo.setBounds(X, Y+20, 120, 30);
 		WbNext.setBounds(X, Y+60, 120, 30);
 		WbPre.setBounds(X, Y+100, 120, 30);
-		WbSelect.setBounds(X, Y+140, 120, 30);
+		WbMenu.setBounds(X, Y+140, 120, 30);
 		WbTimer.setBounds(X, Y+180, 120, 30);
 		WbReset.setBounds(X, Y+220, 120, 30);
 		WbMusicOn.setBounds(X, Y+260, 120, 30);
@@ -322,11 +322,11 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbPre.setBackground(new Color(254,232,156));
 		WbPre.setOpaque(true);
 
-		WbSelect.setBackground(new Color(254,232,156));
-		WbSelect.setOpaque(true);
+		WbMenu.setBackground(new Color(254,232,156));
+		WbMenu.setOpaque(true);
 
-		WbTimer.setBackground(new Color(254,232,156));
-		WbTimer.setOpaque(true);
+		WbTimer.setBackground(new Color(255,90,90));
+		//WbTimer.setOpaque(true);
 
 		WbReset.setBackground(new Color(254,232,156));
 		WbReset.setOpaque(true);
@@ -348,7 +348,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbUndo.addActionListener(this);
 		WbNext.addActionListener(this);
 		WbPre.addActionListener(this);
-		WbSelect.addActionListener(this);
+		WbMenu.addActionListener(this);
 		WbTimer.addActionListener(this);
 		WbReset.addActionListener(this);
 		WbMusicOn.addActionListener(this);
@@ -359,7 +359,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		c.add(WbUndo);
 		c.add(WbNext);
 		c.add(WbPre);
-		c.add(WbSelect);
+		c.add(WbMenu);
 		c.add(WbTimer);
 		c.add(WbReset);
 		c.add(WbQuit);
@@ -415,16 +415,15 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				timerOn = false;
 				requestFocus();
 			}
-		} else if (e.getSource() == WbSelect) {
-			String selectLevel = JOptionPane.showInputDialog(this, "What level would you like to play ?", "Level",
-					JOptionPane.QUESTION_MESSAGE);
-			int selectedLevel = Integer.parseInt(selectLevel)-1;
-			game.resetMovesMade();
-			game.resetMap(currLevel);
-			currLevel = selectedLevel;
-			updateInterface(MODE_REFRESH, game);
-			requestFocus();
-			resetTimer();
+		} else if (e.getSource() == WbMenu) {
+			String str = "Are you sure you want to go to the menu?\n";
+			int diaResult = JOptionPane.showConfirmDialog(this, str, "Menu", JOptionPane.YES_NO_OPTION);
+			if(diaResult == JOptionPane.YES_OPTION) {
+				setVisible(false);
+				StartingScreen startMenu = new StartingScreen();
+			} else {
+				requestFocus();
+			}
 		} else if (e.getSource() == WbPre) {
 			if(currLevel > 0) {
 				currLevel--;
@@ -490,7 +489,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				kit.getImage("img/player.png"), 
 				kit.getImage("img/wall1.png"), 
 				kit.getImage("img/goal-box1.png"),
-				kit.getImage("img/player.png")};
+				kit.getImage("img/player2.png")};
 // More
 		
 																													// images
@@ -518,7 +517,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 						} else if (currString.equals("P")||currString.equals("O")) { // player Probably not needed
 							g.drawImage(mapimg[2], i * x + startx, j * x + starty, x, x, this);
 							g.drawImage(mapimg[3], i * x + startx, j * x + starty, x, x, this);
-						} else if (currString.equals("Q")||currString.equals("R")) { // player Probably not needed
+						} else if (currString.equals("Q") || currString.equals("R")) { // player Probably not needed
 							g.drawImage(mapimg[2], i * x + startx, j * x + starty, x, x, this);
 							g.drawImage(mapimg[6], i * x + startx, j * x + starty, x, x, this);
 						} else if (currString.equals("W")) { // wall
@@ -735,7 +734,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	@Override
 	public void keyReleased(KeyEvent e) {
 		Animation.PRESSED = false;
-		System.out.println("WAAAAAAAAAAAAAAAAA");
 	}
 
 	public Game game;

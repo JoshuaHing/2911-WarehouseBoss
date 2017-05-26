@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,11 +36,14 @@ public class StartingScreen extends JFrame implements ActionListener
     setContentPane(new JLabel(new ImageIcon("MenuImage/bg_start menu.png")));
     setLayout(null);
 
-    JLabel title = new JLabel("Warehouse Boss");
+    /*JLabel title = new JLabel("Warehouse Boss");
     title.setBounds(X-332, Y-85, 400, 100);
     title.setFont(new Font("Arial Black", Font.BOLD,30));
-    add(title);
+    add(title);*/
     
+    Toolkit toolkit = Toolkit.getDefaultToolkit();
+	Image image = toolkit.getImage("img/box.png");
+	setIconImage(image);
     //ImageIcon icon = new ImageIcon("MenuImage/gui_07.bmp");
     //JButton button = new JButton(icon);
 
