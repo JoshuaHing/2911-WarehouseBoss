@@ -295,52 +295,57 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbNext = new JButton("Next Level");
 		WbPre = new JButton("Prev Level");
 		WbMenu = new JButton("Menu");
-		WbTimer = new JButton("Timer");
+		WbTimer = new JButton("Timer Mode");
 		WbReset = new JButton("Reset");
 		WbMusicOn = new JButton("Music On");
 		WbQuit = new JButton("Quit");
 		JLabel musicList = new JLabel("Choose Music");
 		cbMusic = new JComboBox(sMusicList);
 
+		
 		// set the location of each button
-		WbUndo.setBounds(X, Y+20, 120, 30);
-		WbNext.setBounds(X, Y+60, 120, 30);
-		WbPre.setBounds(X, Y+100, 120, 30);
-		WbMenu.setBounds(X, Y+140, 120, 30);
-		WbTimer.setBounds(X, Y+180, 120, 30);
-		WbReset.setBounds(X, Y+220, 120, 30);
-		WbMusicOn.setBounds(X, Y+260, 120, 30);
-		musicList.setBounds(X+10, Y+290, 120, 30);
-		cbMusic.setBounds(X, Y+320, 120, 40);
-		WbQuit.setBounds(X, Y+370, 120, 30);
+		WbUndo.setBounds(X, Y+30, 120, 30);
+		WbReset.setBounds(X, Y+85, 120, 30);
+		
+		WbNext.setBounds(X, Y+140, 120, 30);
+		WbPre.setBounds(X, Y+195, 120, 30);
+		WbTimer.setBounds(X, Y+250, 120, 30);
+		
+		WbMenu.setBounds(X, Y+305, 120, 30);
+		WbQuit.setBounds(X, Y+360, 120, 30);
+		
+		WbMusicOn.setBounds(X, Y+538, 120, 30);
+		//musicList.setBounds(X+10, Y+584, 120, 30);
+		cbMusic.setBounds(X, Y+567, 120, 40);
+		
+		Color C = new Color(255, 205, 82);
+		WbUndo.setBackground(C);
+		//WbUndo.setOpaque(true);
+		WbNext.setBackground(C);
+		//WbNext.setOpaque(true);
 
-		WbUndo.setBackground(new Color(254,232,156));
-		WbUndo.setOpaque(true);
-		WbNext.setBackground(new Color(254,232,156));
-		WbNext.setOpaque(true);
-
-		WbPre.setBackground(new Color(254,232,156));
+		WbPre.setBackground(C);
 		WbPre.setOpaque(true);
 
-		WbMenu.setBackground(new Color(254,232,156));
+		WbMenu.setBackground(C);
 		WbMenu.setOpaque(true);
 
-		WbTimer.setBackground(new Color(255,90,90));
+		WbTimer.setBackground(C);
 		//WbTimer.setOpaque(true);
 
-		WbReset.setBackground(new Color(254,232,156));
-		WbReset.setOpaque(true);
+		WbReset.setBackground(C);
+		//WbReset.setOpaque(true);
 
-		WbMusicOn.setBackground(new Color(254,232,156));
+		WbMusicOn.setBackground(C);
 		WbMusicOn.setOpaque(true);
 
-		WbQuit.setBackground(new Color(254,232,156));
+		WbQuit.setBackground(C);
 		WbQuit.setOpaque(true);
 
-		musicList.setBackground(new Color(254,232,156));
+		musicList.setBackground(C);
 		musicList.setOpaque(true);
 
-		cbMusic.setBackground(new Color(254,232,156));
+		cbMusic.setBackground(C);
 		cbMusic.setOpaque(true);
 
 
@@ -454,7 +459,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 			requestFocus();
 		} else if (e.getSource() == WbMusicOn) {
 			String title = WbMusicOn.getText();
-			if (title.equals("Music On")) {
+			if (title.equals("Music On/Off")) {
 				music.stopPlay();
 				WbMusicOn.setText("Music Off");
 			} else if (title.equals("Music Off")) {
