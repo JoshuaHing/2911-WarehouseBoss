@@ -25,7 +25,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 		setVisible(true);
 
 		setLayout(new BorderLayout());
-		setContentPane(new JLabel(new ImageIcon("MenuImage/bg_start menu.png")));
+		setContentPane(new JLabel(new ImageIcon("MenuImage/bg_congratulation menu.png")));
 		setLayout(null);
 
 
@@ -37,8 +37,13 @@ public class EndingScreen extends JFrame implements ActionListener {
 	    sPlayerText.setAlignmentX(Y-80);
 	    sPlayerText.setVisible(true);*/
 	    try {
-	      Image img = ImageIO.read(getClass().getResource("MenuImage/icon4.png"));
-	      menu.setIcon(new ImageIcon(img));
+	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_05.png"));
+	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_06.png"));
+	        menu.setIcon(new ImageIcon(img1));
+	        menu.setDisabledIcon(new ImageIcon(img2));
+	        menu.setPressedIcon(new ImageIcon(img2));
+	        menu.setSelectedIcon(new ImageIcon(img2));
+	        menu.setDisabledSelectedIcon(new ImageIcon(img2));
 	    } catch (Exception ex) {
 	      System.out.println(ex);
 	    }
@@ -55,8 +60,13 @@ public class EndingScreen extends JFrame implements ActionListener {
 	    Quit.setHorizontalTextPosition(JButton.CENTER);
 	    Quit.setVerticalTextPosition(JButton.CENTER);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("MenuImage/icon4.png"));
-	        Quit.setIcon(new ImageIcon(img));
+	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_05.png"));
+	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_06.png"));
+	        Quit.setIcon(new ImageIcon(img1));
+	        Quit.setDisabledIcon(new ImageIcon(img2));
+	        Quit.setPressedIcon(new ImageIcon(img2));
+	        Quit.setSelectedIcon(new ImageIcon(img2));
+	        Quit.setDisabledSelectedIcon(new ImageIcon(img2));
 	      } catch (Exception ex) {
 	        System.out.println(ex);
 	      }

@@ -4,6 +4,10 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -48,7 +52,6 @@ public class StartingScreen extends JFrame implements ActionListener
     //JButton button = new JButton(icon);
 
    // SPlayer = new JButton(icon);
-    
 
     //SPlayer.setFont(new Font("Arial", Font.PLAIN, 25));
     SPlayer = new JButton("Single Player");
@@ -59,8 +62,13 @@ public class StartingScreen extends JFrame implements ActionListener
     sPlayerText.setAlignmentX(Y-80);
     sPlayerText.setVisible(true);*/
     try {
-      Image img = ImageIO.read(getClass().getResource("MenuImage/icon2.png"));
-      SPlayer.setIcon(new ImageIcon(img));
+      Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_01.png"));
+      Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_02.png"));
+      SPlayer.setIcon(new ImageIcon(img1));
+      SPlayer.setDisabledIcon(new ImageIcon(img2));
+      SPlayer.setPressedIcon(new ImageIcon(img2));
+      SPlayer.setSelectedIcon(new ImageIcon(img2));
+      SPlayer.setDisabledSelectedIcon(new ImageIcon(img2));
     } catch (Exception ex) {
       System.out.println(ex);
     }
@@ -81,8 +89,13 @@ public class StartingScreen extends JFrame implements ActionListener
     sPlayerText.setAlignmentX(Y-80);
     sPlayerText.setVisible(true);*/
     try {
-      Image img = ImageIO.read(getClass().getResource("MenuImage/icon2.png"));
-      TPlayer.setIcon(new ImageIcon(img));
+        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_01.png"));
+        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_02.png"));
+        TPlayer.setIcon(new ImageIcon(img1));
+        TPlayer.setDisabledIcon(new ImageIcon(img2));
+        TPlayer.setPressedIcon(new ImageIcon(img2));
+        TPlayer.setSelectedIcon(new ImageIcon(img2));
+        TPlayer.setDisabledSelectedIcon(new ImageIcon(img2));
     } catch (Exception ex) {
       System.out.println(ex);
     }
@@ -99,8 +112,13 @@ public class StartingScreen extends JFrame implements ActionListener
     Exit.setHorizontalTextPosition(JButton.CENTER);
     Exit.setVerticalTextPosition(JButton.CENTER);
     try {
-        Image img = ImageIO.read(getClass().getResource("MenuImage/icon2.png"));
-        Exit.setIcon(new ImageIcon(img));
+        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_01.png"));
+        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_02.png"));
+        Exit.setIcon(new ImageIcon(img1));
+        Exit.setDisabledIcon(new ImageIcon(img2));
+        Exit.setPressedIcon(new ImageIcon(img2));
+        Exit.setSelectedIcon(new ImageIcon(img2));
+        Exit.setDisabledSelectedIcon(new ImageIcon(img2));
       } catch (Exception ex) {
         System.out.println(ex);
       }
@@ -137,7 +155,6 @@ public class StartingScreen extends JFrame implements ActionListener
     	DifficultyScreen dS = new DifficultyScreen(mode);
     }
   }
-
-  
-
+	
+	
 }

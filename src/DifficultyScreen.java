@@ -33,7 +33,7 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		setVisible(true);
 
 		setLayout(new BorderLayout());
-		setContentPane(new JLabel(new ImageIcon("MenuImage/bg_start menu.png")));
+		setContentPane(new JLabel(new ImageIcon("MenuImage/bg_selection menu.png")));
 		setLayout(null);
 
 
@@ -53,8 +53,13 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		 * easyButtonText.setAlignmentX(Y-80); easyButtonText.setVisible(true);
 		 */
 		try {
-			Image img = ImageIO.read(getClass().getResource("MenuImage/icon3.png"));
-			easyButton.setIcon(new ImageIcon(img));
+	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_03.png"));
+	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_04.png"));
+	        easyButton.setIcon(new ImageIcon(img1));
+	        easyButton.setDisabledIcon(new ImageIcon(img2));
+	        easyButton.setPressedIcon(new ImageIcon(img2));
+	        easyButton.setSelectedIcon(new ImageIcon(img2));
+	        easyButton.setDisabledSelectedIcon(new ImageIcon(img2));
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
@@ -76,8 +81,13 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		 * easyButtonText.setAlignmentX(Y-80); easyButtonText.setVisible(true);
 		 */
 		try {
-			Image img = ImageIO.read(getClass().getResource("MenuImage/icon3.png"));
-			medButton.setIcon(new ImageIcon(img));
+	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_03.png"));
+	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_04.png"));
+	        medButton.setIcon(new ImageIcon(img1));
+	        medButton.setDisabledIcon(new ImageIcon(img2));
+	        medButton.setPressedIcon(new ImageIcon(img2));
+	        medButton.setSelectedIcon(new ImageIcon(img2));
+	        medButton.setDisabledSelectedIcon(new ImageIcon(img2));
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
@@ -94,8 +104,13 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		hardButton.setHorizontalTextPosition(JButton.CENTER);
 		hardButton.setVerticalTextPosition(JButton.CENTER);
 		try {
-			Image img = ImageIO.read(getClass().getResource("MenuImage/icon3.png"));
-			hardButton.setIcon(new ImageIcon(img));
+	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_03.png"));
+	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_04.png"));
+	        hardButton.setIcon(new ImageIcon(img1));
+	        hardButton.setDisabledIcon(new ImageIcon(img2));
+	        hardButton.setPressedIcon(new ImageIcon(img2));
+	        hardButton.setSelectedIcon(new ImageIcon(img2));
+	        hardButton.setDisabledSelectedIcon(new ImageIcon(img2));
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
@@ -116,8 +131,13 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		 * easyButtonText.setAlignmentX(Y-80); easyButtonText.setVisible(true);
 		 */
 		try {
-			Image img = ImageIO.read(getClass().getResource("MenuImage/icon3.png"));
-			menuButton.setIcon(new ImageIcon(img));
+	        Image img1 = ImageIO.read(getClass().getResource("MenuImage/GUI_03.png"));
+	        Image img2 = ImageIO.read(getClass().getResource("MenuImage/GUI_04.png"));
+	        menuButton.setIcon(new ImageIcon(img1));
+	        menuButton.setDisabledIcon(new ImageIcon(img2));
+	        menuButton.setPressedIcon(new ImageIcon(img2));
+	        menuButton.setSelectedIcon(new ImageIcon(img2));
+	        menuButton.setDisabledSelectedIcon(new ImageIcon(img2));
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
