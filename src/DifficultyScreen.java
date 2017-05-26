@@ -177,7 +177,31 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 	}
 
 	public void readMap(String mode) {
-		ArrayList<ArrayList<String>> map = null;
+		TempGenerator tG;
+		if(mode.equals("Easy")) {	
+			tG = new TempGenerator(2);
+			Game game = tG.getGame(2);
+			game.setMap(game.getLevel(0));
+			setVisible(false);
+			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
+			EventQueue.invokeLater(() -> newInterface.canvas.start());
+		} else if(mode.equals("Medium")) {
+			tG = new TempGenerator(3);
+			Game game = tG.getGame(3);
+			game.setMap(game.getLevel(0));
+			setVisible(false);
+			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
+			EventQueue.invokeLater(() -> newInterface.canvas.start());
+		} else if(mode.equals("Hard")) {
+			tG = new TempGenerator(4);
+			Game game = tG.getGame(4);
+			game.setMap(game.getLevel(0));
+			setVisible(false);
+			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
+			EventQueue.invokeLater(() -> newInterface.canvas.start());
+		}
+		//game.setMap(game.getLevel(0));
+		/*ArrayList<ArrayList<String>> map = null;
 		// ****************SCANNER STARTS****************
 		Scanner sc = null;
 		int numGoals = 0;
@@ -228,6 +252,6 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		} finally {
 			if (sc != null)
 				sc.close();
-		}
+		}*/
 	}
 }

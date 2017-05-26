@@ -49,8 +49,8 @@ public class TempGenerator{
 		
 		int boxSum =0;
 		//set player & box binded at start 
-		randomStartX = (int )(Math.random() * (N-8))+5;
-		randomStartY = (int )(Math.random() * (M-8))+5;
+		randomStartX = (int )(Math.random() * (N-7))+4;
+		randomStartY = (int )(Math.random() * (M-7))+4;
 		//5~8
 		//set box ,maybe multiple boxes
 		while(boxSum<boxNeeded){
@@ -559,14 +559,14 @@ public class TempGenerator{
 		return this.boxesNeeded;
 	}
 	
-	public static void main(String[] args){
+	public static Game getGame(int num) {
 		Game game = new Game();
 		for(int i = 0; i < 3; i++) {
-			TempGenerator a = new TempGenerator(3) ;
+			TempGenerator a = new TempGenerator(num) ;
 			int px = 0,py = 0;
 			for(int j = 0;j <20;j++){
-				a = new TempGenerator(3);
-				if(a.checkFinished(3)){
+				a = new TempGenerator(num);
+				if(a.checkFinished(num )){
 					break;
 				}
 			}
@@ -622,8 +622,9 @@ public class TempGenerator{
 			}
 			Map newMap = new Map(stringMap, a.getBoxesNeeded());
 			game.addMap(newMap);
-			//print();
+			print();
 		}
+		return game;
 
 	}
 
