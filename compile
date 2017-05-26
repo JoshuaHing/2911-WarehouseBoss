@@ -1,6 +1,7 @@
 #!/bin/sh
 
 mkdir -p bin/
-find src -type f -name "*.java" -print | xargs javac -cp bin -d bin
+javac -d bin src/*.java
 cp -R MenuImage bin
 cp -R img bin
+cp -R music bin

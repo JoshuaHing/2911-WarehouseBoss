@@ -1,0 +1,3 @@
+#!/bin/sh
+
+zip -r ass3.zip * -x pack
