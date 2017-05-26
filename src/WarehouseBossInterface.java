@@ -39,7 +39,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 	// Final, If we can, we can play a background music in our game.
 	JButton WbMusicOn;
-	JComboBox cbMusic;
+	JComboBox<String> cbMusic;
 
 	String sMusicFiles[] = { "He's a Pirate.midi", "Snow Dream-Bandari.midi" };
 	String sMusicList[] = { "He's a Pirate", "Snow Deam" };
@@ -304,7 +304,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbMusicOn = new JButton("Music On");
 		WbQuit = new JButton("Quit");
 		JLabel musicList = new JLabel("Choose Music");
-		cbMusic = new JComboBox(sMusicList);
+		cbMusic = new JComboBox<>(sMusicList);
 
 		
 		// set the location of each button
@@ -799,5 +799,3 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 
 
 	}
-
-
