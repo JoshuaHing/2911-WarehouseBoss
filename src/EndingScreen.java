@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -28,9 +29,12 @@ public class EndingScreen extends JFrame implements ActionListener {
 		setContentPane(new JLabel(new ImageIcon("MenuImage/bg_congratulation menu.png")));
 		setLayout(null);
 
+	    Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image image = toolkit.getImage("img/box.png");
+		setIconImage(image);
 
 	    menu = new JButton("Main Menu");
-	    menu.setFont(new Font("Arial", Font.PLAIN, 25));
+	    menu.setFont(new Font("Arial", Font.BOLD, 25));
 	    menu.setHorizontalTextPosition(JButton.CENTER);
 	    menu.setVerticalTextPosition(JButton.CENTER);
 	    /*sPlayerText.setAlignmentX(X-280);
@@ -51,12 +55,12 @@ public class EndingScreen extends JFrame implements ActionListener {
 	    menu.setContentAreaFilled(false);
 	    menu.setBorderPainted(false);
 	    menu.setFocusPainted(false);	
-	    menu.setBounds(X - 277, Y + 100, 200, 92);
+	    menu.setBounds(X - 277, Y + 140, 200, 92);
 	    menu.addActionListener(this);
 	    add(menu);
 
 	    Quit = new JButton("Quit");
-	    Quit.setFont(new Font("Arial", Font.PLAIN, 25));
+	    Quit.setFont(new Font("Arial", Font.BOLD, 25));
 	    Quit.setHorizontalTextPosition(JButton.CENTER);
 	    Quit.setVerticalTextPosition(JButton.CENTER);
 	    try {
@@ -74,7 +78,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 	    Quit.setContentAreaFilled(false);
 	    Quit.setBorderPainted(false);
 	    Quit.setFocusPainted(false);
-	    Quit.setBounds(X - 277, Y + 320, 200, 92);
+	    Quit.setBounds(X - 277, Y + 280, 200, 92);
 	    Quit.addActionListener(this);
 	    add(Quit);
 		setSize(1678, 888);

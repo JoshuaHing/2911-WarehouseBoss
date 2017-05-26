@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -35,6 +36,10 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		setLayout(new BorderLayout());
 		setContentPane(new JLabel(new ImageIcon("MenuImage/bg_selection menu.png")));
 		setLayout(null);
+		
+	    Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Image image = toolkit.getImage("img/box.png");
+		setIconImage(image);
 
 
 		// ImageIcon icon = new ImageIcon("MenuImage/gui_07.bmp");
@@ -45,7 +50,7 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 
 		// easyButton.setFont(new Font("Arial", Font.PLAIN, 25));
 		easyButton = new JButton("Easy");
-		easyButton.setFont(new Font("Arial", Font.PLAIN, 25));
+		easyButton.setFont(new Font("Arial", Font.BOLD, 25));
 		easyButton.setHorizontalTextPosition(JButton.CENTER);
 		easyButton.setVerticalTextPosition(JButton.CENTER);
 		/*
@@ -67,13 +72,13 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		easyButton.setContentAreaFilled(false);
 		easyButton.setBorderPainted(false);
 		easyButton.setFocusPainted(false);
-		easyButton.setBounds(X - 277, Y + 80, 200, 92);
+		easyButton.setBounds(X - 277, Y + 50, 200, 92);
 		// easyButton.setIcon(new ImageIcon("MenuImage/gui_07.bmp"));
 		easyButton.addActionListener(this);
 		add(easyButton);
 
 		medButton = new JButton("Medium");
-		medButton.setFont(new Font("Arial", Font.PLAIN, 25));
+		medButton.setFont(new Font("Arial", Font.BOLD, 25));
 		medButton.setHorizontalTextPosition(JButton.CENTER);
 		medButton.setVerticalTextPosition(JButton.CENTER);
 		/*
@@ -95,12 +100,12 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		medButton.setContentAreaFilled(false);
 		medButton.setBorderPainted(false);
 		medButton.setFocusPainted(false);
-		medButton.setBounds(X - 277, Y + 250, 200, 92);
+		medButton.setBounds(X - 277, Y + 170, 200, 92);
 		medButton.addActionListener(this);
 		add(medButton);
 
 		hardButton = new JButton("Hard");
-		hardButton.setFont(new Font("Arial", Font.PLAIN, 25));
+		hardButton.setFont(new Font("Arial", Font.BOLD, 25));
 		hardButton.setHorizontalTextPosition(JButton.CENTER);
 		hardButton.setVerticalTextPosition(JButton.CENTER);
 		try {
@@ -118,12 +123,12 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		hardButton.setContentAreaFilled(false);
 		hardButton.setBorderPainted(false);
 		hardButton.setFocusPainted(false);
-		hardButton.setBounds(X - 277, Y + 420, 200, 92);
+		hardButton.setBounds(X - 277, Y + 290, 200, 92);
 		hardButton.addActionListener(this);
 		add(hardButton);
 
 		menuButton = new JButton("Back");
-		menuButton.setFont(new Font("Arial", Font.PLAIN, 25));
+		menuButton.setFont(new Font("Arial", Font.BOLD, 25));
 		menuButton.setHorizontalTextPosition(JButton.CENTER);
 		menuButton.setVerticalTextPosition(JButton.CENTER);
 		/*
@@ -145,7 +150,7 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		menuButton.setContentAreaFilled(false);
 		menuButton.setBorderPainted(false);
 		menuButton.setFocusPainted(false);
-		menuButton.setBounds(X - 277, Y + 500, 200, 92);
+		menuButton.setBounds(X - 277, Y + 470, 200, 92);
 		// easyButton.setIcon(new ImageIcon("MenuImage/gui_07.bmp"));
 		menuButton.addActionListener(this);
 		add(menuButton);

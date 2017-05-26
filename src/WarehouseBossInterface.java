@@ -17,6 +17,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -31,7 +33,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 	// We want to bulid ipnterface with basic steps including
 	// first pass, next level, previous level, last level and undo the last
 	// move;
-	JButton WbFirst, WbNext, WbPre, WbTimer, WbUndo;
+	JButton WbFirst, WbNext, WbPre, WbTimer, WbUndo, help;
 
 	// Then we can provide more actions like select which level gamer want to
 	// challenge
@@ -276,8 +278,10 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		
 		c.add(mainPanel);
 	    c.add (canvas);
+	    music = new Music();
 		
 		// width, height)
+	    
 		setSize(1678, 936); // set size of the entire container
 		setVisible(true);
 		setLocationRelativeTo(null);
@@ -318,11 +322,12 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		//musicList.setBounds(X+10, Y+584, 120, 30);
 		cbMusic.setBounds(X, Y+567, 120, 40);
 		
-		Color C = new Color(255, 205, 82);
+		
+		Color C = new Color(254,232,156);
 		WbUndo.setBackground(C);
-		//WbUndo.setOpaque(true);
+		WbUndo.setOpaque(true);
 		WbNext.setBackground(C);
-		//WbNext.setOpaque(true);
+		WbNext.setOpaque(true);
 
 		WbPre.setBackground(C);
 		WbPre.setOpaque(true);
@@ -331,10 +336,10 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		WbMenu.setOpaque(true);
 
 		WbTimer.setBackground(C);
-		//WbTimer.setOpaque(true);
+		WbTimer.setOpaque(true);
 
 		WbReset.setBackground(C);
-		//WbReset.setOpaque(true);
+		WbReset.setOpaque(true);
 
 		WbMusicOn.setBackground(C);
 		WbMusicOn.setOpaque(true);
@@ -371,7 +376,8 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		c.add(WbMusicOn);
 		c.add(musicList);
 		c.add(cbMusic);
-
+		
+		
 	}
 
 	@Override
@@ -467,6 +473,10 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				WbMusicOn.setText("Music On");
 			}
 			requestFocus();
+		} else if(e.getSource() == help) {
+			//setVisible(false);
+			HelpScreen hS = new HelpScreen();
+			//requestFocus();
 		}
 	}
 	

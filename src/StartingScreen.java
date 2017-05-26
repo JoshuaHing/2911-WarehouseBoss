@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 
 public class StartingScreen extends JFrame implements ActionListener
 {
-  JButton Exit, SPlayer, TPlayer;
+  JButton Exit, SPlayer, TPlayer, help;
   
   String mode;
   int X = 1410;
@@ -55,7 +55,7 @@ public class StartingScreen extends JFrame implements ActionListener
 
     //SPlayer.setFont(new Font("Arial", Font.PLAIN, 25));
     SPlayer = new JButton("Single Player");
-    SPlayer.setFont(new Font("Arial", Font.PLAIN, 25));
+    SPlayer.setFont(new Font("Arial", Font.BOLD, 25));
     SPlayer.setHorizontalTextPosition(JButton.CENTER);
     SPlayer.setVerticalTextPosition(JButton.CENTER);
     /*sPlayerText.setAlignmentX(X-280);
@@ -76,13 +76,13 @@ public class StartingScreen extends JFrame implements ActionListener
     SPlayer.setContentAreaFilled(false);
     SPlayer.setBorderPainted(false);
     SPlayer.setFocusPainted(false);
-    SPlayer.setBounds(X-277, Y+80, 200, 92);
+    SPlayer.setBounds(X-277, Y+50, 200, 92);
     //SPlayer.setIcon(new ImageIcon("MenuImage/gui_07.bmp"));
     SPlayer.addActionListener(this);
     add(SPlayer);
 
     TPlayer = new JButton("Two Player");
-    TPlayer.setFont(new Font("Arial", Font.PLAIN, 25));
+    TPlayer.setFont(new Font("Arial", Font.BOLD, 25));
     TPlayer.setHorizontalTextPosition(JButton.CENTER);
     TPlayer.setVerticalTextPosition(JButton.CENTER);
     /*sPlayerText.setAlignmentX(X-280);
@@ -103,12 +103,12 @@ public class StartingScreen extends JFrame implements ActionListener
     TPlayer.setContentAreaFilled(false);
     TPlayer.setBorderPainted(false);
     TPlayer.setFocusPainted(false);
-    TPlayer.setBounds(X-277, Y+250, 200, 92);
+    TPlayer.setBounds(X-277, Y+170, 200, 92);
     TPlayer.addActionListener(this);
     add(TPlayer);
 
     Exit = new JButton("Exit");
-    Exit.setFont(new Font("Arial", Font.PLAIN, 25));
+    Exit.setFont(new Font("Arial", Font.BOLD, 25));
     Exit.setHorizontalTextPosition(JButton.CENTER);
     Exit.setVerticalTextPosition(JButton.CENTER);
     try {
@@ -126,11 +126,29 @@ public class StartingScreen extends JFrame implements ActionListener
     Exit.setContentAreaFilled(false);
     Exit.setBorderPainted(false);
     Exit.setFocusPainted(false);
-    Exit.setBounds(X-277, Y+420, 200, 92);
+    Exit.setBounds(X-277, Y+290, 200, 92);
     Exit.addActionListener(this);
     add(Exit);
 
-    // Just for refresh :) Not optional!
+    help = new JButton();
+    //help.setFont(new Font("Arial", Font.BOLD, 25));
+    /*help.setHorizontalTextPosition(JButton.CENTER);
+    help.setVerticalTextPosition(JButton.CENTER);*/
+    try {
+        Image img1 = ImageIO.read(getClass().getResource("MenuImage/button_05.png"));
+        help.setIcon(new ImageIcon(img1));
+      } catch (Exception ex) {
+        System.out.println(ex);
+      }
+    help.setOpaque(false);
+    help.setContentAreaFilled(false);
+    help.setBorderPainted(false);
+    help.setFocusPainted(false);
+    help.setBounds(X-277, Y+470, 200, 92);
+    help.addActionListener(this);
+    add(help);
+
+    
     setSize(1677,887);
     setSize(1678,888);
   }
@@ -153,7 +171,10 @@ public class StartingScreen extends JFrame implements ActionListener
     	mode = "Multi Player";
     	setVisible(false);
     	DifficultyScreen dS = new DifficultyScreen(mode);
+    }else if (e.getSource() == help) {
+    	HelpScreen hS = new HelpScreen();
     }
+
   }
 	
 	
