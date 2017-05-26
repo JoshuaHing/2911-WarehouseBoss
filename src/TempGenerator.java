@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 
@@ -11,8 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
  * 2. scroll down, and change print to print to the file, not the command line
  */
 public class TempGenerator{
-	final static int N = 10; 		// SIZE OF MAP. CHANGE IF NEEDED
-	final static int M = 10;
+	final static int N = 12; 		// SIZE OF MAP. CHANGE IF NEEDED
+	final static int M = 12;
 	public static char[][] map = new char[N][M];
 	
 	public boolean validStartFlag;
@@ -29,19 +28,6 @@ public class TempGenerator{
 		setAllWall();
 		generate(boxNeeded);
 		this.validStartFlag = false;
-		this.randomStartX = 0;
-		this.randomStartY = 0;
-		this.randomWayX = 0;
-		this.randomWayY = 0;
-		this.randomTX = 0;
-		this.randomTY = 0;
-		this.preBoxX = 0;
-		this.preBoxY = 0;
-		this.currBoxX = 0;
-		this.currBoxY = 0;
-		this.nextBoxX = 0;
-		this.nextBoxY = 0;		
-		
 	}	
 	public void setAllWall(){
 		for (int n=0;n<N;n++){
@@ -61,13 +47,12 @@ public class TempGenerator{
 		
 		int boxSum =0;
 		//set player & box binded at start 
-		randomStartX = (int )(Math.random() * (N-7))+4;
-		randomStartY = (int )(Math.random() * (M-7))+4;
+		randomStartX = (int )(Math.random() * (N-8))+5;
+		randomStartY = (int )(Math.random() * (M-8))+5;
 		System.out.println(randomStartX+"qqqqqqq");
 		System.out.println(randomStartY+"wwwwwwww");
 
-		//3~6
-		//System.out.println(randomStartX);
+		//5~8
 		//set box ,maybe multiple boxes
 		while(boxSum<boxNeeded){
 			//indicate place(1,0) means left (0,-1)means down, this does mean the index of box 
@@ -108,8 +93,9 @@ public class TempGenerator{
 		//now set target place
 		int targetSum = 0;
 		while(targetSum<boxNeeded){
-			randomTX = (int)(Math.random() * (N-3))+2;
-			randomTY = (int)(Math.random() * (M-3))+2;
+			randomTX = (int)(Math.random() * (N-2))+1;
+			randomTY = (int)(Math.random() * (M-2))+1;
+			//1~10
 			if(map[randomTX][randomTY]!='P'&&map[randomTX][randomTY]!='B'){
 				map[randomTX][randomTY] = 'T';
 				int tmp = 0;
@@ -133,7 +119,6 @@ public class TempGenerator{
 
 		int possibleMoveDis[] = new int[4];//used to record possible move distance from box to target
 		//[0] contains up [1]contains down [2] contains left [3] contains right
-		System.out.println(boxIndex.size()+"qqq");
 		int tried = 0;
 		while(!checkFinished(boxNeeded) && tried <100){
 			//when game not finished		
@@ -176,6 +161,8 @@ public class TempGenerator{
 							
 							else{
 								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+								removeWall(currBoxX,currBoxY,newpair1.indexX,newpair1.indexY);
+
 							}
 							preBoxX = currBoxX;
 							preBoxY = currBoxY;
@@ -193,6 +180,8 @@ public class TempGenerator{
 							}
 							else{
 								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+								removeWall(currBoxX,currBoxY,newpair1.indexX,newpair1.indexY);
+
 							}
 							preBoxX = currBoxX;
 							preBoxY = currBoxY;
@@ -210,6 +199,8 @@ public class TempGenerator{
 							//
 							else{
 								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+								removeWall(currBoxX,currBoxY,newpair1.indexX,newpair1.indexY);
+
 							}
 							preBoxX = currBoxX;
 							preBoxY = currBoxY;
@@ -227,6 +218,8 @@ public class TempGenerator{
 							//
 							else{
 								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+								removeWall(currBoxX,currBoxY,newpair1.indexX,newpair1.indexY);
+
 							}
 							preBoxX = currBoxX;
 							preBoxY = currBoxY;
@@ -251,6 +244,8 @@ public class TempGenerator{
 							//
 							else{
 								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+								removeWall(currBoxX,currBoxY,newpair1.indexX,newpair1.indexY);
+
 							}
 							preBoxX = currBoxX;
 							preBoxY = currBoxY;
@@ -271,6 +266,8 @@ public class TempGenerator{
 							//
 							else{
 								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);	
+								removeWall(currBoxX,currBoxY,newpair1.indexX,newpair1.indexY);
+
 							}
 							preBoxX = currBoxX;
 							preBoxY = currBoxY;
@@ -288,6 +285,8 @@ public class TempGenerator{
 							//
 							else{
 								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+								removeWall(currBoxX,currBoxY,newpair1.indexX,newpair1.indexY);
+
 							}
 							preBoxX = currBoxX;
 							preBoxY = currBoxY;
@@ -304,6 +303,7 @@ public class TempGenerator{
 							}
 							else{
 								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+								removeWall(currBoxX,currBoxY,newpair1.indexX,newpair1.indexY);
 							}
 
 							preBoxX = currBoxX;
@@ -317,43 +317,15 @@ public class TempGenerator{
 					}
 					
 
-							
-					
 					tried++;
 				}
-				//print();
-
-				//now set stuff for last step
+				
 				
 			}
-			/*
-			for(int u = 0;u<movesX.length;u++){
-				map[movesX[u]][movesY[u]] = 'E';
-			}
-			*/
-			//print();
+			
 			
 		}
 		
-		
-		
-		
-		
-		
-		//difficulty for generating puzzle is decided by how many walls are passed through which becomes empty then
-		// targets locate togther? more together more harder, since need to move box on target to another target 
-		//to achieve less wall expansion
-		//targets seperate?
-		//need to guarantee one of them is 0
-		//now it can guarantee the player & box place are valid
-		
-		
-		
-		
-		//simulate path
-		//hard point is cornering
-		
-
 				
 	}
 	public void removeCorneringWall(int pBX,int pBY,int cBX,int cBY,int nBX, int nBY,int tarX,int tarY ){
@@ -393,22 +365,18 @@ public class TempGenerator{
 				removeWall(pBX,pBY-1,tarX,tarY);
 				removeWall(cBX,cBY-1,tarX,tarY);
 			}
-		}
-
-		
-
-		
+		}	
 	}
 	
 	public void removeWall(int nBX,int nBY,int tarX,int tarY){
 
-		if (map[nBX][nBY] == 'T' && nBX !=tarX && nBY != tarY){
-			//found a TARGET but not the one looking for
-			map[nBY][nBY] = 'E';
-		}else if (map[nBX][nBY] == 'B'){
+		if (map[nBX][nBY] == 'B'){
 			//gg fked in this case should never happen but if happen, expand around to be empty
 			specialCase(nBX,nBY);
-		}else if(map[nBX][nBY] == 'T' && nBX ==tarX && nBY == tarY){
+		}else if (map[nBX][nBY] == 'T' && nBX !=tarX && nBY != tarY){
+			//found a TARGET but not the one looking for
+			map[nBY][nBY] = 'E';
+		} else if(map[nBX][nBY] == 'T' && nBX ==tarX && nBY == tarY){
 			map[nBX][nBY] = 'O';
 			//specialCase(nBX,nBY);
 		}else if(map[nBX][nBY]=='O'){
@@ -420,6 +388,7 @@ public class TempGenerator{
 	}
 	
 	public void specialCase(int x,int y){
+
 		map[x-1][y-1] = (map[x-1][y-1]=='O') ? 'O':'E';
 		map[x-1][y] = (map[x-1][y]=='O') ? 'O':'E';
 		map[x-1][y+1] = (map[x-1][y+1]=='O') ? 'O':'E';
@@ -430,7 +399,7 @@ public class TempGenerator{
 		map[x+1][y] = (map[x+1][y]=='O') ? 'O':'E';
 		map[x+1][y+1] = (map[x+1][y+1]=='O') ? 'O':'E';
 	}
-	
+
 	//find random move from input minimum moves
 	public int findRandom(int number){
 		int result=0,tens=0,single= 0;
@@ -516,6 +485,33 @@ public class TempGenerator{
 		return result;
 	}
 	
+	static public void dodgySet(int x,int y){
+		if(map[x-1][y-1] == 'W'){
+			map[x-1][y-1] = 'E';
+		}
+		if(map[x-1][y] == 'W'){
+			map[x-1][y] = 'E';
+		}
+		if(map[x-1][y+1] == 'W'){
+			map[x-1][y+1] = 'E';
+		}
+		if(map[x][y-1] == 'W'){
+			map[x][y-1] = 'E';
+		}
+		if(map[x][y+1] == 'W'){
+			map[x][y+1] = 'E';
+		}
+		if(map[x+1][y-1] == 'W'){
+			map[x+1][y-1] = 'E';
+		}
+		if(map[x+1][y] == 'W'){
+			map[x+1][y] = 'E';
+		}
+		if(map[x+1][y+1] == 'W'){
+			map[x+1][y+1] = 'E';
+		}
+	}
+	
 	//create a inner class to represent box and targets
 	class Pair{
 		public int indexX;
@@ -526,9 +522,7 @@ public class TempGenerator{
 			indexY = yValue;
 		}
 	}
-	
 
-	
 	//calculating distance function |x| + |y| instead of sqrt((y-y0)^2 + (x-x0)^2)
 	//needs to consider situation that two method of distance equals eg: up and left would cause
 	//same distance to target
@@ -549,7 +543,6 @@ public class TempGenerator{
 	
 	//x for start x index, y for start y index, rw for randomway eg:0 for up 1 for down
 	public boolean checkStartPoint(int x ,int y,int rx,int ry){
-		System.out.println("lll");
 		if((rx==0 && ry != 0) ||(rx!= 0 && ry == 0)){
 			//if touches edge, then start point is invalid
 			if(rx + x== 0 || ry + y == 0 || rx + x ==N-1 || ry+ y == M-1){return false;}
@@ -567,24 +560,35 @@ public class TempGenerator{
 		System.out.println();
 	}
 	
-	
-	
-	
-
-
 	public static void main(String[] args){
-		TempGenerator a ;
+		TempGenerator a = new TempGenerator(3) ;
 		int px = 0,py = 0;
-
 		for(int i = 0;i <20;i++){
 			a = new TempGenerator(3);
-
 			if(a.checkFinished(3)){
-				
-				
 				break;
 			}
 		}
+		px = a.randomStartX;
+		py = a.randomStartY;
+
+		//set back player & box & target
+
+		map[px][py] = 'P';
+		Iterator<Pair> boxes = a.boxIndex.iterator();
+		Iterator<Pair> targets = a.targetIndex.iterator();
+		while(boxes.hasNext()){
+			Pair tmp = boxes.next();
+			map[tmp.indexX][tmp.indexY] = 'B';
+			//set empty around B in order to get rid of edge cases
+			dodgySet(tmp.indexX,tmp.indexY);
+		}
+		
+		while(targets.hasNext()){
+			Pair tmpT = targets.next();
+			map[tmpT.indexX][tmpT.indexY] = 'T';
+		}	
+		
 		//edit map so that outer bound is wall
 		for(int j = 0;j<N;j++){
 			for(int k = 0;k<M;k++){
@@ -593,15 +597,11 @@ public class TempGenerator{
 				}
 			}
 		}
-		//set back player & box & target
-		
-		
-			
 		print();
-		
-		System.out.println("doing");
 
 	}
 
 }
+
+
 
