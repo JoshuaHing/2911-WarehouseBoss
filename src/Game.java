@@ -34,7 +34,26 @@ public class Game {
     this.gameMaps = new ArrayList<Map>();
     this.movesMade = new Stack<Integer>();
   }
-
+/**
+   * PRECONDITIONS:
+   * 	Level is a valid number >= 0
+   * 	playerNum is a valid number 1 or 2
+   * 	The map is a valid map surrounded by walls
+   * 	There isn't any undefined foreign Strings in the map
+   * 
+   * POSTCONDITIONS:
+   * 	The player makes a valid move upwards if possible
+   * 	If can't move up, pushing box or otherwise, then do nothing
+   * 
+   * INVARIANTS:
+   * 	The number of boxes and targets on the map
+   * 	The wall positions
+   * 	The number of characters
+   * 	The size of the map
+   * 
+   * @param level
+   * @param playerNum
+   */
   public void moveUP(int level, int playerNum) {
 		// first find person P or O
 		int x = 0;
