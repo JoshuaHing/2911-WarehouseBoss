@@ -540,13 +540,13 @@ public class TempGenerator{
 	
 	//x for start x index, y for start y index, rw for randomway eg:0 for up 1 for down
 	public boolean checkStartPoint(int x ,int y,int rx,int ry){
-		if((rx==0 && ry != 0) ||(rx!= 0 && ry == 0)){
-			//if touches edge, then start point is invalid
-			if(rx + x== 0 || ry + y == 0 || rx + x ==N-1 || ry+ y == M-1){return false;}
-			else{return true;}
+		if(!(rx ==0&&ry==0)){
+		//if touches edge, then start point is invalid
+		if(rx + x== 0 || ry + y == 0 || rx + x ==N-1 || ry+ y == M-1){return false;}
+		else{return true;}
 		}
 		return false;
-	}
+		}
 
 	public static void print(){
 		for(int i = 0; i< N; i++){
@@ -566,7 +566,7 @@ public class TempGenerator{
 		for(int i = 0; i < 3; i++) {
 			TempGenerator a = new TempGenerator(num,mode) ;
 			int px = 0,py = 0;
-			for(int j = 0;j <20;j++){
+			for(int j = 0;j < 20;j++){
 				a = new TempGenerator(num, mode);
 				if(a.checkFinished(num )){
 					break;
@@ -619,12 +619,11 @@ public class TempGenerator{
 				stringMap.add(newList);
 				for(int j = 0; j < 12; j++) {
 					char c = map[k][j];
-					String s = Character.toString(c );
+					String s = Character.toString(c);
 					stringMap.get(k).add(s);	
 				}
 			}
-			System.out.println("Map = ");
-			for(int k = 0; k < 12; k++) {
+			/*for(int k = 0; k < 12; k++) {
 				ArrayList<String> newList = new ArrayList<String>();
 				stringMap.add(newList);
 				for(int j = 0; j < 12; j++) {
@@ -632,7 +631,7 @@ public class TempGenerator{
 					System.out.print(stringMap.get(k).get(j) + " ");	
 				}
 				System.out.println();
-			}
+			}*/
 			Map newMap = new Map(stringMap, a.getBoxesNeeded());
 			game.addMap(newMap);
 			print();
