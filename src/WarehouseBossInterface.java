@@ -384,7 +384,7 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		} else if (e.getSource() == WbReset) {
 			// When the restart button is pressed, the game should go back to
 			// the start.
-			String str = "Do you want to restart this level?\n";
+			String str = "Would you like to reset this level?\n";
 			int diaResult = JOptionPane.showConfirmDialog(this, str, "Warning", JOptionPane.YES_NO_OPTION);
 			if (diaResult == JOptionPane.YES_OPTION) {
 				updateInterface(MODE_RESTART, game);
@@ -452,7 +452,6 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		} else if (e.getSource() == WbUndo) {
 			game.undo(currLevel);
 			updateInterface(MODE_REFRESH, game);
-			resetTimer();
 			requestFocus();
 		} else if (e.getSource() == WbMusicOn) {
 			String title = WbMusicOn.getText();
@@ -534,7 +533,9 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 		if (mode == MODE_REFRESH) { // Used for general purposes
 			mainPanel.add(new MyPanel(game.getMap()));
 		} else if (mode == MODE_RESTART) { // **YET TO BE IMPLEMENTED**
-			currLevel = 0; // Used for when the restart button is pressed
+			game.resetMap(currLevel);
+			game.resetMovesMade();
+			//currLevel = 0; // Used for when the restart button is pressed
 			mainPanel.add(new MyPanel(game.getMap()));
 		} else if (mode == MODE_DONE) { // **YET TO BE IMPLEMENTED**
 			// The program should display a closing message such as
@@ -654,10 +655,77 @@ public class WarehouseBossInterface extends JFrame implements ActionListener, Ke
 				// move down
 				down(PLAYER_TWO);
 				break;
+			case KeyEvent.VK_U:
+				game.undo(currLevel);
+				updateInterface(MODE_REFRESH, game);
+				requestFocus();
+				break;
+			case KeyEvent.VK_N:
+				//Next level
+				if(game.hasNextLevel(currLevel)) {
+					currLevel++;
+				}
+				updateInterface(MODE_REFRESH, game);
+				game.resetMovesMade();
+				game.resetMap(currLevel);
+				resetTimer();
+				requestFocus();
+				break;
+			case KeyEvent.VK_P:
+				//Previous level
+				if(currLevel > 0) {
+					currLevel--;
+				}
+				updateInterface(MODE_REFRESH, game);
+				game.resetMovesMade();
+				game.resetMap(currLevel);
+				resetTimer();
+				requestFocus();
+				break;
+			case KeyEvent.VK_T:
+				//Time
+				if(!timerOn) {
+					String str = "Would you like to enable timer mode? Current progress will be lost.\n";
+					int diaResult = JOptionPane.showConfirmDialog(this, str, "Warning", JOptionPane.YES_NO_OPTION);
+					if (diaResult == JOptionPane.YES_OPTION) {
+						resetTimer();
+						timerPanel.setVisible(true);
+						game.resetMap(currLevel);
+						game.resetMovesMade();
+						currLevel = 0;
+						updateInterface(MODE_RESTART, game);
+						requestFocus();
+					} else {
+						requestFocus();
+					}
+					timerOn = true;
+				} else {
+					timerPanel.setVisible(false);
+					timerOn = false;
+					requestFocus();
+				}
+				break;
+			case KeyEvent.VK_R:
+				//Reset
+				String str = "Would you like to restart this level?\n";
+				int diaResult = JOptionPane.showConfirmDialog(this, str, "Warning", JOptionPane.YES_NO_OPTION);
+				if (diaResult == JOptionPane.YES_OPTION) {
+					updateInterface(MODE_RESTART, game);
+					requestFocus();
+				} else {
+					requestFocus();
+				}
+				resetTimer();
+				break;
+			case KeyEvent.VK_M:
+				//Music on/off
+				requestFocus();
+				break;
 			}
+			
 		}
 	
-
+	
 	@Override
 	public void keyReleased(KeyEvent e) {
 		Animation.PRESSED = false;

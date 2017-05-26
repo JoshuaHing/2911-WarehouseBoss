@@ -55,7 +55,7 @@ public class StartingScreen extends JFrame implements ActionListener
     sPlayerText.setAlignmentX(Y-80);
     sPlayerText.setVisible(true);*/
     try {
-      Image img = ImageIO.read(getClass().getResource("MenuImage/icon.png"));
+      Image img = ImageIO.read(getClass().getResource("MenuImage/icon2.png"));
       SPlayer.setIcon(new ImageIcon(img));
     } catch (Exception ex) {
       System.out.println(ex);
@@ -77,7 +77,7 @@ public class StartingScreen extends JFrame implements ActionListener
     sPlayerText.setAlignmentX(Y-80);
     sPlayerText.setVisible(true);*/
     try {
-      Image img = ImageIO.read(getClass().getResource("MenuImage/icon.png"));
+      Image img = ImageIO.read(getClass().getResource("MenuImage/icon2.png"));
       TPlayer.setIcon(new ImageIcon(img));
     } catch (Exception ex) {
       System.out.println(ex);
@@ -95,7 +95,7 @@ public class StartingScreen extends JFrame implements ActionListener
     Exit.setHorizontalTextPosition(JButton.CENTER);
     Exit.setVerticalTextPosition(JButton.CENTER);
     try {
-        Image img = ImageIO.read(getClass().getResource("MenuImage/icon.png"));
+        Image img = ImageIO.read(getClass().getResource("MenuImage/icon2.png"));
         Exit.setIcon(new ImageIcon(img));
       } catch (Exception ex) {
         System.out.println(ex);

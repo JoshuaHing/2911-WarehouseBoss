@@ -41,7 +41,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 	    sPlayerText.setAlignmentX(Y-80);
 	    sPlayerText.setVisible(true);*/
 	    try {
-	      Image img = ImageIO.read(getClass().getResource("MenuImage/icon.png"));
+	      Image img = ImageIO.read(getClass().getResource("MenuImage/icon4.png"));
 	      menu.setIcon(new ImageIcon(img));
 	    } catch (Exception ex) {
 	      System.out.println(ex);
@@ -59,7 +59,7 @@ public class EndingScreen extends JFrame implements ActionListener {
 	    Quit.setHorizontalTextPosition(JButton.CENTER);
 	    Quit.setVerticalTextPosition(JButton.CENTER);
 	    try {
-	        Image img = ImageIO.read(getClass().getResource("MenuImage/icon.png"));
+	        Image img = ImageIO.read(getClass().getResource("MenuImage/icon4.png"));
 	        Quit.setIcon(new ImageIcon(img));
 	      } catch (Exception ex) {
 	        System.out.println(ex);

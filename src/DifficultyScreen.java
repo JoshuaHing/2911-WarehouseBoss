@@ -57,7 +57,7 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		 * easyButtonText.setAlignmentX(Y-80); easyButtonText.setVisible(true);
 		 */
 		try {
-			Image img = ImageIO.read(getClass().getResource("MenuImage/icon.png"));
+			Image img = ImageIO.read(getClass().getResource("MenuImage/icon3.png"));
 			easyButton.setIcon(new ImageIcon(img));
 		} catch (Exception ex) {
 			System.out.println(ex);
@@ -80,7 +80,7 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		 * easyButtonText.setAlignmentX(Y-80); easyButtonText.setVisible(true);
 		 */
 		try {
-			Image img = ImageIO.read(getClass().getResource("MenuImage/icon.png"));
+			Image img = ImageIO.read(getClass().getResource("MenuImage/icon3.png"));
 			medButton.setIcon(new ImageIcon(img));
 		} catch (Exception ex) {
 			System.out.println(ex);
@@ -98,7 +98,7 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 		hardButton.setHorizontalTextPosition(JButton.CENTER);
 		hardButton.setVerticalTextPosition(JButton.CENTER);
 		try {
-			Image img = ImageIO.read(getClass().getResource("MenuImage/icon.png"));
+			Image img = ImageIO.read(getClass().getResource("MenuImage/icon3.png"));
 			hardButton.setIcon(new ImageIcon(img));
 		} catch (Exception ex) {
 			System.out.println(ex);
