@@ -49,8 +49,6 @@ public class TempGenerator{
 		//set player & box binded at start 
 		randomStartX = (int )(Math.random() * (N-8))+5;
 		randomStartY = (int )(Math.random() * (M-8))+5;
-		System.out.println(randomStartX+"qqqqqqq");
-		System.out.println(randomStartY+"wwwwwwww");
 
 		//5~8
 		//set box ,maybe multiple boxes
@@ -58,8 +56,6 @@ public class TempGenerator{
 			//indicate place(1,0) means left (0,-1)means down, this does mean the index of box 
 			randomWayX = (int )(Math.random()*3) -1;
 			randomWayY = (int )(Math.random()*3) -1;
-			System.out.println(randomWayX);
-			System.out.println(randomWayY+"yy");
 			this.validStartFlag = checkStartPoint(randomStartX,randomStartY,randomWayX,randomWayY);
 			//should always valid 
 			if(validStartFlag){
@@ -68,8 +64,6 @@ public class TempGenerator{
 					//if it's not wall then it's duplicated box place, then skip to next loop
 					map[randomStartX][randomStartY] = 'P';
 					map[randomStartX+randomWayX][randomStartY+randomWayY] = 'B';
-					System.out.println(randomStartX);
-					System.out.println(randomWayX);
 					
 					int tmp = 0;
 					Iterator<Pair> pair = boxIndex.iterator();
@@ -113,7 +107,7 @@ public class TempGenerator{
 				targetSum++;
 			}
 		}
-		print();
+		//print();
 		
 		//now simulate path, minimize wall destroying. 
 
@@ -561,11 +555,11 @@ public class TempGenerator{
 	}
 	
 	public static void main(String[] args){
-		TempGenerator a = new TempGenerator(3) ;
+		TempGenerator a = new TempGenerator(4) ;
 		int px = 0,py = 0;
 		for(int i = 0;i <20;i++){
-			a = new TempGenerator(3);
-			if(a.checkFinished(3)){
+			a = new TempGenerator(4);
+			if(a.checkFinished(4)){
 				break;
 			}
 		}
@@ -602,6 +596,4 @@ public class TempGenerator{
 	}
 
 }
-
-
 
