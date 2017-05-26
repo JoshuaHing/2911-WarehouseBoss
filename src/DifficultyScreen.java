@@ -120,10 +120,13 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == easyButton) {
 			readMap("Easy");
+			Animation.PRESSED = false;
 		} else if (e.getSource() == medButton) {
 			readMap("Medium");
+			Animation.PRESSED = false;
 		} else if (e.getSource() == hardButton) {
 			readMap("Hard");
+			Animation.PRESSED = false;
 		}
 	}
 

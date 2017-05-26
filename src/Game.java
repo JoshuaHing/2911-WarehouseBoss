@@ -24,6 +24,11 @@ public class Game {
   private static final int PLAYER_TWO_RIGHT_MOVE = 14;
   private static final int PLAYER_TWO_RIGHT_MOVE_WB = 15;
   
+  private int initialMX;
+  private int initialMY;
+  private int initialLX;
+  private int initialLY;
+  
   public Game(){
     this.map = null;
     this.gameMaps = new ArrayList<Map>();
@@ -743,4 +748,50 @@ public class Game {
 			return false;
 		}
 	}
+	public void getPosition(int playerNum) {
+		Map currMap = this.gameMaps.get(0);
+		ArrayList<ArrayList<String>> map = currMap.getMap();
+		if(playerNum == 1){
+			for(int j=0;j<map.size();j++){
+				for(int i=0;i<map.get(j).size();i++){
+					if(map.get(j).get(i).equals("P")||map.get(j).get(i).equals("O")){
+						initialMX = j;
+						initialMY = i;
+					}
+				}
+			}
+		}
+		if(playerNum == 2){
+			for(int j=0;j<map.size();j++){
+				for(int i=0;i<map.get(j).size();i++){
+					if(map.get(j).get(i).equals("Q")||map.get(j).get(i).equals("R")){
+						initialLX = j;
+						initialLY = i;
+					}
+				}
+			}
+		}
+	}
+	
+	public int getXPosition(int playerNum) {
+		if(playerNum == 1) {
+			return this.initialMX;
+		} else {
+			return this.initialLX;
+		}
+	}
+	
+	public int getYPosition(int playerNum) {
+		if(playerNum == 1) {
+			return this.initialMY;
+		} else {
+			return this.initialLY;
+		}
+	}
+	
+	public int getSize() {
+		return this.gameMaps.size();
+	}
+	
+	
 }
