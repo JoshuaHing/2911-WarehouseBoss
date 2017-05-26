@@ -65,7 +65,8 @@ public class HelpScreen extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == Return){
-			setVisible(false);
+			dispose();
+			//setVisible(false);
 		}
 	}
 	

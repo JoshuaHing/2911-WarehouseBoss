@@ -98,10 +98,12 @@ public class EndingScreen extends JFrame implements ActionListener {
 				requestFocus();
 			}
 		} else if(e.getSource() == menu) {
-			setVisible(false);
+			dispose();
+			//setVisible(false);
 			StartingScreen startScreen = new StartingScreen();
 		} else if(e.getSource() == continueGame) {
-			setVisible(false);
+			dispose();
+			//setVisible(false);
 			StartingScreen startScreen = new StartingScreen();
 		}
 	}

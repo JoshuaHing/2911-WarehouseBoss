@@ -176,21 +176,24 @@ public class DifficultyScreen extends JFrame implements ActionListener {
 			tG = new TempGenerator(3, this.gameMode);
 			Game game = tG.getGame(3, this.gameMode);
 			game.setMap(game.getLevel(0));
-			setVisible(false);
+			dispose();
+			//setVisible(false);
 			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 			EventQueue.invokeLater(() -> newInterface.canvas.start());
 		} else if(mode.equals("Medium")) {
 			tG = new TempGenerator(6, this.gameMode);
 			Game game = tG.getGame(6, this.gameMode);
 			game.setMap(game.getLevel(0));
-			setVisible(false);
+			dispose();
+			//setVisible(false);
 			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 			EventQueue.invokeLater(() -> newInterface.canvas.start());
 		} else if(mode.equals("Hard")) {
 			tG = new TempGenerator(8, this.gameMode);
 			Game game = tG.getGame(8, this.gameMode);
 			game.setMap(game.getLevel(0));
-			setVisible(false);
+			dispose();
+			//setVisible(false);
 			WarehouseBossInterface newInterface = new WarehouseBossInterface(game);
 			EventQueue.invokeLater(() -> newInterface.canvas.start());
 		}

@@ -158,11 +158,13 @@ public class StartingScreen extends JFrame implements ActionListener
 		}
     }else if (e.getSource() == SPlayer){
     	mode = "Single Player";
-    	setVisible(false);
+    	dispose();
+        //setVisible(false);
     	DifficultyScreen dS = new DifficultyScreen(mode);
     }else if (e.getSource() == TPlayer) {
     	mode = "Multi Player";
-    	setVisible(false);
+    	dispose();
+        //setVisible(false);
     	DifficultyScreen dS = new DifficultyScreen(mode);
     }else if (e.getSource() == help) {
     	HelpScreen hS = new HelpScreen();
