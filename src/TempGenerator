@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -13,25 +14,15 @@ public class TempGenerator{
 	final static int N = 10; 		// SIZE OF MAP. CHANGE IF NEEDED
 	final static int M = 10;
 	public static char[][] map = new char[N][M];
-	static int Y;
-	static int X;
-	static int testY;
-	static int testX;
-	static int delta;
-	static String direction;
-	static int boxes;
-	static int walks; // number of directional walks for each box
 	
 	public boolean validStartFlag;
 	public int randomStartX,randomStartY,randomWayX,randomWayY,randomTX,randomTY;
-	public int goingX,goingY;
-	public int wallDestroyed;
-	public Pair[] boxIndex = new Pair[3];
-	public Pair[] targetIndex  = new Pair[3];
-	public int[] moves;
-
-	public char[][] stra;
-	public int index;
+	public ArrayList<Pair> boxIndex = new ArrayList<Pair>();
+	public ArrayList<Pair> targetIndex = new ArrayList<Pair>();
+	public int[] movesX = new int[102];
+	public int[] movesY = new int[102];
+		
+	public int preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY;
 	
 	
 	public TempGenerator(int boxNeeded){
@@ -44,13 +35,13 @@ public class TempGenerator{
 		this.randomWayY = 0;
 		this.randomTX = 0;
 		this.randomTY = 0;
-		this.wallDestroyed = 0;
-		this.goingX = 0;
-		this.goingY = 0;
-		 
-		this.moves = new int[30];
-		this.stra = new char[5][30];
-		this.index = 0;
+		this.preBoxX = 0;
+		this.preBoxY = 0;
+		this.currBoxX = 0;
+		this.currBoxY = 0;
+		this.nextBoxX = 0;
+		this.nextBoxY = 0;		
+		
 	}	
 	public void setAllWall(){
 		for (int n=0;n<N;n++){
@@ -62,11 +53,20 @@ public class TempGenerator{
 	}
 	
 	public void generate(int boxNeeded){
+		//first initialize boxIndex & targetIndex arrayList of pair
+		for (int g = 0;g<boxNeeded;g++){
+			boxIndex.add(new Pair(0,0));
+			targetIndex.add(new Pair(0,0));
+		}
+		
 		int boxSum =0;
 		//set player & box binded at start 
-		randomStartX = (int )(Math.random() * 6)+2;
-		randomStartY = (int )(Math.random() * 6)+2;
-		//2~7
+		randomStartX = (int )(Math.random() * (N-7))+4;
+		randomStartY = (int )(Math.random() * (M-7))+4;
+		System.out.println(randomStartX+"qqqqqqq");
+		System.out.println(randomStartY+"wwwwwwww");
+
+		//3~6
 		//System.out.println(randomStartX);
 		//set box ,maybe multiple boxes
 		while(boxSum<boxNeeded){
@@ -86,122 +86,257 @@ public class TempGenerator{
 					System.out.println(randomStartX);
 					System.out.println(randomWayX);
 					
-					boxIndex[boxSum].indexX = randomStartX+randomWayX;
-					boxIndex[boxSum].indexY = randomStartY+randomWayY;
+					int tmp = 0;
+					Iterator<Pair> pair = boxIndex.iterator();
+				
+					while(tmp < boxNeeded && pair.hasNext()){
+						Pair newpair = pair.next();
+						if(tmp == boxSum ){
+							newpair.indexX = randomStartX+randomWayX;
+							newpair.indexY = randomStartY+randomWayY;
+							break;
+						}
+						
+						tmp++;
+					}
 					boxSum ++;
 				}
 				
 			}
-			//else{
-			//	System.out.println("invalid box ? going next loop");
-			//}
 		}
 		
 		//now set target place
 		int targetSum = 0;
 		while(targetSum<boxNeeded){
-			randomTX = (int)(Math.random()*10);
-			randomTY = (int)(Math.random()*10);
+			randomTX = (int)(Math.random() * (N-3))+2;
+			randomTY = (int)(Math.random() * (M-3))+2;
 			if(map[randomTX][randomTY]!='P'&&map[randomTX][randomTY]!='B'){
 				map[randomTX][randomTY] = 'T';
-				targetIndex[targetSum].indexX = randomTX;
-				targetIndex[targetSum].indexY = randomTY;
+				int tmp = 0;
+				Iterator<Pair> pair = targetIndex.iterator();
+				while(tmp<boxNeeded && pair.hasNext()){
+					Pair newpair = pair.next();
+					if(tmp == targetSum){
+						newpair.indexX = randomTX;
+						newpair.indexY = randomTY;
+						break;
+					}
+					tmp++;
+				}
+				
 				targetSum++;
 			}
 		}
+		print();
 		
-		//now simulate path, minimize wall destroying. eg: when able to move box to get road..
-		//so it's like step by step.
-		int walls = 0,finalwalls = 0,finalindex = 0;
+		//now simulate path, minimize wall destroying. 
 
-		int currentWallDestroyed = 0; 
 		int possibleMoveDis[] = new int[4];//used to record possible move distance from box to target
 		//[0] contains up [1]contains down [2] contains left [3] contains right
-		while(!checkFinished(boxNeeded)){
+		System.out.println(boxIndex.size()+"qqq");
+		int tried = 0;
+		while(!checkFinished(boxNeeded) && tried <100){
+			//when game not finished		
+			tried++;
+			Iterator<Pair> pair = boxIndex.iterator();
+			Iterator<Pair> pair1 = targetIndex.iterator();
 			
-			//do the simulation
-			//check the distance between possible box move and the target
-			//check first box,note whichbox notates both box index & targetindex in some cases
-			 
-			for(int t = 0;t<boxIndex.length;t++){
-				//do works until it is last step
+			for(int t = 0;t<boxIndex.size();t++){
+				assert(pair.hasNext()&&pair1.hasNext());
+				Pair newpair = pair.next();
+				Pair newpair1 = pair1.next();
+				currBoxX = newpair.indexX;
+				currBoxY = newpair.indexY;
+				//initially same as curr
+				preBoxX = currBoxX;
+				preBoxY = currBoxY;
+				
 				int tempResult = 0;
 				
-				while(calDistance(boxIndex[t].indexX,boxIndex[t].indexY,targetIndex[t].indexX,targetIndex[t].indexY)!= 1){
+				while((currBoxX != newpair1.indexX)|| (currBoxY != newpair1.indexY)){
+					
 					//change box location with least distance
-					possibleMoveDis[0] = calDistance(boxIndex[t].indexX,boxIndex[t].indexY-1,targetIndex[t].indexX,targetIndex[t].indexY);
-					possibleMoveDis[1] = calDistance(boxIndex[t].indexX,boxIndex[t].indexY+1,targetIndex[t].indexX,targetIndex[t].indexY);
-					possibleMoveDis[2] = calDistance(boxIndex[t].indexX-1,boxIndex[t].indexY,targetIndex[t].indexX,targetIndex[t].indexY);
-					possibleMoveDis[3] = calDistance(boxIndex[t].indexX+1,boxIndex[t].indexY,targetIndex[t].indexX,targetIndex[t].indexY);
+					possibleMoveDis[0] = calDistance(currBoxX-1,currBoxY,newpair1.indexX,newpair1.indexY);
+					possibleMoveDis[1] = calDistance(currBoxX+1,currBoxY,newpair1.indexX,newpair1.indexY);
+					possibleMoveDis[2] = calDistance(currBoxX,currBoxY-1,newpair1.indexX,newpair1.indexY);
+					possibleMoveDis[3] = calDistance(currBoxX,currBoxY+1,newpair1.indexX,newpair1.indexY);
 					tempResult = findMinimum(possibleMoveDis[0],possibleMoveDis[1],possibleMoveDis[2],possibleMoveDis[3]);
-					//possible minimal move leaves one possibility
-					//need to note that box cant go to the 4 corners.
+					//need to note that box cant go to the 4 corners!!!!!!!
+					
 					if(tempResult!= 0 && tempResult <10){
-						//should not meet box in a row/col in this case, if so, it is fked, needs another map.
 						if(tempResult == 1){
+
+							nextBoxX = currBoxX-1;
+							nextBoxY = currBoxY;
 							//need to note that box cant go to the 4 corners.
-							ArrayList<String> a = new ArrayList<String>();
-							while(index < 5){
-								walls = calWalls(randomStartX,randomStartY,boxIndex[t].indexX,boxIndex[t].indexY+1,t,index);
-								if(walls<=finalwalls){
-									finalwalls = walls;
-									finalindex = index;
-								}
-								index ++;
+							//if cornering
+							if(Math.abs(preBoxX-nextBoxX) == 1 || Math.abs(preBoxY-nextBoxY)==1){
+								removeCorneringWall(preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
 							}
-							walls = 0;
-							index = 0;
-							finalwalls = 0;
-							//use finalindex to simulate player moves and change passed wall to empty
 							
-							//then needs to set finalindex back to 0
-							finalindex = 0;
+							else{
+								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							preBoxX = currBoxX;
+							preBoxY = currBoxY;
+							currBoxX = nextBoxX;
+							currBoxY = nextBoxY;
 							
-							goingX = boxIndex[t].indexX;
-							goingY = boxIndex[t].indexY-1;
-							//make person able to move to the tail of box
-							
-							
+
 						}else if(tempResult == 2){
-							
+							nextBoxX = currBoxX+1;
+							nextBoxY = currBoxY;
+							//need to note that box cant go to the 4 corners.
+							//if cornering
+							if(Math.abs(preBoxX-nextBoxX) == 1 || Math.abs(preBoxY-nextBoxY)==1){
+								removeCorneringWall(preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							else{
+								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							preBoxX = currBoxX;
+							preBoxY = currBoxY;
+							currBoxX = nextBoxX;
+							currBoxY = nextBoxY;
 						}else if(tempResult == 3){
+							nextBoxX = currBoxX;
+							nextBoxY = currBoxY-1;
+							//need to note that box cant go to the 4 corners.
 							
+							//if cornering
+							if(Math.abs(preBoxX-nextBoxX) == 1 || Math.abs(preBoxY-nextBoxY)==1){
+								removeCorneringWall(preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							//
+							else{
+								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							preBoxX = currBoxX;
+							preBoxY = currBoxY;
+							currBoxX = nextBoxX;
+							currBoxY = nextBoxY;
+
 						}else if(tempResult == 4){
-							
+							nextBoxX = currBoxX;
+							nextBoxY = currBoxY+1;
+							//need to note that box cant go to the 4 corners.
+							//if cornering
+							if(Math.abs(preBoxX-nextBoxX) == 1 || Math.abs(preBoxY-nextBoxY)==1){
+								removeCorneringWall(preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							//
+							else{
+								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							preBoxX = currBoxX;
+							preBoxY = currBoxY;
+							currBoxX = nextBoxX;
+							currBoxY = nextBoxY;
+
 						}
 					
-						//make box moving!
-						//consider about walls now
+						
 					}
-					//possible minimal move leaves two possibility
 					else{
 						//maybe meet box in a row/col in this case, if so, try skip current loop and loop again
 						if(findRandom(tempResult)==1){
+							nextBoxX = currBoxX-1;
+							nextBoxY = currBoxY;
+							//need to note that box cant go to the 4 corners.
+
+							//if cornering
+							if(Math.abs(preBoxX-nextBoxX) == 1 || Math.abs(preBoxY-nextBoxY)==1){
+								removeCorneringWall(preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							//
+							else{
+								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							preBoxX = currBoxX;
+							preBoxY = currBoxY;
+							currBoxX = nextBoxX;
+							currBoxY = nextBoxY;
 							
+							
+
 						}else if(findRandom(tempResult) == 2){
-							
+							nextBoxX = currBoxX+1;
+							nextBoxY = currBoxY;
+							//need to note that box cant go to the 4 corners.
+						
+							//if cornering
+							if(Math.abs(preBoxX-nextBoxX) == 1 || Math.abs(preBoxY-nextBoxY)==1){
+								removeCorneringWall(preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							//
+							else{
+								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);	
+							}
+							preBoxX = currBoxX;
+							preBoxY = currBoxY;
+							currBoxX = nextBoxX;
+							currBoxY = nextBoxY;
 						}else if(findRandom(tempResult) == 3){
+							nextBoxX = currBoxX;
+							nextBoxY = currBoxY-1;
+							//need to note that box cant go to the 4 corners.
 							
+							//if cornering
+							if(Math.abs(preBoxX-nextBoxX) == 1 || Math.abs(preBoxY-nextBoxY)==1){
+								removeCorneringWall(preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							//
+							else{
+								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							preBoxX = currBoxX;
+							preBoxY = currBoxY;
+							currBoxX = nextBoxX;
+							currBoxY = nextBoxY;
+
 						}else if(findRandom(tempResult) == 4){
-							
+							nextBoxX = currBoxX;
+							nextBoxY = currBoxY+1;
+							//need to note that box cant go to the 4 corners.							
+							//if cornering
+							if(Math.abs(preBoxX-nextBoxX) == 1 || Math.abs(preBoxY-nextBoxY)==1){
+								removeCorneringWall(preBoxX,preBoxY,currBoxX,currBoxY,nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+							else{
+								removeWall(nextBoxX,nextBoxY,newpair1.indexX,newpair1.indexY);
+							}
+
+							preBoxX = currBoxX;
+							preBoxY = currBoxY;
+							currBoxX = nextBoxX;
+							currBoxY = nextBoxY;
+
 						}
 						
-						//choose direction and make box moving!
-						
-						//consider about walls now
 						
 					}
+					
+
+							
+					
+					tried++;
 				}
-				
+				//print();
+
 				//now set stuff for last step
 				
 			}
+			/*
+			for(int u = 0;u<movesX.length;u++){
+				map[movesX[u]][movesY[u]] = 'E';
+			}
+			*/
+			//print();
 			
 		}
 		
 		
 		
-		print();
 		
 		
 		
@@ -218,9 +353,84 @@ public class TempGenerator{
 		//simulate path
 		//hard point is cornering
 		
-		
+
 				
 	}
+	public void removeCorneringWall(int pBX,int pBY,int cBX,int cBY,int nBX, int nBY,int tarX,int tarY ){
+		removeWall(nBX,nBY,tarX,tarY);
+		removeWall(cBX,cBY,tarX,tarY);
+		//removeWall(pBX,pBY,tarX,tarY);
+		if(preBoxX-nextBoxX == 1 && preBoxY-nextBoxY == 1){
+			//preBox is left up to nextBox
+			if(currBoxX-nextBoxX==1){
+				removeWall(pBX+1,pBY,tarX,tarY);
+				removeWall(cBX+1,cBY,tarX,tarY);
+			}else if(currBoxY-nextBoxY==1){
+				removeWall(pBX,pBY+1,tarX,tarY);
+				removeWall(cBX,cBY+1,tarX,tarY);
+			}
+		}else if(preBoxX-nextBoxX == -1 && preBoxY-nextBoxY == 1){
+			if(currBoxX-nextBoxX== -1){
+				removeWall(pBX-1,pBY,tarX,tarY);
+				removeWall(cBX-1,cBY,tarX,tarY);
+			}else if (currBoxY-nextBoxY == 1){
+				removeWall(pBX,pBY+1,tarX,tarY);
+				removeWall(cBX,cBY+1,tarX,tarY);
+			}
+		}else if(preBoxX-nextBoxX == 1 && preBoxY-nextBoxY == -1){
+			if(currBoxX-nextBoxX== 1){
+				removeWall(pBX+1,pBY,tarX,tarY);
+				removeWall(cBX+1,cBY,tarX,tarY);
+			}else if (currBoxY-nextBoxY == -1){
+				removeWall(pBX,pBY-1,tarX,tarY);
+				removeWall(cBX,cBY-1,tarX,tarY);
+			}		
+		}else if(preBoxX-nextBoxX == -1 && preBoxY-nextBoxY == -1){
+			if(currBoxX-nextBoxX== -1){
+				removeWall(pBX-1,pBY,tarX,tarY);
+				removeWall(cBX-1,cBY,tarX,tarY);
+			}else if (currBoxY-nextBoxY == -1){
+				removeWall(pBX,pBY-1,tarX,tarY);
+				removeWall(cBX,cBY-1,tarX,tarY);
+			}
+		}
+
+		
+
+		
+	}
+	
+	public void removeWall(int nBX,int nBY,int tarX,int tarY){
+
+		if (map[nBX][nBY] == 'T' && nBX !=tarX && nBY != tarY){
+			//found a TARGET but not the one looking for
+			map[nBY][nBY] = 'E';
+		}else if (map[nBX][nBY] == 'B'){
+			//gg fked in this case should never happen but if happen, expand around to be empty
+			specialCase(nBX,nBY);
+		}else if(map[nBX][nBY] == 'T' && nBX ==tarX && nBY == tarY){
+			map[nBX][nBY] = 'O';
+			//specialCase(nBX,nBY);
+		}else if(map[nBX][nBY]=='O'){
+			//do nothing
+		}
+		else{
+			map[nBX][nBY]='E';
+		}
+	}
+	
+	public void specialCase(int x,int y){
+		map[x-1][y-1] = (map[x-1][y-1]=='O') ? 'O':'E';
+		map[x-1][y] = (map[x-1][y]=='O') ? 'O':'E';
+		map[x-1][y+1] = (map[x-1][y+1]=='O') ? 'O':'E';
+		map[x][y-1] = (map[x][y-1]=='O') ? 'O':'E';
+		map[x][y] = (map[x][y]=='B') ? 'E':'E';
+		map[x][y+1] = (map[x][y+1]=='O') ? 'O':'E';
+		map[x+1][y-1] = (map[x+1][y-1]=='O') ? 'O':'E';
+		map[x+1][y] = (map[x+1][y]=='O') ? 'O':'E';
+		map[x+1][y+1] = (map[x+1][y+1]=='O') ? 'O':'E';
+	}
+	
 	//find random move from input minimum moves
 	public int findRandom(int number){
 		int result=0,tens=0,single= 0;
@@ -317,223 +527,7 @@ public class TempGenerator{
 		}
 	}
 	
-	//calculating how many walls around
-	//x0 means current player position in x index,
-	//x means destination position in x index
-	public int calWalls(int x0,int y0,int x,int y,int whichBox,int straIndex){
-		int wallDestroyed = 0;
-		int distance = calDistance(x0,y0,x,y);
-		int playerMove[] = new int[4];
-		int xV = x0;
-		int yV = y0;
-		int tempIndex = 0;
-		while(xV!=x && yV!= y){
-			//shouldnt over bounds
-			playerMove[0] = calDistance(xV,yV-1,x,y);
-			playerMove[1] = calDistance(xV,yV+1,x,y);
-			playerMove[2] = calDistance(xV-1,yV,x,y);
-			playerMove[3] = calDistance(xV+1,yV,x,y);
-			int result = 0;
-			boolean flag = false;
-			result = findMinimum(playerMove[0],playerMove[1],playerMove[2],playerMove[3]);
-			if(result != 0 && result < 10){
-				if(result ==1){
-					yV -=1;
-					//record move now
-					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
-						//valid move
-						wallDestroyed++;
-						flag = true;
-					}else if(map[xV][yV]=='B'){
-						//it may push box when creating map,implement later
-						if(yV-1 == 0){
-							//invalid in this case
-							flag = false;
-						}else{
-							wallDestroyed++;
-							flag = true;
-						}
-					}
-					if(flag == true){
-						char s = 'U';
-						stra[straIndex][tempIndex] = s;
-						tempIndex++;
-					}
-					//if not valid then nothing changes and keep looping
-						
-				}else if(result ==2){
-					yV +=1;
-					//record move now
-					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
-						//valid move
-						wallDestroyed++;
-						flag = true;
-					}else if(map[xV][yV]=='B'){
-						//it may push box when creating map,implement later
-						if(yV+1 == M-1){
-							//invalid in this case
-							flag = false;
-						}else{
-							wallDestroyed++;
-							flag = true;
-						}
-					}
-					if(flag == true){
-						char s = 'D';
-						stra[straIndex][tempIndex] = s;
-						tempIndex++;
-					}
-					//if not valid then nothing changes and keep looping
-				}else if(result ==3){
-					xV -=1;
-					//record move now
-					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
-						//valid move
-						wallDestroyed++;
-						flag = true;
-					}else if(map[xV][yV]=='B'){
-						//it may push box when creating map,implement later
-						if(xV-1 == 0){
-							//invalid in this case
-							flag = false;
-						}else{
-							wallDestroyed++;
-							flag = true;
-						}
-					}
-					if(flag == true){
-						char s = 'L';
-						stra[straIndex][tempIndex] = s;
-						tempIndex++;
-					}
-					//if not valid then nothing changes and keep looping
-				}else if(result ==4){
-					xV +=1;
-					//record move now
-					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
-						//valid move
-						wallDestroyed++;
-						flag = true;
-					}else if(map[xV][yV]=='B'){
-						//it may push box when creating map,implement later
-						if(xV+1 == N-1){
-							//invalid in this case
-							flag = false;
-						}else{
-							wallDestroyed++;
-							flag = true;
-						}
-					}
-					if(flag == true){
-						char s = 'R';
-						stra[straIndex][tempIndex] = s;
-						tempIndex++;
-					}
-					//if not valid then nothing changes and keep looping
-				}
-			}
-			else{
-				if(findRandom(result) == 1){
-					yV -=1;
-					//record move now
-					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
-						//valid move
-						wallDestroyed++;
-						flag = true;
-					}else if(map[xV][yV]=='B'){
-						//it may push box when creating map,implement later
-						if(yV-1 == 0){
-							//invalid in this case
-							flag = false;
-						}else{
-							wallDestroyed++;
-							flag = true;
-						}
-					}
-					if(flag == true){
-						char s = 'U';
-						stra[straIndex][tempIndex] = s;
-						tempIndex++;
-					}
-					//if not valid then nothing changes and keep looping
-				}else if(findRandom(result) == 2){
-					yV +=1;
-					//record move now
-					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
-						//valid move
-						wallDestroyed++;
-						flag = true;
-					}else if(map[xV][yV]=='B'){
-						//it may push box when creating map,implement later
-						if(yV+1 == M-1){
-							//invalid in this case
-							flag = false;
-						}else{
-							wallDestroyed++;
-							flag = true;
-						}
-					}
-					if(flag == true){
-						char s = 'D';
-						stra[straIndex][tempIndex] = s;
-						tempIndex++;
-					}
-					//if not valid then nothing changes and keep looping
-				}else if(findRandom(result) == 3){
-					xV -=1;
-					//record move now
-					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
-						//valid move
-						wallDestroyed++;
-						flag = true;
-					}else if(map[xV][yV]=='B'){
-						//it may push box when creating map,implement later
-						if(xV-1 == 0){
-							//invalid in this case
-							flag = false;
-						}else{
-							wallDestroyed++;
-							flag = true;
-						}
-					}
-					if(flag == true){
-						char s = 'L';
-						stra[straIndex][tempIndex] = s;
-						tempIndex++;
-					}
-					//if not valid then nothing changes and keep looping
-				}else if(findRandom(result) == 4){
-					xV +=1;
-					//record move now
-					if(map[xV][yV]!='B'&&map[xV][yV]!='T'&&map[xV][yV]!='O'){
-						//valid move
-						wallDestroyed++;
-						flag = true;
-					}else if(map[xV][yV]=='B'){
-						//it may push box when creating map,implement later
-						if(xV+1 == N-1){
-							//invalid in this case
-							flag = false;
-						}else{
-							wallDestroyed++;
-							flag = true;
-						}
-					}
-					if(flag == true){
-						char s = 'R';
-						stra[straIndex][tempIndex] = s;
-						tempIndex++;
-					}
-					//if not valid then nothing changes and keep looping
-				}
-				
-			}
-			
-		}
 
-		
-		return 0;
-	}
 	
 	//calculating distance function |x| + |y| instead of sqrt((y-y0)^2 + (x-x0)^2)
 	//needs to consider situation that two method of distance equals eg: up and left would cause
@@ -558,7 +552,7 @@ public class TempGenerator{
 		System.out.println("lll");
 		if((rx==0 && ry != 0) ||(rx!= 0 && ry == 0)){
 			//if touches edge, then start point is invalid
-			if(rx + x== 0 || ry + y == 0 || rx + x ==9 || ry+ y == 9){return false;}
+			if(rx + x== 0 || ry + y == 0 || rx + x ==N-1 || ry+ y == M-1){return false;}
 			else{return true;}
 		}
 		return false;
@@ -579,8 +573,34 @@ public class TempGenerator{
 
 
 	public static void main(String[] args){
-		TempGenerator a = new TempGenerator(3);
+		TempGenerator a ;
+		int px = 0,py = 0;
+
+		for(int i = 0;i <20;i++){
+			a = new TempGenerator(3);
+
+			if(a.checkFinished(3)){
+				
+				
+				break;
+			}
+		}
+		//edit map so that outer bound is wall
+		for(int j = 0;j<N;j++){
+			for(int k = 0;k<M;k++){
+				if(j ==0 || k == 0 ||j==N-1||k==M-1){
+					map[j][k] = 'W';
+				}
+			}
+		}
+		//set back player & box & target
+		
+		
+			
+		print();
+		
 		System.out.println("doing");
+
 	}
 
 }
