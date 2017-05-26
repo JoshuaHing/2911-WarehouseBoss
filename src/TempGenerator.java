@@ -47,8 +47,8 @@ public class TempGenerator{
 		
 		int boxSum =0;
 		//set player & box binded at start 
-		randomStartX = (int )(Math.random() * (N-8))+5;
-		randomStartY = (int )(Math.random() * (M-8))+5;
+		randomStartX = (int )(Math.random() * (N-6))+4;
+		randomStartY = (int )(Math.random() * (M-6))+4;
 
 		//5~8
 		//set box ,maybe multiple boxes
@@ -537,7 +537,7 @@ public class TempGenerator{
 	
 	//x for start x index, y for start y index, rw for randomway eg:0 for up 1 for down
 	public boolean checkStartPoint(int x ,int y,int rx,int ry){
-		if((rx==0 && ry != 0) ||(rx!= 0 && ry == 0)){
+		if(!(rx ==0&&ry==0)){
 			//if touches edge, then start point is invalid
 			if(rx + x== 0 || ry + y == 0 || rx + x ==N-1 || ry+ y == M-1){return false;}
 			else{return true;}
@@ -555,11 +555,11 @@ public class TempGenerator{
 	}
 	
 	public static void main(String[] args){
-		TempGenerator a = new TempGenerator(4) ;
+		TempGenerator a = new TempGenerator(8) ;
 		int px = 0,py = 0;
 		for(int i = 0;i <20;i++){
-			a = new TempGenerator(4);
-			if(a.checkFinished(4)){
+			a = new TempGenerator(8);
+			if(a.checkFinished(8)){
 				break;
 			}
 		}
